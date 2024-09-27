@@ -1,32 +1,36 @@
 import React from 'react'
 import { ImageSkeleton } from '../Common';
 
-interface row{
-    label:string;
-    key:string
-}
 interface Props{
-    data:string[]
-    cols_mapper:row[]
+    data:{}[]
     options?: boolean
     isLoading:boolean
 }
 
 
-const DataTable = ({options, data, cols_mapper, isLoading}:Props) => {
+const DataTable = ({options, data, isLoading}:Props) => {
+    const getHeaders = () =>{
+        const cols = []
+        if (data?.length > 0){
+            for(let i in data[0]){
+                cols.push(i)
+            }
+        }
+        return cols
+    }
     
-    const cols = cols_mapper.forEach(item=>item.key)
 
-    type RowType = Record<keyof typeof cols, string>;
-    const renderRow = ({row}:{row:RowType})=>{
+    
+    const renderRow = ({row}:{row: any})=>{
         const rendered_row = []
-        for(let col of cols_mapper){
-            if(Object.keys(row).includes(col.key)){
-                rendered_row.push(<td className="whitespace-nowrap px-4 py-2 text-gray-700">{row[col.key]}</td>)
+        for(let cell in row){
+            if(typeof row === 'object' && Object.keys(row).includes(cell)){
+                rendered_row.push(<td className="whitespace-nowrap px-4 py-2 text-gray-700">{row[cell]}</td>)
             }
         }
         return rendered_row
     }
+    
   return (
     <div className="overflow-x-auto overflow-y-hidden">
         {
@@ -43,8 +47,8 @@ const DataTable = ({options, data, cols_mapper, isLoading}:Props) => {
                     <thead className="ltr:text-left rtl:text-right">
                         <tr>
                             {
-                                cols_mapper?.map(col=>(
-                                    <th key={col.key} className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{col.label}</th>
+                                getHeaders()?.map(col=>(
+                                    <th key={col} className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{col}</th>
                                 ))
                             }
                             {
@@ -57,25 +61,29 @@ const DataTable = ({options, data, cols_mapper, isLoading}:Props) => {
 
                     <tbody className="divide-y divide-gray-200">
                         {
-                            data?.map((row, index)=>(
-                                <tr key={index+"-"+row[0]}>
-                                    {
-                                        renderRow({row})
-                                    }
-                                    {/* <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">John Doe</td>
-                                    <td className="whitespace-nowrap px-4 py-2 text-gray-700">24/05/1995</td>
-                                    <td className="whitespace-nowrap px-4 py-2 text-gray-700">Web Developer</td>
-                                    <td className="whitespace-nowrap px-4 py-2 text-gray-700">$120,000</td> */}
-                                    <td className="whitespace-nowrap px-4 py-2">
-                                        <a
-                                            href="#"
-                                            className="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
-                                        >
-                                            View
-                                        </a>
-                                    </td>
-                                </tr>
-                            ))
+                            data?.map((row, index)=>{
+                                console.log("index",index, row);
+                                
+                                return (
+                                    <tr key={index+"-"+row}>
+                                        {
+                                            renderRow({row})
+                                        }
+                                        {/* <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">John Doe</td>
+                                        <td className="whitespace-nowrap px-4 py-2 text-gray-700">24/05/1995</td>
+                                        <td className="whitespace-nowrap px-4 py-2 text-gray-700">Web Developer</td>
+                                        <td className="whitespace-nowrap px-4 py-2 text-gray-700">$120,000</td> */}
+                                        <td className="whitespace-nowrap px-4 py-2">
+                                            <a
+                                                href="#"
+                                                className="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
+                                            >
+                                                View
+                                            </a>
+                                        </td>
+                                    </tr>
+                                )
+                            })
                         }
                     </tbody>
                 </table>

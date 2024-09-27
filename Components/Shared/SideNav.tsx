@@ -18,7 +18,7 @@ export default function SideNav() {
                 <li className='mb-5'>
                     <Link href={'/'}>
                         <Image 
-                            className="mx-auto"
+                            className="mx-auto h-auto"
                             src={'/logo.png'}
                             width={25}
                             height={25}
