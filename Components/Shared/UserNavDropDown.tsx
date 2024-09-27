@@ -8,11 +8,9 @@ import Image from 'next/image';
 import { ImageSkeleton } from '../Common';
 import { useRouter } from 'next/navigation';
 interface user {
-    first_name:string;
-    last_name: string;
-    email:string;
-    image?:string | undefined;
-    id:number,
+    full_name:string;
+    username:string;
+    id:string,
 }
 
 interface Props{
@@ -44,20 +42,11 @@ const UserNavDropDown = ({user}:Props) => {
                 user?.id?
                   <div className='flex items-center gap-2 '>
                       <span className="font-semibold">
-                        {user?.first_name + " " + user?.last_name}              
+                        {user?.full_name}              
                       </span>
                       {
-                        user?.image?
-                          <Image
-                            width={100}
-                            height={100}
-                            className="h-8 w-8 rounded-full"
-                            src={process.env.NEXT_PUBLIC_HOST+user?.image}
-                            alt="user logo"
-                            unoptimized
-                          />
-                        :
-                          <div className='p-[20px] rounded-full bg-white'></div>
+                        
+                          <div className='p-[10px] rounded-full bg-white'></div>
                       }
                   </div>
                 :

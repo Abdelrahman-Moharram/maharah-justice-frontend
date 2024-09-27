@@ -1,40 +1,42 @@
 'use client'
+import NavBar from '@/Components/Shared/NavBar'
 import SideNav from '@/Components/Shared/SideNav'
 import { useRetrieveUserQuery } from '@/redux/features/authApiSlice'
 import { setAuth } from '@/redux/features/authSlice'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import Image from 'next/image'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
-import { FaHome, FaTrash } from 'react-icons/fa'
-import { FaBarsStaggered } from 'react-icons/fa6'
-import { IoSettingsSharp } from 'react-icons/io5'
-import { MdManageAccounts } from 'react-icons/md'
-import { RiMovieLine } from 'react-icons/ri'
+import React, { useEffect } from 'react'
+
 
 interface Props{
     children: React.ReactNode
 }
 const CustomLayout = ({children}:Props) => {
-    const {data} = useRetrieveUserQuery()
+    const {data, isLoading:userLoaing} = useRetrieveUserQuery()
     const dispatch = useAppDispatch()
+    const router = useRouter()
     dispatch(setAuth(data))
 
     const {isAuthenticated, isLoading} = useAppSelector(state=>state.auth)
-    const [toggle, setToggle] = useState(true)
-    
+    useEffect(()=>{
+        if(!isAuthenticated && !isLoading && userLoaing === false){
+            router.push('/auth/login')
+        }
+    },[isAuthenticated, isLoading])
     return (
         <>
         {
-            isAuthenticated === true && !isLoading?
-                <div className='flex gap-2 items-center px-2'>
-                    <SideNav />
-                    <div className="min-h-[calc(100vh-78px)] w-full mx-auto rounded-lg overflow-hidden">            
-                        {children}
+            isAuthenticated || userLoaing?
+                <div className="">
+                    <NavBar />
+                    <div className='flex gap-2 pt-[64px] items-center px-2'>
+                        <SideNav />
+                        <div className="min-h-[calc(100vh-78px)] w-full mx-auto rounded-lg overflow-hidden">            
+                            {userLoaing?null:children}
+                        </div>
                     </div>
                 </div>
-                :
+            :
                 <div>
                     {children}
                 </div>

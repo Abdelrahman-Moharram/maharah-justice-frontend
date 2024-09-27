@@ -3,18 +3,18 @@ import Link from "next/link";
 import { FaTrash } from "react-icons/fa";
 import { IoSettingsSharp } from "react-icons/io5";
 import { MdManageAccounts } from "react-icons/md";
-import { FaHome } from "react-icons/fa";
 import { RiMovieLine } from "react-icons/ri";
 import { useState } from "react";
 import { FaBarsStaggered } from "react-icons/fa6";
 import Image from "next/image";
+import { HiBuildingLibrary } from "react-icons/hi2";
 
-export default function SideNav({className}:{className?:string}) {
+export default function SideNav() {
 
     const [toggle, setToggle] = useState(true)
     return (
-        <div className={(toggle?'w-[50px]':'w-[200px]')+' h-[800px] drop-shadow-2xl transition-all duration-300 ease py-3 bg-container default-shadow rounded-md text-color'}>
-            <ul className="h-[90%]">
+        <div className={(toggle?'w-[50px]':'w-[200px]')+' h-[calc(100vh-100px)]  transition-all duration-300 ease py-3 bg-container default-shadow rounded-md text-color'}>
+            <ul className="h-[90%] overflow-y-auto overflow-x-hidden">
                 <li className='mb-5'>
                     <Link href={'/'}>
                         <Image 
@@ -31,7 +31,7 @@ export default function SideNav({className}:{className?:string}) {
                         href={''}
                         className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium hover:bg-gray-100 hover:text-gray-700"
                     >
-                        <FaHome />
+                        <HiBuildingLibrary />
                         <span className={`${toggle?'hidden':''}`}>
                             القضايا
                         </span>
@@ -112,7 +112,7 @@ export default function SideNav({className}:{className?:string}) {
                 </li>
             </ul>
             <div >
-                <button onClick={()=>setToggle(!toggle)} className="w-full hover:bg-secondary transition-all hover:text-negitaive-color py-2 rounded-md flex justify-center">
+                <button onClick={()=>setToggle(!toggle)} className="w-full hover:bg-secondary/10 transition-all hover:text-color py-2 rounded-md flex justify-center">
                     <FaBarsStaggered />
                 </button>
             </div>

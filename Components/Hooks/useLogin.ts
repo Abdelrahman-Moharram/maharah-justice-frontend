@@ -35,9 +35,6 @@ export default function useLogin() {
 			})
 			.catch((err) => {
 				toast.error('Failed to log in');
-				console.log('====================================');
-				console.log(err);
-				console.log('====================================');
 				setErrors(err?.data);
 			});
 	};
