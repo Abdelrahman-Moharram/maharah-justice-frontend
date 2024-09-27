@@ -8,7 +8,7 @@ import { setAuth, setLogout } from '../features/authSlice';
 import { Mutex } from 'async-mutex';
 const mutex = new Mutex();
 const baseQuery = fetchBaseQuery({
-	baseUrl: `${process.env.NEXT_PUBLIC_HOST}/api`,
+	baseUrl: `${process.env.NEXT_PUBLIC_HOST}/api/`,
 	credentials: 'include',
 });
 const baseQueryWithReauth: BaseQueryFn<
@@ -55,5 +55,5 @@ export const apiSlice = createApi({
 	reducerPath: 'api',
 	baseQuery: baseQueryWithReauth,
 	endpoints: builder => ({}),
-	tagTypes: ['contents', 'sections', 'course_base'],
+	tagTypes: ['cases'],
 });

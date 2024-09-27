@@ -18,9 +18,12 @@ const config: Config = {
         border: "rgba(var(--border))",
         "card": "rgba(var(--card))",
         
-        "color": "rgba(var(--cta-text))",
+        "color": "rgba(var(--color))",
         'negitaive-color': "rgba(var(--negitaive-color)) !important",
       },
+      height:{
+        'custom-screen': 'calc(100vh-64px)'
+      }
     },    
   },
   plugins: [],
