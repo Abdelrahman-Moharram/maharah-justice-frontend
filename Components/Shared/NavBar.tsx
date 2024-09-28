@@ -22,7 +22,7 @@ const NavBar = () => {
         <div className="flex flex-1 items-center justify-end md:justify-between">
             <div className="w-[33%]">
                 <input
-                    className='w-full py-2 px-5 outline-none border-none shadow-md rounded-lg'
+                    className='w-full py-2 px-5 bg-card outline-none border-none shadow-md rounded-lg'
                     placeholder='ابحث برقم القضية ...'
                 />
             </div>
