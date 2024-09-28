@@ -19,10 +19,12 @@ const CustomLayout = ({children}:Props) => {
 
     const {isAuthenticated, isLoading} = useAppSelector(state=>state.auth)
     useEffect(()=>{
-        if(!isAuthenticated && !isLoading && userLoaing === false){
+        console.log(isAuthenticated, isLoading, userLoaing);
+        
+        if(!isAuthenticated && !isLoading && !userLoaing){
             router.push('/auth/login')
         }
-    },[isAuthenticated, isLoading])
+    },[isAuthenticated, isLoading, userLoaing])
     return (
         <>
         {
