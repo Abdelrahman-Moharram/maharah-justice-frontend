@@ -37,7 +37,7 @@ const UserNavDropDown = ({user}:Props) => {
     return (
         <Menu as="div" className="relative inline-block text-left">
           <div>
-              <MenuButton className=" items-center inline-flex w-full justify-center gap-x-2 rounded-full px-3 py-2 text-sm font-semibold transition text-black bg-gray-100 hover:bg-gray-200">
+              <MenuButton className="text-color bg-card items-center inline-flex w-full justify-center gap-x-2 rounded-full px-3 py-2 text-sm font-semibold transition hover:bg-gray-200">
               {
                 user?.id?
                   <div className='flex items-center gap-2 '>
