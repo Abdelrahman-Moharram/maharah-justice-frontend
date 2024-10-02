@@ -18,9 +18,7 @@ const CustomLayout = ({children}:Props) => {
     dispatch(setAuth(data))
 
     const {isAuthenticated, isLoading} = useAppSelector(state=>state.auth)
-    useEffect(()=>{
-        console.log(isAuthenticated, isLoading, userLoaing);
-        
+    useEffect(()=>{     
         if(!isAuthenticated && !isLoading && !userLoaing){
             router.push('/auth/login')
         }
