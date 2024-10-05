@@ -13,7 +13,7 @@ export default function useVerify() {
 		verify(undefined)
 			.unwrap()
 			.then((data:{access:string}) => {
-				Cookies.set('access', data?.access)
+				Cookies.set('access_token', data?.access)
 			})
 			.catch(()=>{
 				dispatch(setLogout())

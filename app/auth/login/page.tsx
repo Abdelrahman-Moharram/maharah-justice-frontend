@@ -3,6 +3,9 @@ import Image from 'next/image'
 import React from 'react'
 
 const page = () => {
+    
+    
+    
   return (
     <div className="h-screen overflow-hidden grid lg:grid-cols-2">
         <div className='lg:col-span-1 col-span-2 p-5'>

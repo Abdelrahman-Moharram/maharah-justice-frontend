@@ -4,6 +4,8 @@ import { useAppDispatch } from '@/redux/hooks';
 import { useLoginMutation } from '@/redux/features/authApiSlice';
 import { setAuth } from '@/redux/features/authSlice';
 import { toast } from 'react-toastify';
+import Cookies from "js-cookie"
+import { jwtDecode } from "jwt-decode"
 
 export default function useLogin() {
 	const router = useRouter();
@@ -29,7 +31,8 @@ export default function useLogin() {
 		login({ username, password })
 			.unwrap()
 			.then((data) => {
-				dispatch(setAuth(data?.access));
+				Cookies.set('access_token', data?.access)
+				dispatch(setAuth(jwtDecode(data?.access)));
 				toast.success('Logged in');
 				router.push('/');
 			})

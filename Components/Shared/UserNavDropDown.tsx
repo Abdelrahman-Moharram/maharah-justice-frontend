@@ -4,7 +4,6 @@ import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/r
 import { setLogout } from '@/redux/features/authSlice';
 import { useAppDispatch } from '@/redux/hooks';
 import { useLogoutMutation } from '@/redux/features/authApiSlice';
-import Image from 'next/image';
 import { ImageSkeleton } from '../Common';
 import { useRouter } from 'next/navigation';
 interface user {
@@ -27,7 +26,7 @@ const UserNavDropDown = ({user}:Props) => {
 			.unwrap()
 			.then(() => {
 				dispatch(setLogout());
-        router.push('/')
+        router.push('/auth/login')
 			});
 	};
     function classNames(...classes:string[]) {
