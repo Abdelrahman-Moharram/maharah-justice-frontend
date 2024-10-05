@@ -1,3 +1,4 @@
+import { useUpdateUser } from '@/Components/Hooks';
 import { createSlice } from '@reduxjs/toolkit';
 import Cookies from "js-cookie"
 const colormode = Cookies.get('colormode') || 'light'
@@ -42,7 +43,7 @@ const authSlice = createSlice({
 				state.isAuthenticated = true;
 				state.user = action.payload
 			}
-			state.isLoading = false;
+			state.isLoading = false
 		},
 		changeColorMode: (state)=>{
 			Cookies.set('colormode', state.colormode === 'light'?'dark':'light') 

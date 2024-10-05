@@ -16,6 +16,7 @@ const CustomLayout = ({children}:Props) => {
     const {data} = useRetrieveUserQuery()
     const dispatch = useAppDispatch()
     dispatch(setAuth(data))
+    const router = useRouter()
 
     const router = useRouter();
     const {isAuthenticated, isLoading} = useAppSelector(state=>state.auth)
