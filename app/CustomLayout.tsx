@@ -12,10 +12,10 @@ interface Props{
     children: React.ReactNode
 }
 const CustomLayout = ({children}:Props) => {
-    const {data, isLoading:userLoaing} = useRetrieveUserQuery()
+    const {data, isLoading:userLoaing } = useRetrieveUserQuery()
     const dispatch = useAppDispatch()
-    const router = useRouter()
     dispatch(setAuth(data))
+    const router = useRouter()
 
     const {isAuthenticated, isLoading} = useAppSelector(state=>state.auth)
     useEffect(()=>{
