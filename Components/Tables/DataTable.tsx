@@ -3,17 +3,19 @@ import { ImageSkeleton } from '../Common';
 
 interface Props{
     data:{}[]
-    options?: boolean
+    options?:(id:string)=>React.ReactNode
     isLoading:boolean
+    isOptions?:boolean
 }
 
 
-const DataTable = ({options, data, isLoading}:Props) => {
+const DataTable = ({options, data, isLoading, isOptions=false}:Props) => {
     const getHeaders = () =>{
         const cols = []
         if (data?.length > 0){
             for(let i in data[0]){
-                cols.push(i)
+                if(i !== 'id')
+                    cols.push(i)
             }
         }
         return cols
@@ -24,7 +26,7 @@ const DataTable = ({options, data, isLoading}:Props) => {
     const renderRow = ({row}:{row: any})=>{
         const rendered_row = []
         for(let cell in row){
-            if(typeof row === 'object' && Object.keys(row).includes(cell)){
+            if(typeof row === 'object' && Object.keys(row).includes(cell) && cell != 'id'){
                 rendered_row.push(<td className="whitespace-nowrap px-4 py-2 text-gray-700">{row[cell]}</td>)
             }
         }
@@ -52,7 +54,7 @@ const DataTable = ({options, data, isLoading}:Props) => {
                                 ))
                             }
                             {
-                                options?
+                                isOptions && options?
                                     <th className="px-4 py-2"></th>
                                 :null
                             }
@@ -61,10 +63,7 @@ const DataTable = ({options, data, isLoading}:Props) => {
 
                     <tbody className="divide-y divide-gray-200">
                         {
-                            data?.map((row, index)=>{
-                                console.log("index",index, row);
-                                
-                                return (
+                            data?.map((row, index)=>(
                                     <tr key={index+"-"+row}>
                                         {
                                             renderRow({row})
@@ -73,17 +72,16 @@ const DataTable = ({options, data, isLoading}:Props) => {
                                         <td className="whitespace-nowrap px-4 py-2 text-gray-700">24/05/1995</td>
                                         <td className="whitespace-nowrap px-4 py-2 text-gray-700">Web Developer</td>
                                         <td className="whitespace-nowrap px-4 py-2 text-gray-700">$120,000</td> */}
-                                        <td className="whitespace-nowrap px-4 py-2">
-                                            <a
-                                                href="#"
-                                                className="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
-                                            >
-                                                View
-                                            </a>
-                                        </td>
+                                        {
+                                            isOptions && options?
+                                                <td className="whitespace-nowrap px-4 py-2">
+                                                    {options(row?.id)}
+                                                </td>
+                                            :null
+                                        }
                                     </tr>
                                 )
-                            })
+                            )
                         }
                     </tbody>
                 </table>

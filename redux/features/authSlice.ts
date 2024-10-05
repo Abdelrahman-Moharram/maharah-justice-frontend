@@ -2,7 +2,7 @@ import { useUpdateUser } from '@/Components/Hooks';
 import { createSlice } from '@reduxjs/toolkit';
 import Cookies from "js-cookie"
 const colormode = Cookies.get('colormode') || 'light'
-const isAuthenticated = Cookies.get('access') ? true : false
+const isAuthenticated = Cookies.get('access_token') ? true : false
 
 
 
@@ -51,7 +51,7 @@ const authSlice = createSlice({
 		},
 		setLogout: state => {
 			
-			Cookies.remove('access')
+			Cookies.remove('access_token')
 			state.isAuthenticated = false;
 			state.isLoading = false;
 			state.user = emptyUser
