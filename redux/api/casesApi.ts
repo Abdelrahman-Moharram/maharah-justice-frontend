@@ -11,7 +11,14 @@ const casesApiSlice = apiSlice.injectEndpoints({
             }),
             getCasesList: builder.query({
                 query:()=>({
-                    url:base_url+"list/"
+                    url:base_url+"list/",
+                }),
+            }),
+
+            exportCasesExcel: builder.query({
+                query:()=>({
+                    url:base_url+"list/?excel=true",
+                    responseHandler: (response) => response.blob(), 
                 }),
             }),
     }) 
@@ -21,5 +28,6 @@ const casesApiSlice = apiSlice.injectEndpoints({
 export const {
     useGetIndexPageQuery,
     useGetCasesListQuery,
+    useExportCasesExcelQuery
     
 } = casesApiSlice
