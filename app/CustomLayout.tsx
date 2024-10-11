@@ -16,7 +16,6 @@ const CustomLayout = ({children}:Props) => {
     const {data} = useRetrieveUserQuery()
     const dispatch = useAppDispatch()
     dispatch(setAuth(data))
-    const router = useRouter()
 
     const router = useRouter();
     const {isAuthenticated, isLoading} = useAppSelector(state=>state.auth)
@@ -32,7 +31,7 @@ const CustomLayout = ({children}:Props) => {
             isAuthenticated || isLoading?
                 <div className="">
                     <NavBar />
-                    <div className='flex gap-2 pt-[64px] items-center px-2'>
+                    <div className='flex gap-2 pt-[64px] px-2'>
                         <SideNav />
                         <div className="min-h-[calc(100vh-78px)] w-full mx-auto rounded-lg overflow-hidden">            
                             {isLoading?null:children}

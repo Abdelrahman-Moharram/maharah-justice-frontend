@@ -25,7 +25,7 @@ const FloatingSelectInput = ({
     <>
     <label
         htmlFor={labelId}
-        className="relative block rounded-md border border-primary/80 shadow-sm"
+        className="relative block rounded-md border shadow-sm"
     >
         <select
             name={labelId}
@@ -44,7 +44,7 @@ const FloatingSelectInput = ({
         </select>
 
         <span
-            className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-primary transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs"
+            className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-container py-1 px-2 text-md transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs"
         >
             {label}
         </span>

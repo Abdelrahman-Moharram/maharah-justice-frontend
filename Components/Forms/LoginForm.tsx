@@ -1,5 +1,4 @@
 'use client';
-import Cookies from "js-cookie"
 
 
 import { Form } from '@/Components/Forms';
@@ -7,8 +6,6 @@ import { useLogin } from '../Hooks';
 
 export default function LoginForm() {
 	const { username, password, isLoading, onChange, onSubmit, errors } = useLogin();
-	const access = Cookies.get('access_token')
-    console.log(access);
 	const config = [
 		{
 			labelText: 'اسم المستخدم',

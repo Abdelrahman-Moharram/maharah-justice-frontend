@@ -5,7 +5,7 @@ import ImageSkeleton from './ImageSkeleton';
 interface item{
     href: string;
     title: string;
-    icon?: string | undefined
+    icon?: React.ReactNode
 }
 const Breadcrumb = ({items}:{items:item[]|undefined}) => {
   return (
@@ -15,12 +15,12 @@ const Breadcrumb = ({items}:{items:item[]|undefined}) => {
     {
         items?.length?
             items.map((item, i)=>(
-                <li className="rtl:rotate-180 flex items-center" key={i}>
+                <li className="flex items-center" key={i}>
                     {
                         i !== 0?
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            className="h-4 w-4"
+                            className="h-4 w-4 rtl:rotate-180"
                             viewBox="0 0 20 20"
                             fill="currentColor"
                         >

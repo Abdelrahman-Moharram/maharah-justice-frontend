@@ -17,7 +17,7 @@ const NavBar = () => {
 
 
   return (
-<header className="bg-negitaive-color/40 shadow-lg fixed w-full">
+<header className="bg-negitaive-color shadow-lg fixed w-full z-10">
     <div className="mx-auto flex h-16 items-center gap-8 px-4 sm:px-6 lg:px-8">
         <div className="flex flex-1 items-center justify-end md:justify-between">
             <div className="w-[33%]">

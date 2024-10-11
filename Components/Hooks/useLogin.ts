@@ -1,6 +1,8 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
+import { useAppDispatch } from '@/redux/hooks';
 import { useLoginMutation } from '@/redux/features/authApiSlice';
+import { setAuth } from '@/redux/features/authSlice';
 import { toast } from 'react-toastify';
 import Cookies from "js-cookie"
 import { jwtDecode } from "jwt-decode"
@@ -8,6 +10,7 @@ import { jwtDecode } from "jwt-decode"
 export default function useLogin() {
 	const router = useRouter();
 	const [errors, setErrors] = useState();
+	const dispatch = useAppDispatch();
 	const [login, { isLoading }] = useLoginMutation();
 
 	const [formData, setFormData] = useState({
@@ -28,7 +31,7 @@ export default function useLogin() {
 		login({ username, password })
 			.unwrap()
 			.then((data) => {
-        Cookies.set('access_token', data?.access)
+				Cookies.set('access_token', data?.access)
 				dispatch(setAuth(jwtDecode(data?.access)));
 				toast.success('Logged in');
 				router.push('/');

@@ -1,3 +1,3 @@
 # ToDo
-    - make sidenav items more dynamic
+    - solve pagenation in cases list
     - auth system not completed yet
