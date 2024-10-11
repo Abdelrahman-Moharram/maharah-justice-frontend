@@ -31,6 +31,7 @@ interface CaseType{
     commercial_number:  string;
     date_ar:  string;
     case_attachment?: File[] | null
+    customer_name:string
 }
 interface Props{
     LitigationTypes: baseType[];
@@ -252,6 +253,7 @@ const CaseForm = ({
                     onChange={changeCustomer}
                     // emptyoption={true}
                     // errors={errors?.litigation_type}
+                    oldNameValue={caseForm?.customer_name}
                     type='text'
                 >
                 </CustomerSearchInput>
@@ -327,7 +329,7 @@ const CaseForm = ({
                 <FloatingTextarea
                     labelId={'notes'}
                     onChange={onChange}
-                    value={caseForm.notes}
+                    value={caseForm?.notes}
                     label={'ملاحظات القضية'}
                     errors={errors?.notes}
                 >
@@ -336,13 +338,13 @@ const CaseForm = ({
         </ToggledCard>
 
         <ToggledCard
-            title='الملاحظات'
+            title='المرفقات'
             className='bg-container'
         >
-            <div className="flex gap-3 items-center">
+            <div className="grid grid-cols-3 gap-3 items-center">
                 {
-                    caseForm.case_attachment?.length?
-                        caseForm.case_attachment?.map((attch, idx)=>(
+                    caseForm?.case_attachment?.length?
+                        caseForm.case_attachment?.map((attch:File|string, idx)=>(
                             <div className="" key={idx}>
                                 <ImageInput
                                     labelId={'image'}

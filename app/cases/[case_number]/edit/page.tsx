@@ -2,10 +2,10 @@
 
 import Breadcrumb from '@/Components/Common/Breadcrumb';
 import CaseForm from '@/Components/Forms/CaseForm'
-import { useCreateCaseMutation } from '@/redux/api/casesApi';
+import { useCreateCaseMutation, useGetCaseFormQuery } from '@/redux/api/casesApi';
 import { useGetCaseFormDropDownsQuery } from '@/redux/api/utilsApi';
-import { useRouter } from 'next/navigation';
-import React, { ChangeEvent, FormEvent, useState } from 'react'
+import { useParams, useRouter } from 'next/navigation';
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { HiBuildingLibrary } from 'react-icons/hi2';
 import { toast } from 'react-toastify';
 
@@ -26,32 +26,16 @@ interface CaseType{
   commercial_number:  string;
   date_ar:  string;
   case_attachment?: File[] | null,
-  customer_name:''
+  customer_name:string
 }
 
 
 const page = () => {
+    const {case_number}:{case_number:string} = useParams()
   const router = useRouter()
+  const {data:old_case_data, isLoading:getCaseFormLoading} = useGetCaseFormQuery({case_number})
   const [createCase, {isLoading}] = useCreateCaseMutation()
-  const [caseForm, setcaseForm] = useState<CaseType>({
-    case_number:'',
-    agreement_number:'',
-    amount:'',
-    notes:'',
-    is_aganist_company:false,
-    court:'',
-    circular:'',
-    city:'',
-    state:'',
-    litigation_type:'',
-    company_representative:'',
-    customer:'',
-    cust_phone_number:'',
-    commercial_number:'',
-    date_ar:'',
-    case_attachment:[],
-    customer_name:''
-  })
+  const [caseForm, setcaseForm] = useState<CaseType>(old_case_data?.case)
 
   const BreadcrumbData = [
     {
@@ -64,6 +48,9 @@ const page = () => {
       title: 'إنشاء قضية',
     }
   ]
+  useEffect(()=>{
+    setcaseForm(old_case_data?.case)
+  }, [getCaseFormLoading])
 const [formErrors, setFormErrors] = useState(null)
 const onChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement> ) => {
   const { name, value } = event.target;
