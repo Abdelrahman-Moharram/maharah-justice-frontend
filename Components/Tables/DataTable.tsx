@@ -1,15 +1,18 @@
 import React from 'react'
 import { ImageSkeleton } from '../Common';
+import EmptyContent from '../Common/EmptyContent';
 
 interface Props{
     data:{}[]
     options?:(id:string)=>React.ReactNode
     isLoading:boolean
-    isOptions?:boolean
+    isOptions?:boolean,
+    emptyLinkHref: string
+    emptyText: string
 }
 
 
-const DataTable = ({options, data, isLoading, isOptions=false}:Props) => {
+const DataTable = ({options, data, isLoading, emptyLinkHref, emptyText, isOptions=false}:Props) => {
     const getHeaders = () =>{
         const cols = []
         if (data?.length > 0){
@@ -44,47 +47,55 @@ const DataTable = ({options, data, isLoading, isOptions=false}:Props) => {
                     rounded='10px'
                 />
             :
-                <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-                    
-                    <thead className="ltr:text-left rtl:text-right">
-                        <tr>
-                            {
-                                getHeaders()?.map(col=>(
-                                    <th key={col} className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{col}</th>
-                                ))
-                            }
-                            {
-                                isOptions && options?
-                                    <th className="px-4 py-2"></th>
-                                :null
-                            }
-                        </tr>
-                    </thead>
+                data?.length?
+                    <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+                        
+                        <thead className="ltr:text-left rtl:text-right">
+                            <tr>
+                                {
+                                    getHeaders()?.map(col=>(
+                                        <th key={col} className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{col}</th>
+                                    ))
+                                }
+                                {
+                                    isOptions && options?
+                                        <th className="px-4 py-2"></th>
+                                    :null
+                                }
+                            </tr>
+                        </thead>
 
-                    <tbody className="divide-y divide-gray-200">
-                        {
-                            data?.map((row, index)=>(
-                                    <tr key={index+"-"+row}>
-                                        {
-                                            renderRow({row})
-                                        }
-                                        {/* <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">John Doe</td>
-                                        <td className="whitespace-nowrap px-4 py-2 text-gray-700">24/05/1995</td>
-                                        <td className="whitespace-nowrap px-4 py-2 text-gray-700">Web Developer</td>
-                                        <td className="whitespace-nowrap px-4 py-2 text-gray-700">$120,000</td> */}
-                                        {
-                                            isOptions && options?
-                                                <td className="whitespace-nowrap px-4 py-2">
-                                                    {options(row?.id)}
-                                                </td>
-                                            :null
-                                        }
-                                    </tr>
+                        <tbody className="divide-y divide-gray-200">
+                            {
+                                data?.map((row:any, index)=>(
+                                        <tr key={index+"-"+row}>
+                                            {
+                                                renderRow({row})
+                                            }
+                                            {/* <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">John Doe</td>
+                                            <td className="whitespace-nowrap px-4 py-2 text-gray-700">24/05/1995</td>
+                                            <td className="whitespace-nowrap px-4 py-2 text-gray-700">Web Developer</td>
+                                            <td className="whitespace-nowrap px-4 py-2 text-gray-700">$120,000</td> */}
+                                            {
+                                                isOptions && options?
+                                                    <td className="whitespace-nowrap px-4 py-2">
+                                                        {options(row?.id)}
+                                                    </td>
+                                                :null
+                                            }
+                                        </tr>
+                                    )
                                 )
-                            )
-                        }
-                    </tbody>
-                </table>
+                            }
+                        </tbody>
+                    </table>
+                :
+                <div className="flex justify-center">
+                    <EmptyContent 
+                        href={emptyLinkHref}
+                        title={emptyText}
+                    />
+                </div>
         }
     </div>
   )

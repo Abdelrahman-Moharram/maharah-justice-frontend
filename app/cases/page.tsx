@@ -2,13 +2,15 @@
 import Paginition from '@/Components/Lists/Paginition'
 import DataTable from '@/Components/Tables/DataTable'
 import TableSettings from '@/Components/Tables/TableSettings'
-import { useGetCasesListQuery, useExportCasesExcelMutation } from '@/redux/api/casesApi'
+import { useGetCasesListQuery, useExportCasesExcelMutation, useDeleteCaseMutation } from '@/redux/api/casesApi'
 import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import { BiEdit } from 'react-icons/bi'
 import { BsEye } from 'react-icons/bs'
 import { FaTrash } from "react-icons/fa";
+import DeleteCaseModal from './_Components/DeleteCaseModal'
+import { toast } from 'react-toastify'
 
 const to_int_or_default = (val:string|null)=>{
   try{
@@ -21,6 +23,9 @@ const to_int_or_default = (val:string|null)=>{
 }
 
 const page = () => {
+    const [deleteModal, setDeleteModal] = useState(false)
+    const [deletedCase, setDeleteCase] = useState<{case_number:string}>({case_number:''})
+    const [deleteCase, {isLoading:deleteCaseLoading}] = useDeleteCaseMutation()
     const searchParams = useSearchParams()
     let size = to_int_or_default(searchParams.get("size"))
     let page = to_int_or_default(searchParams.get("page"))
@@ -62,31 +67,64 @@ const page = () => {
         a.remove();
       })
     };
+    const handleDeleteModal = () =>{
+      setDeleteModal(!deleteModal)
+    }
+    const formData = ({case_number, password}:{case_number:string, password:string}) =>{
+      deleteCase({case_number, password})
+        .unwrap()
+        .then(()=>{
+          toast.success(`company ${data?.case_number} deleted successfully`)
+          handleDeleteModal()
+        }).catch((err:any)=>{
+          toast.error(err?.data.message || " حدث خطأ ما وتعذر الإتصال بالخادم برجاء المحاولة لاحقا")
+        })
+    }
      
     const options = (id:string)=>(
       <div className='flex gap-2 items-start'>
         <Link className='p-3 bg-container hover:bg-card transition-all shadow-md rounded-full' href={`/cases/${id}`}><BsEye /></Link>
         <Link className='p-3 bg-container hover:bg-card transition-all shadow-md rounded-full' href={`/cases/${id}/edit`}><BiEdit /></Link>
-        <Link className='p-3 bg-container text-red-500 hover:bg-red-100 shadow-md rounded-full' href={`/cases/${id}/delete`}><FaTrash /></Link>
+        <button 
+          onClick={()=>{
+            setDeleteCase({case_number:id})
+            handleDeleteModal()
+          }} 
+          className='p-3 bg-container text-red-500 hover:bg-red-100 shadow-md rounded-full'><FaTrash /></button>
       </div>
     )
     return (
-      <div className='min-h-[300px] p-5 space-y-4'>
-        <TableSettings 
-          excel={downloadFile}
-        />
-        <div className="p-4">
-          <DataTable 
-            data={data?.cases}
-            isLoading={isLoading}        
-            options={options}
-            isOptions={true}
+      <>
+         <DeleteCaseModal 
+            open={deleteModal}
+            handleModal={handleDeleteModal}
+            Case={deletedCase}
+            formData={formData}
+            isLoading={deleteCaseLoading}
+         />
+        <div className='min-h-[300px] p-5 space-y-4'>
+          <TableSettings 
+            excel={downloadFile}
           />
+          <div className="p-4">
+            <DataTable 
+              data={data?.cases}
+              isLoading={isLoading}        
+              options={options}
+              isOptions={true}
+              emptyLinkHref='/cases'
+              emptyText='صفحة القضايا الرئيسية'
+            />
+          </div>
+          <div className='flex justify-center my-10 font-extrabold'>
+              {
+                data?.cases.length?
+                  <Paginition page={page} totalPages={data?.total_pages} />
+                :null
+              }
+          </div>
         </div>
-        <div className='flex justify-center my-10 font-extrabold'>
-            <Paginition page={page} totalPages={data?.total_pages} />
-        </div>
-      </div>
+      </>
     )
 }
 

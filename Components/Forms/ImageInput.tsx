@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React, { ChangeEvent } from 'react'
 import { FaFile, FaVideo } from 'react-icons/fa';
 import { IoIosCloudUpload } from "react-icons/io";
@@ -30,7 +31,7 @@ const ImageInput = ({labelId,
     <div>
         <label
             htmlFor={labelId}
-            className="flex w-[300px] min-h-[200px] overflow-hidden relative justify-center gap-2 items-center hover:bg-primary hover:text-white bg-white border border-primary rounded-md text-primary cursor-pointer"
+            className="flex w-[300px] min-h-[200px] overflow-hidden relative justify-center gap-2 items-center hover:bg-card  border rounded-md cursor-pointer"
         >
             <span
                 className="h-full"
@@ -41,16 +42,19 @@ const ImageInput = ({labelId,
                         {
                             typeof(file) === 'string'?
                             <img 
-                                src={process.env.NEXT_PUBLIC_HOST+file} 
-                                className='inputImage fade-in rounded-md'
-                                alt="uploaded course image" 
+                                src={process.env.NEXT_PUBLIC_HOST+"/media/"+file} 
+                                className='inputImage fade-in rounded-md w-[300px] h-[200px] overflow-hidden'
+                                alt="uploaded file" 
+                                width={300}
+                                height={200}
+                                
                             />
                             :
                             file?.type?.includes("image")?
                                 <img 
                                     src={objectUrl} 
-                                    className='inputImage fade-in rounded-md'
-                                    alt="uploaded course image" 
+                                    className='inputImage  w-[300px] h-[200px] overflow-hidden fade-in rounded-md'
+                                    alt="uploaded file" 
                                 />
                             :
                             file.type.includes('video')?
@@ -72,9 +76,9 @@ const ImageInput = ({labelId,
                         <div 
                             className="preview-image absolute gap-4 transition-all font-extrabold text-secondry flex justify-center items-center top-0 bottom-0 left-0 right-0  hover:bg-white/50"
                         >
-                            <div className="hidden bg-white gap-2 items-center px-8 py-3 rounded-md">
+                            <div className="hidden bg-card text-color gap-2 items-center px-8 py-3 rounded-md">
                                 <IoIosCloudUpload />
-                                replace
+                                تغيير
                             </div>
                         </div>
                     </div>
