@@ -85,8 +85,8 @@ const imageChange = (file:File )=>{
 
 }
 const changeCheckBox = (event: ChangeEvent<HTMLInputElement>)  =>{
-  const { name} = event.target;   
-    setcaseForm({ ...caseForm, [name]: !caseForm[name] || false })
+  const { name, checked } = event.target;   
+    setcaseForm({ ...caseForm, [name]: checked })
 }
   const {data: dropDowns} = useGetCaseFormDropDownsQuery(undefined)
 
