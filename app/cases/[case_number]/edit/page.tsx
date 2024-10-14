@@ -2,7 +2,7 @@
 
 import Breadcrumb from '@/Components/Common/Breadcrumb';
 import CaseForm from '@/Components/Forms/CaseForm'
-import { useCreateCaseMutation, useGetCaseFormQuery } from '@/redux/api/casesApi';
+import { useEditCaseMutation, useGetCaseFormQuery } from '@/redux/api/casesApi';
 import { useGetCaseFormDropDownsQuery } from '@/redux/api/utilsApi';
 import { useParams, useRouter } from 'next/navigation';
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
@@ -34,7 +34,7 @@ const page = () => {
     const {case_number}:{case_number:string} = useParams()
   const router = useRouter()
   const {data:old_case_data, isLoading:getCaseFormLoading} = useGetCaseFormQuery({case_number})
-  const [createCase, {isLoading}] = useCreateCaseMutation()
+  const [editCase, {isLoading}] = useEditCaseMutation()
   const [caseForm, setcaseForm] = useState<CaseType>(old_case_data?.case)
 
   const BreadcrumbData = [
@@ -108,7 +108,7 @@ const changeCheckBox = (event: ChangeEvent<HTMLInputElement>)  =>{
     
     
     
-    createCase({form:formData})
+      editCase({case_number ,form:formData})
     .unwrap()
     .then(data=>{
         toast.success(data?.message)

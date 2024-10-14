@@ -55,6 +55,7 @@ const CustomerSearchInput = ({
         value={nameValue}
         defaultValue={oldNameValue}
         required
+        
       />
       {
         data?.customers?.length && nameValue && menu  ?

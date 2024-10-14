@@ -21,7 +21,7 @@ const CustomLayout = ({children}:Props) => {
     const {isAuthenticated, isLoading} = useAppSelector(state=>state.auth)
 
     useEffect(() => {        
-        if (!Cookies.get('access_token')) {
+        if (!isAuthenticated && !isLoading) {
             router.push('/auth/login');
         }
     }, [router]);

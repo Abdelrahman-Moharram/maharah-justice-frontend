@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import React, { ChangeEvent } from 'react'
 import { FaFile, FaVideo } from 'react-icons/fa';
 import { IoIosCloudUpload } from "react-icons/io";
@@ -40,7 +39,7 @@ const ImageInput = ({labelId,
                 file? 
                     <div className='relative'>
                         {
-                            typeof(file) === 'string'?
+                            typeof(file) === 'string' && (file.includes('.png') || file.includes('.jp'))?
                             <img 
                                 src={process.env.NEXT_PUBLIC_HOST+"/media/"+file} 
                                 className='inputImage fade-in rounded-md w-[300px] h-[200px] overflow-hidden'
@@ -49,6 +48,14 @@ const ImageInput = ({labelId,
                                 height={200}
                                 
                             />
+                            :
+                            typeof(file) === 'string' ?
+                                <div className="text-center">
+                                    <div className="flex justify-center">
+                                        <FaFile />
+                                    </div>
+                                    {file}
+                                </div>
                             :
                             file?.type?.includes("image")?
                                 <img 

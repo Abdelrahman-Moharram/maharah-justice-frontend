@@ -44,7 +44,7 @@ const FloatingSelectInput = ({
         </select>
 
         <span
-            className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-container py-1 px-2 text-md transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs"
+            className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-container py-0 px-2 text-md transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs"
         >
             {label}
         </span>

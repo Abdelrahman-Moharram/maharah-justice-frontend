@@ -41,7 +41,7 @@ const DataTable = ({options, data, isLoading, emptyLinkHref, emptyText, isOption
         {
             isLoading?
                 <ImageSkeleton 
-                    height='400px'
+                    height='800px'
                     width='100%'
                     shadow
                     rounded='10px'

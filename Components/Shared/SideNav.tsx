@@ -13,7 +13,7 @@ export default function SideNav() {
 
     const casesInnerLinks = [
         {title:'إضافة قضية', link:'/cases/add'},
-        {title:'جميع القضايا', link:'/cases?filter=all'}, 
+        {title:'جميع القضايا', link:'/cases'}, 
         {title:'القضايا المنتهية', link:'/cases?filter=finished'},
         {title:'قضايا اللجنة التمويلية', link:'/cases?filter=financial'},
     ]

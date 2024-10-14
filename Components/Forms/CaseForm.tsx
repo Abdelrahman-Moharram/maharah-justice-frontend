@@ -248,7 +248,8 @@ const CaseForm = ({
         >
             <div className="grid lg:grid-cols-2 sm:grid-cols-1  gap-4 py-5 rounded-md items-center">
                 <CustomerSearchInput
-                    label='العميل'
+                    label='إبحث برقم الهوية او إسم العميل'
+
                     labelId='custumer'
                     onChange={changeCustomer}
                     // emptyoption={true}
@@ -341,7 +342,7 @@ const CaseForm = ({
             title='المرفقات'
             className='bg-container'
         >
-            <div className="grid grid-cols-3 gap-3 items-center">
+            <div className="grid lg:grid-cols-6 md:grid-cols-4 sm-grid-cols-2 gap-3 items-center">
                 {
                     caseForm?.case_attachment?.length?
                         caseForm.case_attachment?.map((attch:File|string, idx)=>(

@@ -9,8 +9,9 @@ import React, { useCallback, useState } from 'react'
 import { BiEdit } from 'react-icons/bi'
 import { BsEye } from 'react-icons/bs'
 import { FaTrash } from "react-icons/fa";
-import DeleteCaseModal from './_Components/DeleteCaseModal'
 import { toast } from 'react-toastify'
+import CaseDetailsOverLay from './_Components/CaseDetailsOverLay'
+import DeleteCaseModal from './_Components/DeleteCaseModal'
 
 const to_int_or_default = (val:string|null)=>{
   try{
@@ -23,6 +24,8 @@ const to_int_or_default = (val:string|null)=>{
 }
 
 const page = () => {
+    const [showCaseDetails, setShowCaseDetails] = useState<Boolean>(false)
+    const [detailsCaseNumber, setDetailsCaseNumber] = useState<string>('')
     const [deleteModal, setDeleteModal] = useState(false)
     const [deletedCase, setDeleteCase] = useState<{case_number:string}>({case_number:''})
     const [deleteCase, {isLoading:deleteCaseLoading}] = useDeleteCaseMutation()
@@ -70,11 +73,14 @@ const page = () => {
     const handleDeleteModal = () =>{
       setDeleteModal(!deleteModal)
     }
-    const formData = ({case_number, password}:{case_number:string, password:string}) =>{
-      deleteCase({case_number, password})
+    const handleDetailsModel = () =>{
+      setShowCaseDetails(!showCaseDetails)
+    }
+    const formData = ({case_number}:{case_number:string}) =>{
+      deleteCase({case_number})
         .unwrap()
         .then(()=>{
-          toast.success(`company ${data?.case_number} deleted successfully`)
+          toast.success(data?.message || "تم حذف القضية بنجاح")
           handleDeleteModal()
         }).catch((err:any)=>{
           toast.error(err?.data.message || " حدث خطأ ما وتعذر الإتصال بالخادم برجاء المحاولة لاحقا")
@@ -82,15 +88,18 @@ const page = () => {
     }
      
     const options = (id:string)=>(
-      <div className='flex gap-2 items-start'>
-        <Link className='p-3 bg-container hover:bg-card transition-all shadow-md rounded-full' href={`/cases/${id}`}><BsEye /></Link>
-        <Link className='p-3 bg-container hover:bg-card transition-all shadow-md rounded-full' href={`/cases/${id}/edit`}><BiEdit /></Link>
+      <div className='flex gap-4 items-start'>
+        <button onClick={()=>{
+            setDetailsCaseNumber(id)
+            handleDetailsModel()
+          }} className=' text-blue-600 text-lg transition-all rounded-full' ><BsEye /></button>
+        <Link className=' text-green-600 text-lg transition-all rounded-full' href={`/cases/${id}/edit`}><BiEdit /></Link>
         <button 
           onClick={()=>{
             setDeleteCase({case_number:id})
             handleDeleteModal()
           }} 
-          className='p-3 bg-container text-red-500 hover:bg-red-100 shadow-md rounded-full'><FaTrash /></button>
+          className=' text-lg text-red-500 rounded-full'><FaTrash /></button>
       </div>
     )
     return (
@@ -102,6 +111,13 @@ const page = () => {
             formData={formData}
             isLoading={deleteCaseLoading}
          />
+         {
+          <CaseDetailsOverLay 
+            case_number={detailsCaseNumber}
+            handleToggler={handleDetailsModel}
+            open={showCaseDetails}
+          />
+         }
         <div className='min-h-[300px] p-5 space-y-4'>
           <TableSettings 
             excel={downloadFile}

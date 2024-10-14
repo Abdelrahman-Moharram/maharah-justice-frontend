@@ -18,6 +18,12 @@ const casesApiSlice = apiSlice.injectEndpoints({
                 }),
                 providesTags:['cases']
             }),
+            getCaseDetails: builder.query({
+                query:({case_number}:{case_number:string})=>({
+                    url:base_url+case_number+"/",
+                }),
+                providesTags:['cases']
+            }),
             getCaseForm: builder.query({
                 query:({case_number}:{case_number:string})=>({
                     url:base_url+case_number+"/form/",
@@ -40,11 +46,19 @@ const casesApiSlice = apiSlice.injectEndpoints({
                 invalidatesTags:['cases']
             }),
 
+            editCase: builder.mutation({
+                query:({case_number, form}:{case_number:string, form:FormData})=>({
+                    url:base_url+`${case_number}/edit/`,
+                    method:'PUT',
+                    body:form,
+                }),
+                invalidatesTags:['cases']
+            }),
+
             deleteCase: builder.mutation({
-                query:({case_number, password}:{case_number:string, password:string})=>({
+                query:({case_number}:{case_number:string})=>({
                     url:base_url+case_number+"/delete/",
                     method:'DELETE',
-                    body:{password},
                 }),
                 invalidatesTags:['cases']
             }),
@@ -58,6 +72,8 @@ export const {
     useExportCasesExcelMutation,
     useCreateCaseMutation,
     useDeleteCaseMutation,
-    useGetCaseFormQuery
+    useGetCaseFormQuery,
+    useGetCaseDetailsQuery,
+    useEditCaseMutation
     
 } = casesApiSlice

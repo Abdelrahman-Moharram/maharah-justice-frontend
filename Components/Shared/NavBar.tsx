@@ -1,6 +1,5 @@
 'use client'
 import React from 'react'
-import SwitchMode from './SwitchMode'
 import UserNavDropDown from './UserNavDropDown';
 import { useAppSelector } from '@/redux/hooks';
 
