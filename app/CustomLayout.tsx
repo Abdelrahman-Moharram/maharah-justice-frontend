@@ -4,9 +4,8 @@ import SideNav from '@/Components/Shared/SideNav'
 import { useRetrieveUserQuery } from '@/redux/features/authApiSlice'
 import { setAuth } from '@/redux/features/authSlice'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import React, { useEffect } from 'react'
-import Cookies from "js-cookie"
 
 
 interface Props{
@@ -17,12 +16,15 @@ const CustomLayout = ({children}:Props) => {
     const dispatch = useAppDispatch()
     dispatch(setAuth(data))
 
+    const pathName = usePathname()
     const router = useRouter();
     const {isAuthenticated, isLoading} = useAppSelector(state=>state.auth)
 
     useEffect(() => {        
         if (!isAuthenticated && !isLoading) {
-            router.push('/auth/login');
+            console.log(pathName);
+            
+            router.push('/auth/login?next='+pathName);
         }
     }, [router]);
     return (

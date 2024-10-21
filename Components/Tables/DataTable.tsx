@@ -3,23 +3,30 @@ import { ImageSkeleton } from '../Common';
 import EmptyContent from '../Common/EmptyContent';
 
 interface Props{
-    data:{}[]
+    data:any
     options?:(id:string)=>React.ReactNode
     isLoading:boolean
     isOptions?:boolean,
     emptyLinkHref: string
-    emptyText: string
+    emptyText: string,
+    startOptions?:(id:string)=>React.ReactNode
 }
 
 
-const DataTable = ({options, data, isLoading, emptyLinkHref, emptyText, isOptions=false}:Props) => {
+const DataTable = ({options, startOptions, data, isLoading, emptyLinkHref, emptyText, isOptions=false}:Props) => {
     const getHeaders = () =>{
         const cols = []
+        if(startOptions?.length){
+            cols.push(<th key={0}></th>)
+        }
         if (data?.length > 0){
             for(let i in data[0]){
                 if(i !== 'id')
                     cols.push(i)
             }
+        }
+        if(options?.length){
+            cols.push(<th key={-1}></th>)
         }
         return cols
     }
@@ -53,22 +60,29 @@ const DataTable = ({options, data, isLoading, emptyLinkHref, emptyText, isOption
                         <thead className="ltr:text-left rtl:text-right">
                             <tr>
                                 {
-                                    getHeaders()?.map(col=>(
-                                        <th key={col} className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{col}</th>
+                                    getHeaders()?.map((col, idx)=>(
+                                        <th key={idx} className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{col}</th>
                                     ))
                                 }
-                                {
+                                {/* {
                                     isOptions && options?
                                         <th className="px-4 py-2"></th>
                                     :null
-                                }
+                                } */}
                             </tr>
                         </thead>
 
                         <tbody className="divide-y divide-gray-200">
                             {
-                                data?.map((row:any, index)=>(
+                                data?.map((row:any, index:number)=>(
                                         <tr key={index+"-"+row}>
+                                            {
+                                                isOptions && startOptions?
+                                                    <td className="whitespace-nowrap px-4 py-2">
+                                                        {startOptions(row?.id)}
+                                                    </td>
+                                                :null
+                                            }
                                             {
                                                 renderRow({row})
                                             }

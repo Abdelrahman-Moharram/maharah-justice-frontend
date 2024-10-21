@@ -141,7 +141,7 @@ const changeCheckBox = (event: ChangeEvent<HTMLInputElement>)  =>{
       changeCheckBox={changeCheckBox}
       errors={formErrors}
       isLoading={isLoading}
-      add
+      add={false}
     />
     
   </div>
