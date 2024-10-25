@@ -70,12 +70,13 @@ const page = () => {
         a.remove();
       })
     };
-    const handleDeleteModal = () =>{
-      setDeleteModal(!deleteModal)
-    }
     const handleDetailsModel = () =>{
       setShowCaseDetails(!showCaseDetails)
     }
+    const handleDeleteModal = () =>{
+      setDeleteModal(!deleteModal)
+    }
+    
     const formData = ({case_number}:{case_number:string}) =>{
       deleteCase({case_number})
         .unwrap()
@@ -104,20 +105,19 @@ const page = () => {
     )
     return (
       <>
-         <DeleteCaseModal 
-            open={deleteModal}
-            handleModal={handleDeleteModal}
-            Case={deletedCase}
-            formData={formData}
-            isLoading={deleteCaseLoading}
-         />
-         {
-          <CaseDetailsOverLay 
-            case_number={detailsCaseNumber}
-            handleToggler={handleDetailsModel}
-            open={showCaseDetails}
-          />
-         }
+        <DeleteCaseModal 
+          open={deleteModal}
+          handleModal={handleDeleteModal}
+          Case={deletedCase}
+          formData={formData}
+          isLoading={deleteCaseLoading}
+        />
+        
+        <CaseDetailsOverLay 
+          case_number={detailsCaseNumber}
+          handleToggler={handleDetailsModel}
+          open={showCaseDetails}
+        />
         <div className='min-h-[300px] p-5 space-y-4'>
           <TableSettings 
             excel={downloadFile}
