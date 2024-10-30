@@ -1,9 +1,9 @@
 import { DefaultBadge } from '@/Components/Cards/Badges'
 import SmallCard from '@/Components/Cards/SmallCard'
 import { ImageSkeleton } from '@/Components/Common'
-import { useGetCaseDetailsQuery } from '@/redux/api/casesApi'
+import { useGetCaseDetailsMutation } from '@/redux/api/casesApi'
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect } from 'react'
 import IncludedSessionsTable from './Tables/IncludedSessionsTable'
 
 const LoadingCaseSkeleton = () =>(
@@ -54,7 +54,11 @@ const handleCaseBadgeColor = (state:string) =>{
 }
 const CaseDetails = ({case_number}:{case_number:string}) => {
 
-  const {isLoading, data} = useGetCaseDetailsQuery({case_number})
+  const [caseDetails, {isLoading, data}] = useGetCaseDetailsMutation()
+  useEffect(()=>{
+    if(case_number)
+      caseDetails({case_number})
+  }, [case_number])
   return (
     <div className='p-5'>
       {
@@ -188,7 +192,10 @@ const CaseDetails = ({case_number}:{case_number:string}) => {
             </div>
 
             <div className="mt-8 bg-card p-4 rounded-md">
-              <h3 className='font-bold text-lg my-3'>الجلسات</h3>
+              <div className="flex justify-between">
+                <h3 className='font-bold text-lg my-3'>الجلسات</h3>
+                <Link href={`/cases/${case_number}/sessions/add`}>إضافة جلسة</Link>
+              </div>
               <IncludedSessionsTable 
                 sessions={data?.case?.sessions}
               />

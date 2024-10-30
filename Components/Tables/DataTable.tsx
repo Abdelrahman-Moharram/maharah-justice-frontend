@@ -4,16 +4,17 @@ import EmptyContent from '../Common/EmptyContent';
 
 interface Props{
     data:any
-    options?:(id:string)=>React.ReactNode
+    options?:(row:any)=>React.ReactNode
     isLoading:boolean
     isOptions?:boolean,
     emptyLinkHref: string
     emptyText: string,
-    startOptions?:(id:string)=>React.ReactNode
+    startOptions?:(row:any)=>React.ReactNode,
+    fnKeys:string[]
 }
 
 
-const DataTable = ({options, startOptions, data, isLoading, emptyLinkHref, emptyText, isOptions=false}:Props) => {
+const DataTable = ({options, startOptions, data, isLoading, emptyLinkHref, emptyText, fnKeys, isOptions=false}:Props) => {
     const getHeaders = () =>{
         const cols = []
         if(startOptions?.length){
@@ -21,7 +22,7 @@ const DataTable = ({options, startOptions, data, isLoading, emptyLinkHref, empty
         }
         if (data?.length > 0){
             for(let i in data[0]){
-                if(i !== 'id')
+                if(!fnKeys || !fnKeys.includes(i))
                     cols.push(i)
             }
         }
@@ -36,7 +37,7 @@ const DataTable = ({options, startOptions, data, isLoading, emptyLinkHref, empty
     const renderRow = ({row}:{row: any})=>{
         const rendered_row = []
         for(let cell in row){
-            if(typeof row === 'object' && Object.keys(row).includes(cell) && cell != 'id'){
+            if(typeof row === 'object' && Object.keys(row).includes(cell) && (!fnKeys || !fnKeys.includes(cell))){
                 rendered_row.push(<td className="whitespace-nowrap px-4 py-2 text-gray-700">{row[cell]}</td>)
             }
         }
@@ -56,7 +57,6 @@ const DataTable = ({options, startOptions, data, isLoading, emptyLinkHref, empty
             :
                 data?.length?
                     <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-                        
                         <thead className="ltr:text-left rtl:text-right">
                             <tr>
                                 {
@@ -93,7 +93,7 @@ const DataTable = ({options, startOptions, data, isLoading, emptyLinkHref, empty
                                             {
                                                 isOptions && options?
                                                     <td className="whitespace-nowrap px-4 py-2">
-                                                        {options(row?.id)}
+                                                        {options(row)}
                                                     </td>
                                                 :null
                                             }

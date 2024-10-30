@@ -24,14 +24,14 @@ export default function SideNav() {
     const sessionsInnerLinks =()=>{
 
         const sessions = [
-            {title:'جلسات اليوم', link:'/sessions/daily'}, 
-            {title:'الجلسات الأسبوعية', link:'/sessions/weekly'},
-            {title:'الجلسات القائمة', link:'/sessions/active'},
-            {title:'الجلسات المنتهية', link:'/sessions/finished'},
+            {title:'جلسات اليوم', link:'/sessions?filter=daily'}, 
+            {title:'الجلسات الأسبوعية', link:'/sessions?filter=weekly'},
+            {title:'الجلسات القائمة', link:'/sessions?filter=active'},
+            {title:'الجلسات المنتهية', link:'/sessions?filter=in-active'},
             {title:'جميع الجلسات', link:'/sessions'}, 
         ]
         if(role && role.toLocaleLowerCase() === 'lawyer')
-            sessions.unshift({title:'جلساتي', link:'/sessions/mine'})
+            sessions.unshift({title:'جلساتي', link:'/sessions?filter=mine'})
 
         return sessions
     }
@@ -39,7 +39,7 @@ export default function SideNav() {
     
     return (
         <div className={(toggle?'w-[50px]':'w-[200px]')+" mt-[20px] relative transition-all duration-300"}>
-            <div className={' h-[calc(100vh-100px)] fixed py-3 bg-container drop-shadow-2xl rounded-md text-color'}>
+            <div className={(toggle?'w-[50px]':'w-[200px]')+' h-[calc(100vh-100px)] fixed py-3 bg-container drop-shadow-2xl rounded-md text-color'}>
                 <ul className="h-[90%] overflow-y-auto overflow-x-hidden">
                     <li className='mb-5'>
                         <Link href={'/'}>

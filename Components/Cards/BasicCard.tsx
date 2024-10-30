@@ -4,20 +4,21 @@ import { ImageSkeleton } from '../Common';
 interface Props{
     title: string;
     value: string;
-    textcolor: string
+    textcolor: string,
+    cardBg:string
 }
 
-const BasicCard = ({title, value, textcolor}:Props) => {
+const BasicCard = ({title, value, textcolor, cardBg}:Props) => {
   return (
     
-    <div className="bg-white shadow-md rounded-md text-center">
+    <div className={cardBg+" py-5 rounded-md text-center"}>
         {
             title && value ?
             <>
-                <span className='block'>
+                <span className='block text-[24px]'>
                     {title}
                 </span>
-                <span className={`${textcolor} text-4xl font-semibold flex h-[90%] justify-center items-center`}>
+                <span className={`${textcolor} text-[24px] font-bold flex justify-center items-center fw-[700]`}>
                     {value}
                 </span>
             </>

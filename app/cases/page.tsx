@@ -88,16 +88,16 @@ const page = () => {
         })
     }
      
-    const options = (id:string)=>(
+    const options = (row:any)=>(
       <div className='flex gap-4 items-start'>
         <button onClick={()=>{
-            setDetailsCaseNumber(id)
+            setDetailsCaseNumber(row?.id)
             handleDetailsModel()
           }} className=' text-blue-600 text-lg transition-all rounded-full' ><BsEye /></button>
-        <Link className=' text-green-600 text-lg transition-all rounded-full' href={`/cases/${id}/edit`}><BiEdit /></Link>
+        <Link className=' text-green-600 text-lg transition-all rounded-full' href={`/cases/${row?.id}/edit`}><BiEdit /></Link>
         <button 
           onClick={()=>{
-            setDeleteCase({case_number:id})
+            setDeleteCase({case_number:row?.id})
             handleDeleteModal()
           }} 
           className=' text-lg text-red-500 rounded-full'><FaTrash /></button>
@@ -130,6 +130,7 @@ const page = () => {
               isOptions={true}
               emptyLinkHref='/cases'
               emptyText='صفحة القضايا الرئيسية'
+              fnKeys={['id']}
             />
           </div>
           <div className='flex justify-center my-10 font-extrabold'>

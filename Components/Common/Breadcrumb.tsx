@@ -3,9 +3,9 @@ import React from 'react'
 import ImageSkeleton from './ImageSkeleton';
 
 interface item{
-    href: string;
-    title: string;
-    icon?: React.ReactNode
+  href: string;
+  title: string;
+  current?: boolean
 }
 const Breadcrumb = ({items}:{items:item[]|undefined}) => {
   return (
@@ -18,21 +18,21 @@ const Breadcrumb = ({items}:{items:item[]|undefined}) => {
                 <li className="flex items-center" key={i}>
                     {
                         i !== 0?
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-4 w-4 rtl:rotate-180"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                        >
-                            <path
-                            fillRule="evenodd"
-                            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                            clipRule="evenodd"
-                            />
-                        </svg>
+                          <div className="mx-3">
+                            <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M6.31494 1.05994L1.42494 5.94994C0.847442 6.52744 0.847442 7.47244 1.42494 8.04994L6.31494 12.9399" stroke="#3F4040" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                          </div>
+
                         :null
                     }
-                    <Link href={item.href} className="font-semibold text-secondry hover:text-black flex gap-2 items-center transition "> {item.icon} {item.title} </Link>
+                    {
+                      item?.current?
+                          <p className="font-semibold text-black flex gap-2 items-center transition "> {item.title} </p>
+                        :
+                          <Link href={item.href} className="font-semibold text[20px] text-[#3091F2] hover:text-black flex gap-2 items-center transition "> {item.title} </Link>
+
+                    }
                 </li>
             ))
         : 

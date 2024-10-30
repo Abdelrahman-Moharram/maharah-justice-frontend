@@ -32,6 +32,7 @@ const IncludedSessionsTable = ({sessions}:{sessions:sessionsType}) => {
             isLoading={false}
             isOptions
             startOptions={options}
+            fnKeys={['id']}
         />
     </div>
   )

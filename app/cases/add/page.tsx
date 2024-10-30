@@ -7,7 +7,9 @@ import { useGetCaseFormDropDownsQuery } from '@/redux/api/utilsApi';
 import { useRouter } from 'next/navigation';
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { HiBuildingLibrary } from 'react-icons/hi2';
+import { DateObject } from 'react-multi-date-picker';
 import { toast } from 'react-toastify';
+import arabic_en from "react-date-object/locales/arabic_en"
 
 interface CaseType{
   case_number:  string;
@@ -24,7 +26,7 @@ interface CaseType{
   customer: string;
   cust_phone_number:  string;
   commercial_number:  string;
-  date_ar:  string;
+  date_ar:  DateObject|null;
   case_attachment?: File[] | null,
   customer_name:''
 }
@@ -48,46 +50,53 @@ const page = () => {
     customer:'',
     cust_phone_number:'',
     commercial_number:'',
-    date_ar:'',
+    date_ar:null,
     case_attachment:[],
     customer_name:''
   })
 
   const BreadcrumbData = [
     {
+      href: '/',
+      title: 'الصفحة الرئيسية',
+    },
+    {
       href: '/cases',
       title: 'القضايا',
-      icon: <HiBuildingLibrary />
+      // icon: <HiBuildingLibrary />
     },
     {
       href: '/cases/add',
       title: 'إنشاء قضية',
+      current:true
     }
   ]
-const [formErrors, setFormErrors] = useState(null)
-const onChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement> ) => {
-  const { name, value } = event.target;
-  setcaseForm({ ...caseForm, [name]: value });
-};
-const changeCustomer = (val:string)=>{
-  setcaseForm({ ...caseForm, customer: val })
-}
-const selectChange = (e: ChangeEvent<HTMLSelectElement> )=>{
-    const { name, value } = e.target;        
+  const [formErrors, setFormErrors] = useState(null)
+  const onChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement> ) => {
+    const { name, value } = event.target;
     setcaseForm({ ...caseForm, [name]: value });
-}
+  };
+  const changeCustomer = (val:string)=>{
+    setcaseForm({ ...caseForm, customer: val })
+  }
+  const selectChange = (e: ChangeEvent<HTMLSelectElement> )=>{
+      const { name, value } = e.target;        
+      setcaseForm({ ...caseForm, [name]: value });
+  }
 
-const imageChange = (file:File )=>{
-    if(caseForm.case_attachment?.length)
-      setcaseForm({ ...caseForm, case_attachment: [...caseForm.case_attachment, file] });
-    else
-      setcaseForm({ ...caseForm, case_attachment: [file] });
-
-}
-const changeCheckBox = (event: ChangeEvent<HTMLInputElement>)  =>{
-  const { name, checked } = event.target;   
-    setcaseForm({ ...caseForm, [name]: checked })
-}
+  const imageChange = (file:File )=>{
+      if(caseForm.case_attachment?.length)
+        setcaseForm({ ...caseForm, case_attachment: [...caseForm.case_attachment, file] });
+      else
+        setcaseForm({ ...caseForm, case_attachment: [file] });
+  }
+  const changeCheckBox = (event: ChangeEvent<HTMLInputElement>)  =>{
+    const { name, checked } = event.target;   
+      setcaseForm({ ...caseForm, [name]: checked })
+  }
+  const changeDate = (date:DateObject | null)=>{
+    setcaseForm({ ...caseForm, date_ar: date });
+  }
   const {data: dropDowns} = useGetCaseFormDropDownsQuery(undefined)
 
   
@@ -110,7 +119,7 @@ const changeCheckBox = (event: ChangeEvent<HTMLInputElement>)  =>{
     formData.append('customer', caseForm.customer)
     formData.append('cust_phone_number', caseForm.cust_phone_number)
     formData.append('commercial_number', caseForm.commercial_number)
-    formData.append('date_ar', caseForm.date_ar)
+    formData.append('date_ar', caseForm.date_ar?.setLocale(arabic_en).toString()??'')
 
     if(caseForm?.case_attachment?.length)
       for (let attch of caseForm?.case_attachment){
@@ -151,6 +160,7 @@ const changeCheckBox = (event: ChangeEvent<HTMLInputElement>)  =>{
       imageChange={imageChange}
       changeCustomer={changeCustomer}
       changeCheckBox={changeCheckBox}
+      changeDate={changeDate}
       errors={formErrors}
       isLoading={isLoading}
       add

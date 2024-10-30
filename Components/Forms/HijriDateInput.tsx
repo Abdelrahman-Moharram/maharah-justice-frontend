@@ -1,65 +1,58 @@
 import React, { ChangeEvent, KeyboardEvent, MouseEvent } from 'react'
-import DatePicker from "react-datepicker";
-import moment from "moment-hijri";
+import DatePicker, { DateObject } from "react-multi-date-picker";
+import arabic from "react-date-object/calendars/arabic"
+import arabic_ar from "react-date-object/locales/arabic_ar"
+import 'react-datepicker/dist/react-datepicker.css';
 
 interface props {
 	labelId: string;
-	handleDate: (date:Date, event:) => void;
-	value: string | number;
+	onChange: (date:DateObject | null) => void;
+	value: DateObject | null | undefined;
 	label: string
 	required?: boolean;
     children?: React.ReactNode | undefined
     errors?:any[]
-    defaultValue?:string|number
 }
 const HijriDateInput = ({
     labelId,
-	handleDate,
+	onChange,
 	value,
 	label,
 	required = false,
     children,
-    defaultValue,
     errors
 }: props) => {
     
   return (
-    <>
-        <label
+    <div className='p-0'>
+        <label 
             htmlFor={labelId}
-            className={"relative block rounded-md border "+ (errors?.length?"border-red-500":" ")}
+            className={"block text-md font-medium shadow-none drop-shadow-none outline-none text-gray-700 "+ (errors?.length?"border-red-500":" border-none ")}
         >
-            
-            <DatePicker 
-                type={'text'}
-                name={labelId}
-                id={labelId}
-                onChange={handleDate}
-                value={moment()}
-                adjustDateOnChange
-                // date={value}
-                selected={moment()}
-                calendar="hijri"
-                defaultValue={defaultValue}
-                required={required}
-                placeholder=''
-                className="[&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none py-2 px-3 peer w-full border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"
-                selectedDate="1439/08/02" 
-                dateFormat="iYYYY/iMM/iDD" 
-            />
-            <span
-                className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-container py-0 px-2  text-md transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs"
-            >
-                {label}
-            </span>
-            {children}
+            {label} 
         </label>
-        {
-            errors?.map(error=>
-                <span key={error} className='text-red-500 block'>{error}</span>
-            )
-        }
-    </>
+        <DatePicker
+            format="DD-MM-YYYY"
+            inputClass={"mt-1 w-full py-2 px-4 bg-card border-[#F8F8F8] border rounded-xl outline-none "+ (errors?.length?"border-red-500":" border-none ")}
+            placeholder={""}
+            value={value}
+            calendar={arabic}
+            containerClassName='z-[100] w-full'
+            calendarPosition='bottom-right'
+            required={required}
+            locale={arabic_ar}
+            onChange={onChange}
+        />
+            
+        {children}
+        <div className="absolute">
+            {
+                errors?.map(error=>
+                    <span key={error} className='text-red-500 block'>{error}</span>
+                )
+            }
+        </div>
+    </div>
       
   )
 }

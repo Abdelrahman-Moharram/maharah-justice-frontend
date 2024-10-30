@@ -3,6 +3,8 @@ import Button from '@/Components/Common/Button';
 import { FloatingInput, FloatingSelectInput, FloatingTextarea, ImageInput } from '@/Components/Forms'
 import ToggledCard from '../Cards/ToggledCard';
 import CustomerSearchInput from './CustomerSearchInput';
+import HijriDateInput from './HijriDateInput';
+import { DateObject } from 'react-multi-date-picker';
 
 interface circularType{
     id: string;
@@ -29,7 +31,7 @@ interface CaseType{
     customer: string;
     cust_phone_number:  string;
     commercial_number:  string;
-    date_ar:  string;
+    date_ar:  DateObject|null;
     case_attachment?: File[] | null
     customer_name:string
 }
@@ -51,7 +53,8 @@ interface Props{
     isLoading:boolean
     errors?:any | null
     type?: string
-    add?:boolean
+    add?:boolean,
+    changeDate:(date:DateObject | null)=>void
 }
 const CaseForm = ({
     onChange, 
@@ -70,7 +73,8 @@ const CaseForm = ({
     circulars,
     company_representatives,
     courts,
-    changeCheckBox
+    changeCheckBox,
+    changeDate
   }:Props) => {
     const [file, setFile] = useState<File|null>(null)
     const changeCurrentFile = (e:ChangeEvent<HTMLInputElement> ) =>{
@@ -105,10 +109,9 @@ const CaseForm = ({
                         errors={errors?.case_number}
                     />
                 </div>
-                <FloatingInput
+                <HijriDateInput
                     labelId={'date_ar'}
-                    type={'text'}
-                    onChange={onChange}
+                    onChange={changeDate}
                     value={caseForm?.date_ar}
                     label={'تاريخ القضية'}
                     required= {true}

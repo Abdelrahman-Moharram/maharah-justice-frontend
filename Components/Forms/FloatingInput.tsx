@@ -1,12 +1,13 @@
 'use client'
 import React, { ChangeEvent, useState } from 'react'
+import Time from 'react-datepicker/dist/time';
 import { FaEye } from 'react-icons/fa';
 
 interface props {
 	labelId: string;
 	type: string;
 	onChange: (e:ChangeEvent<HTMLInputElement>) => void;
-	value: string | number;
+	value: string | number | Time | null;
 	label: string
 	required?: boolean;
     children?: React.ReactNode | undefined
@@ -27,7 +28,7 @@ const FloatingInput = ({
 }: props) => {
     const [inputType, setType] = useState(type)
   return (
-    <>
+    <div>
         <label
             htmlFor={labelId}
             className={"relative block rounded-md border "+ (errors?.length?"border-red-500":" ")}
@@ -37,7 +38,7 @@ const FloatingInput = ({
                 name={labelId}
                 id={labelId}
                 onChange={onChange}
-                value={value}
+                value={value?.toString()}
                 defaultValue={defaultValue}
                 required={required}
                 placeholder=''
@@ -61,12 +62,14 @@ const FloatingInput = ({
                 }
                 {children}
         </label>
-        {
-            errors?.map(error=>
-                <span key={error} className='text-red-500 block'>{error}</span>
-            )
-        }
-    </>
+        <div className="absolute">
+            {
+                errors?.map(error=>
+                    <span key={error} className='text-red-500 block'>{error}</span>
+                )
+            }
+        </div>
+    </div>
   )
 }
 

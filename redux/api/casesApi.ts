@@ -18,11 +18,18 @@ const casesApiSlice = apiSlice.injectEndpoints({
                 }),
                 providesTags:['cases']
             }),
-            getCaseDetails: builder.query({
-                query:({case_number}:{case_number:string})=>({
-                    url:base_url+case_number+"/",
+            getCaseDetails: builder.mutation({
+                query:({case_number}:{case_number:string})=>{
+                    return {
+                        url:base_url+case_number+"/",
+                    }
+                },
+                invalidatesTags:['cases']
+            }),
+            getSessionCaseData: builder.query({
+                query:({case_number}:{case_number?:string})=>({
+                    url:base_url+case_number+"/session/",
                 }),
-                providesTags:['cases']
             }),
             getCaseForm: builder.query({
                 query:({case_number}:{case_number:string})=>({
@@ -73,7 +80,7 @@ export const {
     useCreateCaseMutation,
     useDeleteCaseMutation,
     useGetCaseFormQuery,
-    useGetCaseDetailsQuery,
+    useGetCaseDetailsMutation,
     useEditCaseMutation
     
 } = casesApiSlice

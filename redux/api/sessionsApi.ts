@@ -7,16 +7,25 @@ const sessionsApiSlice = apiSlice.injectEndpoints({
         
         // sessions list
         getSessionsList: builder.query({
-            query:({page, size, search}:{page:number, size:number, search?:string|null})=>({
-                url:base_url,
-                params:{page, size, search}
-            }),
+            query:({page, size, search, filter}:{page:number, size:number, search?:string|null, filter:string|null})=>{
+                console.log(filter);
+                
+                if (filter){
+                    filter += "/"
+                }else{
+                    filter = ''
+                }
+                return {
+                    url:base_url+filter,
+                    params:{page, size, search}
+                }
+            },
             providesTags:['sessions']
         }),
         getSessionsExcel: builder.mutation({
-            query:({search}:{search?:string|null})=>({
+            query:({search, filter}:{search?:string|null, filter:string|null;})=>({
                 url:base_url,
-                params:{search, excel:true}
+                params:{search, filter, excel:true}
             }),
         }),
         // --------------
@@ -103,7 +112,30 @@ const sessionsApiSlice = apiSlice.injectEndpoints({
                 params:{search, excel:true}
             }),
         }),
-        // --------------
+
+        // -------------- add & update --------------
+
+        
+
+        addSession: builder.mutation({
+            query:({form}:{form:FormData})=>({
+                url:base_url +"/add/",
+                body:form,
+                method:'POST'
+            }),
+            invalidatesTags:['sessions']
+
+        }),
+        // ------------------------------------------
+
+        deleteSession: builder.mutation({
+            query:({id}:{id:string})=>({
+                url:base_url + id + "/delete/",
+                method:'DELETE'
+            }),
+            invalidatesTags:['sessions']
+
+        })
 
     }) 
 })
@@ -121,4 +153,5 @@ export const {
     useGetMySessionsExcelMutation,
     useGetWeeklySessionsListQuery,   
     useGetWeeklySessionsExcelMutation,   
+    useDeleteSessionMutation
 } = sessionsApiSlice    

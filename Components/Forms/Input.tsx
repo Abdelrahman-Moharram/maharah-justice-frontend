@@ -1,56 +1,73 @@
-import React, { ChangeEvent } from 'react';
-import FloatingInput from './FloatingInput';
+'use client'
+import React, { ChangeEvent, useState } from 'react'
+import Time from 'react-datepicker/dist/time';
+import { FaEye } from 'react-icons/fa';
 
-interface Props {
+interface props {
 	labelId: string;
 	type: string;
 	onChange: (e:ChangeEvent<HTMLInputElement>) => void;
-	value: string;
-	children: React.ReactNode;
-	link?: {
-		linkText: string;
-		linkUrl: string;
-	};
+	value: string | number | Time | null;
+	label: string
 	required?: boolean;
+    children?: React.ReactNode | undefined
+    errors?:any[]
+    defaultValue?:string|number
 }
 
-export default function Input({
-	labelId,
+const Input = ({
+    labelId,
 	type,
 	onChange,
 	value,
+	label,
 	required = false,
-}: Props) {
+    children,
+    defaultValue,
+    errors
+}: props) => {
+    const [inputType, setType] = useState(type)
 	return (
-		<div>
-			{/* <div className='flex justify-between align-center'>
-				<label
-					htmlFor={labelId}
-					className='block text-sm font-medium leading-6 text-gray-900'
-				>
-					{children}
-				</label>
-				{link && (
-					<div className='text-sm'>
-						<Link
-							className='font-semibold text-indigo-600 hover:text-indigo-500'
-							href={link.linkUrl}
-						>
-							{link.linkText}
-						</Link>
-					</div>
-				)}
-			</div> */}
-			<div className='mt-2'>
-				<FloatingInput
-					label={labelId}
-					labelId={labelId}
-					type={type}
-					onChange={onChange}
-					value={value}
-					required={required}
-				/>
+		<div className=' p-0'>
+			<label 
+				htmlFor={labelId}
+            	className={"block text-md font-medium  text-gray-700 "+ (errors?.length?"border-red-500":" border-none ")}
+			> 
+				{label} 
+			</label>
+			
+			<input
+                type={inputType}
+                name={labelId}
+                id={labelId}
+                onChange={onChange}
+                value={value?.toString()}
+                defaultValue={defaultValue}
+                required={required}
+                placeholder=''
+				className={"mt-1 w-full py-2 px-4 bg-card border-[#F8F8F8] border rounded-xl outline-none "+ (errors?.length?"border-red-500":" border-none ")}
+			/>
+			{
+				type === 'password'?
+					<button 
+						type='button'
+						onClick={()=>setType(inputType === 'text'?'password':'text')}
+						className='absolute end-1 rounded-full top-1 p-2 hover:bg-gray-100'
+					>
+						<FaEye />
+					</button>
+				:null
+			}
+			{children}
+			<div className="absolute">
+				{
+					errors?.map(error=>
+						<span key={error} className='text-red-500 block'>{error}</span>
+					)
+				}
 			</div>
 		</div>
 	);
 }
+
+export default Input

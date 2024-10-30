@@ -21,9 +21,7 @@ const CustomLayout = ({children}:Props) => {
     const {isAuthenticated, isLoading} = useAppSelector(state=>state.auth)
 
     useEffect(() => {        
-        if (!isAuthenticated && !isLoading) {
-            console.log(pathName);
-            
+        if (!isAuthenticated && !isLoading) {            
             router.push('/auth/login?next='+pathName);
         }
     }, [router]);
