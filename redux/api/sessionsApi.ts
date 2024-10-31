@@ -153,5 +153,6 @@ export const {
     useGetMySessionsExcelMutation,
     useGetWeeklySessionsListQuery,   
     useGetWeeklySessionsExcelMutation,   
-    useDeleteSessionMutation
+    useDeleteSessionMutation,
+    useAddSessionMutation
 } = sessionsApiSlice    

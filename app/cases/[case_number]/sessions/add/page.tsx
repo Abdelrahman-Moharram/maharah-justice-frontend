@@ -3,11 +3,13 @@ import SessionForm from '@/app/sessions/_Components/SessionForm'
 import BasicCard from '@/Components/Cards/BasicCard'
 import Breadcrumb from '@/Components/Common/Breadcrumb'
 import { useGetSessionFormDropDownsQuery } from '@/redux/api/utilsApi'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 import Time from 'react-datepicker/dist/time'
 import { DateObject } from 'react-multi-date-picker'
 import arabic_en from "react-date-object/locales/arabic_en"
+import { useAddSessionMutation } from '@/redux/api/sessionsApi'
+import { toast } from 'react-toastify'
 
 interface SessionType{
   case_number: string,
@@ -26,6 +28,7 @@ interface SessionType{
 }
 
 const page = () => {
+  const router = useRouter()
   const [formErrors, setFormErrors] = useState<any>(null)
   const [session, setSession] = useState<SessionType>({
     case_number:'',
@@ -45,6 +48,7 @@ const page = () => {
   
   // date?.setLocale(arabic_en).date
   // console.log(date?.setLocale(arabic_en).toString());
+  const [addSession] = useAddSessionMutation()
   const {data:dropDowns, isLoading} = useGetSessionFormDropDownsQuery(undefined)
   const {case_number}:{case_number:string} = useParams()
   const onChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement> ) => {
@@ -83,6 +87,7 @@ const page = () => {
       current:true
     }
   ]
+
   const formSubmit = (event: FormEvent<HTMLFormElement>) =>{
     event.preventDefault()
     const formData = new FormData()
@@ -101,15 +106,15 @@ const page = () => {
     
     
     
-    // createCase({form:formData})
-    // .unwrap()
-    // .then(data=>{
-    //     toast.success(data?.message)
-    //     router.push("/cases")
-    //   })
-    //   .catch((err:any)=>{     
-    //     setFormErrors(err.data.errors)
-    //   })
+    addSession({form:formData})
+    .unwrap()
+    .then(data=>{
+        toast.success(data?.message)
+        router.push("/cases")
+      })
+      .catch((err:any)=>{     
+        setFormErrors(err.data.errors)
+      })
     }
   
   return (
