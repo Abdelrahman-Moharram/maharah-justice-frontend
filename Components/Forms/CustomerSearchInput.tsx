@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import FloatingInput from './FloatingInput'
+import Input from './Input'
 import { useSearchCustomerByNameMutation } from '@/redux/api/utilsApi'
 
 
@@ -47,7 +47,7 @@ const CustomerSearchInput = ({
 
   return (
     <div className='relative'>
-      <FloatingInput
+      <Input
         label={label}
         labelId={labelId}
         onChange={handleNameValue}

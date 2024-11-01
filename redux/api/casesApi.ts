@@ -31,6 +31,11 @@ const casesApiSlice = apiSlice.injectEndpoints({
                     url:base_url+case_number+"/session/",
                 }),
             }),
+            getSessionForm: builder.query({
+                query:({case_number}:{case_number:string})=>({
+                    url:base_url+case_number+"/session-form/",
+                }),
+            }),
             getCaseForm: builder.query({
                 query:({case_number}:{case_number:string})=>({
                     url:base_url+case_number+"/form/",
@@ -81,6 +86,7 @@ export const {
     useDeleteCaseMutation,
     useGetCaseFormQuery,
     useGetCaseDetailsMutation,
-    useEditCaseMutation
+    useEditCaseMutation,
+    useGetSessionFormQuery
     
 } = casesApiSlice

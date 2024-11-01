@@ -6,6 +6,7 @@ import type {
 } from '@reduxjs/toolkit/query';
 import { setAuth, setLogout } from '../features/authSlice';
 import { Mutex } from 'async-mutex';
+import { toast } from 'react-toastify';
 const mutex = new Mutex();
 const baseQuery = fetchBaseQuery({
 	baseUrl: `${process.env.NEXT_PUBLIC_HOST}/api/`,
@@ -46,6 +47,9 @@ const baseQueryWithReauth: BaseQueryFn<
 			await mutex.waitForUnlock();
 			result = await baseQuery(args, api, extraOptions);
 		}
+	}
+	else if(result.error && result.error.status === 403){
+		toast.error('ليس لديك صلاحية تنفيذ هذا الطلب')
 	}
 	return result;
 };

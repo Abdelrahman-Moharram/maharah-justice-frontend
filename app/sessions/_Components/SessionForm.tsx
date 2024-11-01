@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, FormEvent, useState } from 'react'
 import HijriDateInput from '@/Components/Forms/HijriDateInput'
 import { DateObject } from 'react-multi-date-picker'
 import { ImageInput, Input } from '@/Components/Forms'
@@ -6,6 +6,8 @@ import Time from 'react-datepicker/dist/time'
 import LawyerSearchInput from './Inputs/LawyerSearchInput'
 import SelectInput from '@/Components/Forms/SelectInput'
 import Textarea from '@/Components/Forms/TextArea'
+import Button from '@/Components/Common/Button'
+import Link from 'next/link'
 
 interface SessionType{
     case_number: string,
@@ -21,6 +23,7 @@ interface SessionType{
     lawyer: string,
     alterlawyer: string,
     session_attachments: File[] | null,
+    state: string
 }
 interface baseType{
     id: string;
@@ -29,26 +32,32 @@ interface baseType{
 interface Props{
     session: SessionType
     formErrors: any,
+    courts: baseType[],
+    cities: baseType[],
+    states: baseType[],
+    add:boolean,
+    isLoading:boolean,
+    formSubmit:(e:FormEvent<HTMLFormElement>) =>void
     changeDate: (date:DateObject | null) => void,
     onChange: (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => void,
     selectChange: (e: ChangeEvent<HTMLSelectElement> ) => void,
-    courts: baseType[],
-    cities: baseType[],
     changeLawyer:(val:string)=>void
-    add:boolean,
     imageChange:(file:File)=>void
 }
 const SessionForm = ({
     session,
     formErrors, 
+    courts,
+    cities,
+    states,
+    add,
+    isLoading,
     changeDate,
     onChange,
     selectChange,
-    courts,
-    cities,
     changeLawyer,
     imageChange,
-    add
+    formSubmit,
 }:Props) => {
     const [file, setFile] = useState<File|null>(null)
     
@@ -60,14 +69,14 @@ const SessionForm = ({
         }
     }
   return (
-    <>
+    <form onSubmit={formSubmit}>
         <div className="grid grid-cols-2 drop-shadow-md p-5 gap-4 ">
             <div className="mb-3">
                 <HijriDateInput
                     labelId={'date_ar'}
                     onChange={changeDate}
                     value={session?.date_ar}
-                    label={'تاريخ القضية'}
+                    label={'تاريخ الجلسة'}
                     required= {true}
                     errors={formErrors?.date_ar}
                 />
@@ -143,18 +152,38 @@ const SessionForm = ({
                     onChange={changeLawyer}
                     oldNameValue={session?.alterlawyer}
                     exclude={session?.lawyer}
+                    required={false}
                     // errors={formErrors?.lawyer}
                 />
             </div>
 
-            <div className="mb-3 col-span-2">
+            <div className="mb-3">
+                <SelectInput
+                    label='حالة الجلسة'
+                    labelId='state'
+                    value={session?.state}
+                    required={true}
+                    onChange={selectChange}
+                    emptyoption={true}
+                    errors={formErrors?.state}
+                >
+                {
+                    states?.length?
+                        states.map(state=>(
+                            <option key={state.id} value={state.id}>{state.name}</option>   
+                        ))
+                    :
+                    null
+                }    
+                </SelectInput>
+            </div>
+            <div className="mb-3">
                 <Input 
                     type='url'
                     labelId='link'
                     label='رابط الجلسة'
                     onChange={onChange}
                     value={session?.link??''}
-                    required
                     errors={formErrors?.link}
                 />
             </div>
@@ -191,7 +220,7 @@ const SessionForm = ({
                     label='الملاحظات'
                     onChange={onChange}
                     value={session?.notes}
-                    required
+                    required={false}
                     errors={formErrors?.notes}
                 />
             </div>
@@ -201,7 +230,7 @@ const SessionForm = ({
                     label='الدفوع'
                     onChange={onChange}
                     value={session?.defenses}
-                    required
+                    required={false}
                     errors={formErrors?.defenses}
                 />
             </div>
@@ -240,7 +269,17 @@ const SessionForm = ({
                     </div>
                 </div>
         </div>
-    </>
+
+        <div className="grid grid-cols-2 gap-2 mt-4">
+            <Button submit className='bg-primary hover:bg-transparent border-primary' title={'حفظ'} isLoading={isLoading} />
+            <Link 
+                href={'/cases'} 
+                className='w-full py-2 rounded-lg border border-secondary text-center hover:bg-secondary hover:text-white transition-all'
+            >
+                إلغاء
+            </Link>
+      </div>
+    </form>
 
   )
 }

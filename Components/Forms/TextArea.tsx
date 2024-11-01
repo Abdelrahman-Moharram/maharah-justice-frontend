@@ -9,7 +9,7 @@ interface props {
     errors?: []
 }
 
-const Textarea = ({labelId,
+const TextArea = ({labelId,
 	onChange,
 	value,
 	label,
@@ -45,4 +45,4 @@ const Textarea = ({labelId,
   )
 }
 
-export default Textarea
+export default TextArea

@@ -14,7 +14,8 @@ interface Props{
     type        :string
     onChange:(val:string)=>void | undefined;
     exclude?: string,
-    oldNameValue:string
+    oldNameValue:string,
+    required?:boolean
 }
 const LawyerSearchInput = ({
     label,
@@ -22,7 +23,8 @@ const LawyerSearchInput = ({
     exclude,
     type,
     onChange,
-    oldNameValue
+    oldNameValue,
+    required=true
 }:Props) => {
     const [nameValue, setNameValue] = useState(oldNameValue)
     const [menu, setMenu] = useState(false)
@@ -55,7 +57,7 @@ const LawyerSearchInput = ({
         type={type}
         value={nameValue}
         defaultValue={oldNameValue}
-        required
+        required={required}
       />
       {
         data?.lawyers?.length && nameValue && menu  ?

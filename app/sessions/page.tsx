@@ -80,7 +80,7 @@ const page = () => {
         </div>
       )
     const downloadFile = () => {
-      ExportSessions({filter:''})
+      ExportSessions({filter:filter})
       .unwrap()
       .then(res=>{        
         const url = window.URL.createObjectURL(res);
@@ -142,7 +142,7 @@ const page = () => {
         </div>
         <div className='flex justify-center my-10 font-extrabold'>
             {
-              data?.sessions.length?
+              data?.sessions?.length?
                 <Paginition page={page} totalPages={data?.total_pages} />
               :null
             }

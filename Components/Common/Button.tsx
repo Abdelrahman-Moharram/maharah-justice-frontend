@@ -6,25 +6,21 @@ interface props{
     submit?: boolean;
     isLoading: boolean;
     onClick?:()=>void;
-    icon?:React.ReactNode
-}
-const Button = ({title, submit, isLoading, onClick, icon}:props) => {
+    icon?:React.ReactNode;
+    className?: string
+  }
+const Button = ({title, submit, isLoading, onClick, icon, className}:props) => {
   return (
     <button
         
         type={submit? "submit" : "button" }
         onClick={onClick}
-        className="inline-block rounded border border-primary hover:bg-primary hover:text-white text-primary px-8 py-3 text-sm font-medium transition-all"
+        className={`w-full py-2 rounded-lg border transition-all `+ className}
     >
-      {isLoading ?  
-        <div className='flex items-center gap-1'>
-          {icon} {title} <Spinner sm /> 
-        </div>
-      :
-        <div className='flex items-center gap-1'>
-          {icon} {title}
-        </div>
-      }
+      <div className='flex justify-center items-center content-center gap-1 text-center'>
+        {isLoading? <Spinner sm />: icon } {title}
+      </div>
+      
     </button>
   )
 }

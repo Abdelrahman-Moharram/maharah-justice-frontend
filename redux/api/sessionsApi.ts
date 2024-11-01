@@ -7,9 +7,7 @@ const sessionsApiSlice = apiSlice.injectEndpoints({
         
         // sessions list
         getSessionsList: builder.query({
-            query:({page, size, search, filter}:{page:number, size:number, search?:string|null, filter:string|null})=>{
-                console.log(filter);
-                
+            query:({page, size, search, filter}:{page:number, size:number, search?:string|null, filter:string|null})=>{                
                 if (filter){
                     filter += "/"
                 }else{
@@ -17,16 +15,25 @@ const sessionsApiSlice = apiSlice.injectEndpoints({
                 }
                 return {
                     url:base_url+filter,
-                    params:{page, size, search}
+                    params:{page, size, search},
                 }
             },
             providesTags:['sessions']
         }),
         getSessionsExcel: builder.mutation({
-            query:({search, filter}:{search?:string|null, filter:string|null;})=>({
-                url:base_url,
-                params:{search, filter, excel:true}
-            }),
+            query:({search, filter}:{search?:string|null, filter:string|null;})=>{
+                if (filter){
+                    filter += "/"
+                }else{
+                    filter = ''
+                }                
+                return {
+                    url:base_url+filter,
+                    params:{search, excel:true},
+                    responseHandler: (response) => response.blob(), 
+
+                }
+            }
         }),
         // --------------
 
@@ -119,7 +126,7 @@ const sessionsApiSlice = apiSlice.injectEndpoints({
 
         addSession: builder.mutation({
             query:({form}:{form:FormData})=>({
-                url:base_url +"/add/",
+                url:base_url +"add/",
                 body:form,
                 method:'POST'
             }),

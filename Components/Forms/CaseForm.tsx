@@ -1,10 +1,10 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 import Button from '@/Components/Common/Button';
-import { FloatingInput, FloatingSelectInput, FloatingTextarea, ImageInput } from '@/Components/Forms'
+import { Input, SelectInput, TextArea, ImageInput, HijriDateInput, CheckBox } from '@/Components/Forms'
 import ToggledCard from '../Cards/ToggledCard';
 import CustomerSearchInput from './CustomerSearchInput';
-import HijriDateInput from './HijriDateInput';
 import { DateObject } from 'react-multi-date-picker';
+import Link from 'next/link';
 
 interface circularType{
     id: string;
@@ -25,7 +25,7 @@ interface CaseType{
     court:  string;
     circular: string;
     city: string;
-    state:  string;
+    // state:  string;
     litigation_type:  string;
     company_representative: string;
     customer: string;
@@ -69,7 +69,7 @@ const CaseForm = ({
     isLoading, 
     LitigationTypes,
     cities,
-    states,
+    // states,
     circulars,
     company_representatives,
     courts,
@@ -99,7 +99,7 @@ const CaseForm = ({
             <div className="grid lg:grid-cols-3 sm:grid-cols-1 space-y-5 gap-4 py-5 rounded-md items-center">
                 
                 <div className="mt-5">
-                    <FloatingInput
+                    <Input
                         labelId={'case_number'}
                         type={'text'}
                         onChange={onChange}
@@ -117,7 +117,7 @@ const CaseForm = ({
                     required= {true}
                     errors={errors?.date_ar}
                 />
-                <FloatingSelectInput
+                {/* <SelectInput
                     label='حالة القضية'
                     labelId='state'
                     value={caseForm?.state}
@@ -134,12 +134,12 @@ const CaseForm = ({
                         :
                         null
                     }    
-                </FloatingSelectInput>
+                </SelectInput> */}
 
 
                 
 
-                <FloatingSelectInput
+                <SelectInput
                     label='المدينة'
                     labelId='city'
                     value={caseForm?.city}
@@ -157,10 +157,10 @@ const CaseForm = ({
                         :
                         null
                     }  
-                </FloatingSelectInput>
+                </SelectInput>
 
 
-                <FloatingSelectInput
+                <SelectInput
                     label='المحكمة'
                     labelId='court'
                     value={caseForm?.court}
@@ -177,10 +177,10 @@ const CaseForm = ({
                         :
                         null
                     }    
-                </FloatingSelectInput>
+                </SelectInput>
 
             
-                <FloatingSelectInput
+                <SelectInput
                     label='رقم الدائرة'
                     labelId='circular'
                     value={caseForm?.circular}
@@ -197,10 +197,10 @@ const CaseForm = ({
                         :
                         null
                     }
-                </FloatingSelectInput>
+                </SelectInput>
                     
 
-                <FloatingSelectInput
+                <SelectInput
                     label='نوع القضية'
                     labelId='litigation_type'
                     value={caseForm?.litigation_type}
@@ -217,9 +217,9 @@ const CaseForm = ({
                     :
                     null
                     }
-                </FloatingSelectInput>
+                </SelectInput>
 
-                <FloatingInput
+                <Input
                     labelId={'amount'}
                     type={'text'}
                     onChange={onChange}
@@ -229,7 +229,7 @@ const CaseForm = ({
                     errors={errors?.amount}
                 />
 
-                <FloatingInput
+                <Input
                     labelId={'agreement_number'}
                     type={'text'}
                     onChange={onChange}
@@ -262,7 +262,7 @@ const CaseForm = ({
                 >
                 </CustomerSearchInput>
 
-                <FloatingInput
+                <Input
                     labelId={'cust_phone_number'}
                     type={'text'}
                     onChange={onChange}
@@ -273,7 +273,7 @@ const CaseForm = ({
                 />
 
 
-                <FloatingInput
+                <Input
                     labelId={'commercial_number'}
                     type={'text'}
                     onChange={onChange}
@@ -283,7 +283,7 @@ const CaseForm = ({
                     errors={errors?.commercial_number}
                 />
 
-                <FloatingSelectInput
+                <SelectInput
                     label='مفوض الشركة'
                     labelId='company_representative'
                     value={caseForm?.company_representative}
@@ -301,28 +301,22 @@ const CaseForm = ({
                         :
                         null
                     }  
-                </FloatingSelectInput>
+                </SelectInput>
 
                 
 
-                <label
-                    htmlFor="Option1"
-                    className="flex cursor-pointer items-start gap-4 rounded-md border py-1.5 px-4 transition hover:bg-card"
-                    >
-                    <div className="flex items-center">
-                        &#8203;
-                        <input checked={caseForm?.is_aganist_company} name='is_aganist_company' onChange={changeCheckBox} type="checkbox" className="size-4 rounded border" id="Option1" />
-                    </div>
-
-                    <div>
-                        <strong className="font-medium "> هل القضية ضد الشركة ؟ </strong>
-                    </div>
-                </label>
+                <div className="mt-5">
+                    <CheckBox 
+                        changeCheckBox={changeCheckBox}
+                        checked={caseForm?.is_aganist_company}
+                        label='هل القضية ضد الشركة ؟ '
+                        labelId='is_aganist_company'
+                        name='is_aganist_company'
+                    />
+                </div>
                 
             </div>
-            <div className="mb-2 space-y-3">
-                
-            </div>
+            
         </ToggledCard>
         
         <ToggledCard
@@ -330,14 +324,14 @@ const CaseForm = ({
             className='bg-container'
         >
             <div className="mt-5">    
-                <FloatingTextarea
+                <TextArea
                     labelId={'notes'}
                     onChange={onChange}
                     value={caseForm?.notes}
                     label={'ملاحظات القضية'}
                     errors={errors?.notes}
                 >
-                </FloatingTextarea>
+                </TextArea>
             </div>
         </ToggledCard>
 
@@ -384,8 +378,14 @@ const CaseForm = ({
 
       
       
-      <div className="">
-          <Button title={type?type:'حفظ'} isLoading={isLoading} submit />
+      <div className="grid grid-cols-2 gap-2">
+            <Button submit className='bg-primary hover:bg-transparent border-primary' title={'حفظ'} isLoading={isLoading} />
+            <Link 
+                href={'/cases'} 
+                className='w-full py-2 rounded-lg border border-secondary text-center hover:bg-secondary hover:text-white transition-all'
+            >
+                إلغاء
+            </Link>
       </div>
 
     </form>

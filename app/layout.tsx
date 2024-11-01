@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Provider } from "@/redux";
-import { Inter } from "next/font/google";
+import { Cairo } from "next/font/google";
 import { Setup } from "@/Components/utils";
 import CustomLayout from "./CustomLayout";
 
-const inter = Inter({ subsets: ["latin"] });
+const cairo = Cairo({ subsets: ["latin"] });
 
 
 
@@ -22,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" dir="rtl">
-        <body className={inter.className + " light"}>
+        <body className={cairo.className + " light"}>
         <Provider>
           <Setup />
             <CustomLayout>

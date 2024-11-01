@@ -113,7 +113,7 @@ const page = () => {
     formData.append('court', caseForm.court)
     formData.append('circular', caseForm.circular)
     formData.append('city', caseForm.city)
-    formData.append('state', caseForm.state)
+    // formData.append('state', caseForm.state)
     formData.append('litigation_type', caseForm.litigation_type)
     formData.append('company_representative', caseForm.company_representative)
     formData.append('customer', caseForm.customer)
