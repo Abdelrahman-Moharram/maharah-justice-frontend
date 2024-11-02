@@ -9,12 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@eslint/config-array": "^0.19.0",
     "@headlessui/react": "^2.1.8",
     "@reduxjs/toolkit": "^2.2.7",
     "async-mutex": "^0.5.0",
     "classnames": "^2.5.1",
-    "glob": "^9.3.5",
     "js-cookie": "^3.0.5",
     "jwt-decode": "^4.0.0",
     "moment-hijri": "^2.30.0",
@@ -26,7 +24,6 @@
     "react-multi-date-picker": "^4.5.2",
     "react-redux": "^9.1.2",
     "react-toastify": "^10.0.5",
-    "rimraf": "^4.4.1",
     "sharp": "^0.33.5"
   },
   "devDependencies": {

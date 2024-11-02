@@ -1,5 +1,6 @@
 import BasicCard from '@/Components/Cards/BasicCard'
 import { ImageSkeleton } from '@/Components/Common'
+import { handleCaseBadgeColor } from '@/Components/utils/helper'
 import React from 'react'
 
 
@@ -8,7 +9,7 @@ const hanldeSkeleton= () =>{
     for (let i = 0; i < 3; i++){
         l.push(
             <ImageSkeleton 
-                height='200px'
+                height='115px'
                 width='100%'
                 rounded='10px'
             />
@@ -23,7 +24,7 @@ const CaseInfo = ({data, isLoading}:{data:any, isLoading:boolean}) => {
             l.push(
                 <BasicCard 
                     cardBg='bg-[#F4F4F4]'
-                    textcolor=''
+                    textcolor={handleCaseBadgeColor(data[i])}
                     title={i}
                     value={data[i]}
                 />

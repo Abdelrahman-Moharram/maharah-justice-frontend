@@ -9,6 +9,8 @@ interface Props{
 }
 
 const BasicCard = ({title, value, textcolor, cardBg}:Props) => {
+    console.log(textcolor);
+    
   return (
     
     <div className={cardBg+" py-5 rounded-md text-center"}>
@@ -18,7 +20,7 @@ const BasicCard = ({title, value, textcolor, cardBg}:Props) => {
                 <span className='block text-[24px]'>
                     {title}
                 </span>
-                <span className={`${textcolor} text-[24px] font-bold flex justify-center items-center fw-[700]`}>
+                <span className={`text-[${textcolor}] text-[24px] font-bold flex justify-center items-center fw-[700]`}>
                     {value}
                 </span>
             </>

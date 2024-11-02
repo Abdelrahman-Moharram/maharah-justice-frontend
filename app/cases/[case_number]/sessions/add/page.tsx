@@ -65,7 +65,7 @@ const page = () => {
     }
   
   return (
-    <div className='min-h-[300px] p-5 space-y-4'>
+    <div className='min-h-[300px]  space-y-4'>
       <Breadcrumb 
         items={BreadcrumbData}
       />

@@ -53,6 +53,7 @@ const authSlice = createSlice({
 			
 			Cookies.remove('access_token')
 			state.isAuthenticated = false;
+			state.isLoading = false;
 			state.user = emptyUser
 
 		},

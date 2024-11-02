@@ -12,7 +12,8 @@ interface props {
 	required?: boolean;
     children?: React.ReactNode | undefined
     errors?:any[]
-    defaultValue?:string|number
+    defaultValue?:string|number,
+	placeholder?: string
 }
 
 const Input = ({
@@ -21,12 +22,13 @@ const Input = ({
 	onChange,
 	value,
 	label,
+	placeholder,
 	required = false,
     children,
     defaultValue,
-    errors
+    errors,
 }: props) => {
-    const [inputType, setType] = useState(type)
+    const [inputType, setType] = useState(type)	
 	return (
 		<div className=' p-0'>
 			<label 
@@ -35,29 +37,30 @@ const Input = ({
 			> 
 				{label} 
 			</label>
-			
-			<input
-                type={inputType}
-                name={labelId}
-                id={labelId}
-                onChange={onChange}
-                value={value?.toString()}
-                defaultValue={defaultValue}
-                required={required}
-                placeholder=''
-				className={"mt-1 w-full py-2 px-4 bg-card border-[#F8F8F8] border rounded-xl outline-none "+ (errors?.length?"border-red-500":" border-none ")}
-			/>
-			{
-				type === 'password'?
-					<button 
-						type='button'
-						onClick={()=>setType(inputType === 'text'?'password':'text')}
-						className='absolute end-1 rounded-full top-1 p-2 hover:bg-gray-100'
-					>
-						<FaEye />
-					</button>
-				:null
-			}
+			<div className='relative'>
+				<input
+					type={inputType}
+					name={labelId}
+					id={labelId}
+					onChange={onChange}
+					value={value?.toString()}
+					defaultValue={defaultValue}
+					required={required}
+					placeholder={placeholder}
+					className={"mt-1 w-full py-2 px-4 bg-card border-[#F8F8F8] border rounded-xl outline-none "+ (errors?.length?"border-red-500":" border-none ")}
+				/>
+				{
+					type === 'password'?
+						<button 
+							type='button'
+							onClick={()=>setType(inputType === 'text'?'password':'text')}
+							className='absolute end-2.5 rounded-full top-2.5 p-1.5 transition-all hover:bg-secondary/20'
+						>
+							<FaEye />
+						</button>
+					:null
+				}
+			</div>
 			{children}
 			<div className="absolute">
 				{

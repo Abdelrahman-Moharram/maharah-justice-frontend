@@ -16,13 +16,13 @@ const NavBar = () => {
 
 
   return (
-<header className="bg-negitaive-color shadow-lg fixed w-full z-10">
-    <div className="mx-auto flex h-16 items-center gap-8 px-4 sm:px-6 lg:px-8">
+<header className="px-4 w-full z-10">
+    <div className="mx-auto flex items-center gap-8 py-5">
         <div className="flex flex-1 items-center justify-end md:justify-between">
-            <div className="w-[33%]">
+            <div className="w-[60%]">
                 <input
-                    className='w-full py-2 px-5 bg-card outline-none border-none shadow-md rounded-lg'
-                    placeholder='ابحث برقم القضية ...'
+                    className='w-full py-2 px-5 bg-card outline-none border-none rounded-lg'
+                    placeholder='ابحث برقم العميل أو القضية أو رقم الهوية أو رقم الجوال'
                 />
             </div>
 

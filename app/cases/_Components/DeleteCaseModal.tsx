@@ -2,7 +2,7 @@
 import { ChangeEvent, useState } from 'react'
 import { FaTrash } from 'react-icons/fa';
 import BaseModal from '@/Components/Modals/BaseModal';
-import FloatingInput from '@/Components/Forms/FloatingInput';
+import Input from '@/Components/Forms/Input';
 import { Spinner } from '@/Components/Common';
 interface Props{
     open: boolean;
@@ -23,7 +23,7 @@ const DeleteCaseModal = ({handleModal, open, Case, formData, isLoading}:Props) =
   return (
     <BaseModal
         open={open}
-        handleClose={handleModal}
+        handleToggler={handleModal}
     >
        <div className="px-5 py-3 md:w-[700px] sm:w-[full]">
         <div>
@@ -38,7 +38,7 @@ const DeleteCaseModal = ({handleModal, open, Case, formData, isLoading}:Props) =
             <span className='text-md block text-gray-500 font-semibold mt-2 mb-5'>بحذف هذه الفضية سوف تقوم بحذف جميع الجلسات والأحكام و المرفقات الخاصة بها .</span>
             <span className='text-sm block text-gray-500 mt-2 mb-5'>الرجاء إدخال رقم القضية هنا</span>
             <div className="block mt-4">
-                <FloatingInput
+                <Input
                     label='رقم القضية'
                     labelId='caseNumber'
                     onChange={handlecaseNumber}

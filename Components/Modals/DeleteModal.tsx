@@ -16,7 +16,7 @@ interface Props{
 
 const DeleteModal = ({title, open, handleClose, children, deleteAction, isLoading, id}:Props) => {
   return (
-    <BaseModal open={open} handleClose={handleClose}  >
+    <BaseModal open={open} handleToggler={handleClose}  >
         <div className="min-w-[50vw] flex justify-between items-center ">
             <h3 className='font-bold'>{title}</h3>
             <div onClick={handleClose} className="cursor-pointer p-3 rounded-full hover:bg-gray-100"><IoClose /></div>

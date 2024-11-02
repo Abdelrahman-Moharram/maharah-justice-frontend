@@ -5,7 +5,7 @@ import { useRetrieveUserQuery } from '@/redux/features/authApiSlice'
 import { setAuth } from '@/redux/features/authSlice'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { usePathname, useRouter } from 'next/navigation'
-import React, { useEffect } from 'react'
+import React, { Suspense, useEffect } from 'react'
 
 
 interface Props{
@@ -22,25 +22,25 @@ const CustomLayout = ({children}:Props) => {
 
     useEffect(() => {        
         if (!isAuthenticated && !isLoading) {            
-            router.push('/auth/login?next='+pathName);
+            return router.push('/auth/login?next='+pathName);
         }
     }, [router]);
     return (
         <>
         {
             isAuthenticated || isLoading?
-                <div className="">
-                    <NavBar />
-                    <div className='flex gap-2 pt-[64px] px-2'>
-                        <SideNav />
-                        <div className="min-h-[calc(100vh-78px)] w-full mx-auto rounded-lg overflow-hidden">            
-                            {isLoading?null:children}
-                        </div>
+                <div className='flex gap-2 '>
+                    <SideNav />
+                    <div className="px-10 w-full min-h-[calc(100vh-78px)] mx-auto overflow-hidden">
+                        <NavBar />
+                        {!isAuthenticated?null:children}
                     </div>
                 </div>
             :
             <div>
-                {children}
+                <Suspense>
+                    {children}
+                </Suspense>
             </div>
         }
         </>

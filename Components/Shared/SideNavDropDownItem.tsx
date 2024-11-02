@@ -1,6 +1,7 @@
+'use client'
 import Link from 'next/link'
+import { useParams, usePathname } from 'next/navigation'
 import React from 'react'
-import { MdManageAccounts } from 'react-icons/md'
 
 interface innerLinkType{
     title:string,
@@ -8,53 +9,56 @@ interface innerLinkType{
     icon?:React.ReactNode
 }
 interface Props{
-    toggle: boolean,
     title: string,
     icon:React.ReactNode,
-    innerLinks: innerLinkType[]
+    innerLinks?: innerLinkType[] ,
+    baseKey:string
 }
-const SideNavDropDownItem = ({toggle, title, icon, innerLinks}:Props) => {
-  return (
-    <details className="group [&_summary::-webkit-details-marker]:hidden">
-        <summary
-            className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 hover:bg-gray-100 hover:text-gray-700"
-        >
-            <div className="flex items-center gap-2 text-sm font-medium"> {icon} <span className={`${toggle?'hidden':''}`}>{title}</span> </div>
+const SideNavDropDownItem = ({title, icon, innerLinks, baseKey}:Props) => {
+    const path = usePathname()    
+    return (
+        <details className="group [&_summary::-webkit-details-marker]:hidden">
+            <summary
+                className={"flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 hover:text-primary hover:bg-secondary transition-all "+(baseKey === path.split('/')[1]?'text-primary bg-secondary':'')}
+            >
+                {
+                    innerLinks?.length?
+                        <>
+                            <div className="flex items-center gap-2 text-sm font-medium "> 
+                                <div className="w-[24px] text-center hover:text-primary">
+                                    {icon}
+                                </div> 
+                                <span className='mx-4'>{title}</span> 
+                            </div>
+                            <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M16.5999 7.45837L11.1666 12.8917C10.5249 13.5334 9.4749 13.5334 8.83324 12.8917L3.3999 7.45837" stroke="currentColor" stroke-width="1.5" strokeMiterlimit="10" stroke-linecap="round" strokeLinejoin="round"/>
+                            </svg>
 
+                            </span>
+                        </>
+                    :
+                        <Link href={"/"+baseKey} className="flex items-center gap-2 text-sm font-medium "> 
+                            <div className="hover:text-primary">
+                                {icon}
+                            </div> 
+                            <span className='mx-6'>{title}</span> 
+                        </Link>
+                
+                }
+                
+
+
+            </summary>
             {
-                toggle
-                ?
-                    null
-                :
-                    <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                        >
-                            <path
-                                fillRule="evenodd"
-                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                clipRule="evenodd"
-                            />
-                        </svg>
-                    </span>
-            }
-
-
-        </summary>
-        {
-            toggle?
-                    null
-                :
-                    <ul className="mt-2 space-y-1 px-4">
+                innerLinks?.length?
+                    <ul className="mt-2  space-y-1 px-5">
                         {
                             innerLinks.map((link, idx)=>(
                                 <li key={idx}>
                                     <Link
                                         href={link.link}
-                                        className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium hover:bg-gray-100 hover:text-gray-700"
+                                        className="flex items-center gap-2 rounded-lg px-14 py-2 text-xs font-medium hover:text-primary hover:bg-secondary transition-all"
                                     >
                                         {link?.icon}
                                         {link.title}
@@ -63,9 +67,10 @@ const SideNavDropDownItem = ({toggle, title, icon, innerLinks}:Props) => {
                             ))
                         }                  
                     </ul>
-        }
-    </details>
-  )
+                :null
+            }
+        </details>
+    )
 }
 
 export default SideNavDropDownItem

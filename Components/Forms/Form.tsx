@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent } from 'react';
-import { FloatingInput } from '@/Components/Forms';
+import { Input } from '@/Components/Forms';
 import { Spinner } from '@/Components/Common';
 import ErrorAlert from '../alerts/ErrorAlert';
 
@@ -8,6 +8,7 @@ interface Config {
 	labelId: string;
 	type: string;
 	value: string;
+	placeholder: string;
 	link?: {
 		linkText: string;
 		linkUrl: string;
@@ -54,8 +55,9 @@ export default function Form({
 				:null
 			}
 			{config.map(input => (
-				<FloatingInput
+				<Input
 					label={input.labelText}
+					placeholder={input.placeholder}
 					key={input.labelId}
 					labelId={input.labelId}
 					type={input.type}
@@ -63,13 +65,14 @@ export default function Form({
 					value={input.value}
 					required={input.required}
 					errors={errors?.hasOwnProperty(input.labelId) ? errors[input.labelId]: []}
+					
 				/>
 			))}
 
-			<div>
+			<div className='pt-2'>
 				<button
 					type='submit'
-					className='flex w-full justify-center rounded-md bg-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
+					className='flex w-full justify-center rounded-xl bg-primary px-3 py-1.5 text-sm  leading-6 font-[700] shadow-sm hover:bg-primary-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
 					disabled={isLoading}
 				>
 					{isLoading ? <span className='flex gap-1 items-center'>{btnText} <Spinner sm /> </span> : `${btnText}`}

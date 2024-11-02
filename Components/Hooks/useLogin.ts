@@ -34,10 +34,10 @@ export default function useLogin() {
 				Cookies.set('access_token', data?.access)
 				dispatch(setAuth(jwtDecode(data?.access)));
 				toast.success('Logged in');
-				router.push('/');
+				return router.push('/');
 			})
 			.catch((err) => {
-				toast.error('Failed to log in');
+				toast.error('حدث خطأ اثناء تسجيل الدخول');
 				setErrors(err?.data);
 			});
 	};

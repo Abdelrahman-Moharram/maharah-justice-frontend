@@ -1,6 +1,7 @@
 import OverLay from '@/Components/Modals/OverLay'
 import React from 'react'
 import CaseDetails from './CaseDetails'
+import FullHModal from '@/Components/Modals/FullHModal'
 
 interface Props{
     handleToggler:()=>void
@@ -9,14 +10,14 @@ interface Props{
 }
 const CaseDetailsOverLay = ({open, handleToggler, case_number}:Props) => {
   return (
-    <OverLay
-        handleOpen={handleToggler}
-        open={open}  
+    <FullHModal
+      handleToggler={handleToggler}
+      open={open}  
     >
       <CaseDetails
         case_number={case_number}          
       />
-    </OverLay>
+    </FullHModal>
   )
 }
 

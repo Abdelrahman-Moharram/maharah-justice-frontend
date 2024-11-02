@@ -5,6 +5,7 @@ import { useGetCaseDetailsMutation } from '@/redux/api/casesApi'
 import Link from 'next/link'
 import React, { useEffect } from 'react'
 import IncludedSessionsTable from './Tables/IncludedSessionsTable'
+import { handleCaseBadgeColor } from '@/Components/utils/helper'
 
 const LoadingCaseSkeleton = () =>(
     <div className='p-4'>
@@ -38,20 +39,7 @@ interface CaseType{
     case_number:string,
 
 }
-const handleCaseBadgeColor = (state:string) =>{
-    switch (state){
-        case 'مشطوبة' || 'منتهي بعدم السداد':
-          return 'red'
-        case 'منتهي بالسداد':
-          return 'green'
-        case 'قيد النظر' || 'قرار 34' || 'قرار 46':
-          return 'blue'
-        case 'منتهية' || 'حكم' || 'بيع عقار أو منقول':
-          return 'dark'
-        default:
-          return 'bg-white text-dark'
-      }
-}
+
 const CaseDetails = ({case_number}:{case_number:string}) => {
 
   const [caseDetails, {isLoading, data}] = useGetCaseDetailsMutation()
@@ -59,6 +47,8 @@ const CaseDetails = ({case_number}:{case_number:string}) => {
     if(case_number)
       caseDetails({case_number})
   }, [case_number])
+  console.log(handleCaseBadgeColor(data?.case?.state));
+  
   return (
     <div className='p-5'>
       {

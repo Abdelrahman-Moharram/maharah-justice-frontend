@@ -1,0 +1,22 @@
+
+export const handleCaseBadgeColor = (state:string) =>{
+    
+    if (state === 'منتهية')
+        return '#3091F2'
+    else if (state === 'قيد النظر')
+        return '#F27E30'
+    else if (state === 'مشطوبة')
+        return '#C91010'
+    else if (state === 'منتهي بعدم السداد')
+        return '#B81313'
+    else if (state === 'قرار 34' || state === 'قرار 46')
+        return '#6B13B8'
+    else if (state === 'منتهي بالسداد' || state === 'حكم')
+        return '#13B860'
+    else if (state === 'بيع عقار أو منقول')
+        return '#D7A80D'
+    else if (state === 'رهن عقاري')
+        return '#F27E30'
+    else
+        return '#7E7E7E'
+}

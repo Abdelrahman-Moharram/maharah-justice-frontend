@@ -13,12 +13,14 @@ export default function LoginForm() {
 			type: 'username',
 			value: username,
 			required: true,
+			placeholder:'أدخل اسم المستخدم'
 		},
 		{
 			labelText: 'كلمة السر',
 			labelId: 'password',
 			type: 'password',
 			value: password,
+			placeholder:'أدخل كلمة المرور',
 			link: {
 				linkText: 'Forgot password?',
 				linkUrl: '/password-reset',

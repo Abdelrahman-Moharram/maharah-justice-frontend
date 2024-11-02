@@ -38,7 +38,7 @@ const DataTable = ({options, startOptions, data, isLoading, emptyLinkHref, empty
         const rendered_row = []
         for(let cell in row){
             if(typeof row === 'object' && Object.keys(row).includes(cell) && (!fnKeys || !fnKeys.includes(cell))){
-                rendered_row.push(<td className="whitespace-nowrap px-4 py-2 text-gray-700">{row[cell]}</td>)
+                rendered_row.push(<td className="whitespace-nowrap px-4 py-2 ">{row[cell]}</td>)
             }
         }
         return rendered_row
@@ -56,12 +56,12 @@ const DataTable = ({options, startOptions, data, isLoading, emptyLinkHref, empty
                 />
             :
                 data?.length?
-                    <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-                        <thead className="ltr:text-left rtl:text-right">
+                    <table className="min-w-full divide-y-2 divide-gray-200 bg-container text-color text-sm">
+                        <thead className="ltr:text-left rtl:text-right font-bold">
                             <tr>
                                 {
                                     getHeaders()?.map((col, idx)=>(
-                                        <th key={idx} className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{col}</th>
+                                        <th key={idx} className="whitespace-nowrap px-4 py-2 font-medium ">{col}</th>
                                     ))
                                 }
                                 {/* {

@@ -9,7 +9,8 @@
   --card: 248, 248, 248;
   
   
-  --color: 63, 64, 64
+  --color: 63, 64, 64;
+  --side-nav: 49, 49, 49, 1;
   --negitaive-color:255, 255, 255;
   background-color: #fff;
 
@@ -28,6 +29,8 @@
   --color: 255, 255, 255;
   --negitaive-color:0, 0, 0;
   background: rgba(var(--background));
+  --side-nav: 49, 49, 49
+
 }
 .sideNav{
   transition: all ease .4s;
@@ -87,7 +90,7 @@ animation: fadein 0.35s ease forwards;
 }
 
 .showOverLayDetails{
-  top:70px;
+  top:0px;
 }
 .hideOverLayDetails{
   top:100%;

@@ -17,6 +17,7 @@ const config: Config = {
         container: "rgba(var(--container))",
         border: "rgba(var(--border))",
         "card": "rgba(var(--card))",
+        "side-nav": "rgba(var(--side-nav))",
         
         "color": "rgba(var(--color))",
         'negitaive-color': "rgba(var(--negitaive-color)) !important",

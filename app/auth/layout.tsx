@@ -14,9 +14,11 @@ const layout = ({children}:Props) => {
   const {isAuthenticated, isLoading} = useAppSelector(state=>state.auth)
   useEffect(() => {   
     if (isAuthenticated && !isLoading) {
-      router.push(next || '/');
+      if (next?.includes('login'))
+        return router.push('/');
+      return router.push(next || '/');
     }
-  }, [router]);
+  }, [router, isAuthenticated, isLoading]);
   return (
     children
   )
