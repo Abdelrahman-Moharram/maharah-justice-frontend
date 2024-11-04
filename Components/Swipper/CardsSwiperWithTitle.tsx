@@ -19,20 +19,20 @@ interface props{
 const CardsSwiperWithTitle = ({cases, title, handleCaseNumber, handleDetailsModal, count, link, isLoading}:props) => {
   const handleImageSkeleton = ()=>{
     const total = [];
-    for(let i=0; i < 4; i ++)
-        total.push(<ImageSkeleton key={i} width='340px' height='504px' rounded='10px' />)
+    for(let i=0; i < 2; i ++)
+        total.push(<ImageSkeleton key={i} width='800px' height='300px' rounded='10px' />)
     return total
   }
   return (
     <div className='my-3'>
-        <div className='flex justify-between'>
+        <div className='flex justify-between px-12'>
           <p className="font-semibold text-xl">{title}</p>
           <Link href={link} className="text-primary text-[16px] font-[600]">عرض الجميع ({count})</Link>
         </div>
         <div className="my-4">
           {
             isLoading?
-              <div className="flex gap-3">
+              <div className="flex gap-3 justify-center">
                 {handleImageSkeleton()}
               </div>
             :

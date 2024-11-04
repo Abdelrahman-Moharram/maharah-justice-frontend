@@ -30,7 +30,7 @@ const Input = ({
 }: props) => {
     const [inputType, setType] = useState(type)	
 	return (
-		<div className=' p-0'>
+		<div className='p-0'>
 			<label 
 				htmlFor={labelId}
             	className={"block text-md font-medium  text-gray-700 "+ (errors?.length?"border-red-500":" border-none ")}
@@ -62,13 +62,19 @@ const Input = ({
 				}
 			</div>
 			{children}
-			<div className="absolute">
-				{
-					errors?.map(error=>
-						<span key={error} className='text-red-500 block'>{error}</span>
-					)
-				}
-			</div>
+			{
+				errors?.length?
+					<div className="mb-3">
+						<div className="absolute">
+							{
+								errors?.map(error=>
+									<span key={error} className='text-red-500 block'>{error}</span>
+								)
+							}
+						</div>
+					</div>
+				:null
+			}
 		</div>
 	);
 }

@@ -13,6 +13,7 @@ import { Pagination, Navigation } from 'swiper/modules';
 import CaseCard from '../Cards/CaseCard';
 import { caseHomeCardType } from '../Types/case';
 
+import 'swiper/css/pagination';
 
 interface props{
     cases: caseHomeCardType[],
@@ -41,10 +42,11 @@ const ScrollableCasesList = ({cases, handleDetailsModal, handleCaseNumber}: prop
           // spaceBetween={-40}
           
           loop={true}
-          pagination={{
-            clickable: true,
-            
-          }}
+          pagination={{ 
+            clickable: true, 
+            bulletActiveClass:"swiper-pagination-bullet-active"
+           }}
+
           navigation={{
             hiddenClass:'color-primary',
             disabledClass:'color-primary',

@@ -58,7 +58,7 @@ const NavBarSearch = () => {
                         :
                             data?.cases?.length?
                                 data?.cases.map((Case:{case_number:string, id: string})=>(
-                                    <div key={Case?.id} onClick={()=>handleCaseNumber(Case?.case_number)}  className='cursor-pointer bg-container py-2 rounded-md text-center'>
+                                    <div key={Case?.id} onClick={()=>handleCaseNumber(Case?.case_number)}  className='mb-4 cursor-pointer bg-container py-2 rounded-md text-center'>
                                         <dl>رقم القضية</dl>
                                         <dd className='font-semibold'>{Case?.case_number}</dd>
                                     </div>

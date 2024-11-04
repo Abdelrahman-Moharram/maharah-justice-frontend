@@ -98,3 +98,28 @@ animation: fadein 0.35s ease forwards;
 .hideOverLayDetails{
   top:100%;
 }
+
+
+
+.swiper-pagination-bullet-active {
+  background: #FBB827 !important; 
+  color: #FBB827 ; 
+
+  width: 20px !important;
+  height: 10px;
+  border-radius: 8px !important;
+}
+.swiper-button-next{
+  margin-left: -10px;
+}
+.swiper-button-prev{
+  margin-right: -10px;
+}
+.swiper-button-next, .swiper-button-prev {
+  color: #BDBFBF !important ; 
+}
+
+/* Optional: Change hover color */
+.swiper-button-next:hover, .swiper-button-prev:hover {
+  color: #BDBFBF !important ; 
+}
