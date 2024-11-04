@@ -10,6 +10,12 @@ const casesApiSlice = apiSlice.injectEndpoints({
                     params:{}
                 }),
             }),
+            getNavBarSearch: builder.query({
+                query:({query}:{query:string})=>({
+                    url:base_url+`search/`,
+                    params:{query:query}
+                }),
+            }),
             
             getCasesList: builder.query({
                 query:({page, size, filter}:{page:number, size:number, filter?:string|null})=>({
@@ -87,6 +93,7 @@ export const {
     useGetCaseFormQuery,
     useGetCaseDetailsMutation,
     useEditCaseMutation,
-    useGetSessionFormQuery
+    useGetSessionFormQuery,
+    useGetNavBarSearchQuery,
     
 } = casesApiSlice

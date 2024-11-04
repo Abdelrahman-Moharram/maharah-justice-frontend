@@ -6,6 +6,7 @@ import { useAppDispatch } from '@/redux/hooks';
 import { useLogoutMutation } from '@/redux/features/authApiSlice';
 import { ImageSkeleton } from '../Common';
 import { useRouter } from 'next/navigation';
+import { FaUser } from 'react-icons/fa';
 interface user {
     full_name:string;
     username:string;
@@ -36,16 +37,19 @@ const UserNavDropDown = ({user}:Props) => {
     return (
         <Menu as="div" className="relative inline-block text-left">
           <div>
-              <MenuButton className="text-color bg-card items-center inline-flex w-full justify-center gap-x-2 rounded-full px-3 py-2 text-sm font-semibold transition hover:bg-gray-200">
+              <MenuButton className="text-color bg-transparent items-center inline-flex w-full justify-center gap-x-2 rounded-full px-3 py-2 text-sm font-semibold transition hover:bg-gray-200">
               {
                 user?.id?
                   <div className='flex items-center gap-2 '>
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M16.6001 7.45825L11.1668 12.8916C10.5251 13.5333 9.47515 13.5333 8.83348 12.8916L3.40015 7.45825" stroke="#3F4040" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+
                       <span className="font-semibold">
                         {user?.full_name}              
                       </span>
                       {
-                        
-                          <div className='p-[10px] rounded-full bg-white'></div>
+                        <div className='p-[1px] rounded-full bg-white'><FaUser /></div>
                       }
                   </div>
                 :
@@ -65,9 +69,9 @@ const UserNavDropDown = ({user}:Props) => {
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
           >
-            <MenuItems className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-              <div className="py-1">
-                {/* <MenuItem>
+            <MenuItems className="absolute -right-20 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+              {/* <div className="py-1">
+                <MenuItem>
                   {({ active }) => (
                     <Link
                       href={`/auth/profile/${user.id}`}
@@ -79,8 +83,8 @@ const UserNavDropDown = ({user}:Props) => {
                       Profile
                     </Link>
                   )}
-                </MenuItem> */}
-              </div>
+                </MenuItem> 
+              </div>*/}
 
 
               <div className="py-1">
@@ -90,7 +94,7 @@ const UserNavDropDown = ({user}:Props) => {
                         onClick={handleLogout}
                         className={classNames(
                             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                            'block px-4 py-2 text-sm cursor-pointer  text-left'
+                            'block px-4 py-2 text-sm cursor-pointer w-full text-left'
                       )}
                     >
                       Logout

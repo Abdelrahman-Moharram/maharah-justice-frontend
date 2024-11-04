@@ -108,14 +108,14 @@ const sessionsApiSlice = apiSlice.injectEndpoints({
 
         getInActiveSessionsList: builder.query({
             query:({page, size, search}:{page:number, size:number, search?:string|null})=>({
-                url:base_url+"in-active/",
+                url:base_url+"finished/",
                 params:{page, size, search}
             }),
             providesTags:['sessions']
         }),
         getInActiveSessionsExcel: builder.mutation({
             query:({search}:{search?:string|null})=>({
-                url:base_url+"in-active/",
+                url:base_url+"finished/",
                 params:{search, excel:true}
             }),
         }),

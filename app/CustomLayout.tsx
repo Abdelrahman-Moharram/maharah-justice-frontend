@@ -26,24 +26,22 @@ const CustomLayout = ({children}:Props) => {
         }
     }, [router]);
     return (
-        <>
+        <Suspense>
         {
-            isAuthenticated || isLoading?
+            isAuthenticated?
                 <div className='flex gap-2 '>
                     <SideNav />
                     <div className="px-10 w-full min-h-[calc(100vh-78px)] mx-auto overflow-hidden">
                         <NavBar />
-                        {!isAuthenticated?null:children}
+                        {isAuthenticated?children:null}
                     </div>
                 </div>
             :
             <div>
-                <Suspense>
                     {children}
-                </Suspense>
             </div>
         }
-        </>
+        </Suspense>
     )
 }
 

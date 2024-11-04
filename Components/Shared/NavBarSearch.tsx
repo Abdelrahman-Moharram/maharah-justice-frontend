@@ -1,0 +1,77 @@
+'use client'
+import CaseDetailsOverLay from '@/app/cases/_Components/CaseDetailsOverLay'
+import React, { ChangeEvent, useState } from 'react'
+import { ImageSkeleton } from '../Common'
+import { useGetNavBarSearchQuery } from '@/redux/api/casesApi'
+
+const NavBarSearch = () => {
+    const [searchValue, setSearchValue] = useState('')
+    const [modalCaseNumber, setModalCaseNumber] = useState('')
+    const [modal, setModal] = useState(false)
+    const {data, isLoading} = useGetNavBarSearchQuery({query:searchValue}, {skip:searchValue === ''})
+    const handleSearchValue = (e:ChangeEvent<HTMLInputElement>) =>{
+        setSearchValue(e.target.value)
+    }
+    const handleDetailsModal = () =>{
+        if(modal){
+            setSearchValue('')
+        }
+        setModal(!modal)
+    }
+    const handleCaseNumber = (case_number:string|null) =>{
+        if(case_number){
+            setModalCaseNumber(case_number)
+            setModal(true)
+        }else{
+            setModalCaseNumber('')
+            setModal(false)
+        }
+    }
+
+    
+  return (
+    <>
+        <CaseDetailsOverLay 
+            case_number={modalCaseNumber}
+            handleToggler={handleDetailsModal}
+            open={modal}
+        />
+        <div className="w-[60%] relative">
+            <input
+                className='w-full py-2 px-5 bg-card outline-none border-none rounded-lg'
+                placeholder='ابحث برقم العميل أو القضية أو رقم الهوية أو رقم الجوال'
+                value={searchValue}
+                onChange={handleSearchValue}
+            />
+            <div className={"absolute drop-shadow-lg z-[3] w-[100%] mt-2 transition-all ease-in duration-300 rounded-md bg-card overflow-y-auto "+(searchValue?'max-h-[20rem]':'max-h-0')}>
+                <div className='p-5'>
+                    {/* <p className="text-xs">القضايا</p> */}
+                    <div className="grid">
+                    {
+                        isLoading?
+                            <ImageSkeleton 
+                                width='100%'
+                                height='64px'
+                                rounded='10px'
+                                shadow
+                            />
+                        :
+                            data?.cases?.length?
+                                data?.cases.map((Case:{case_number:string, id: string})=>(
+                                    <div key={Case?.id} onClick={()=>handleCaseNumber(Case?.case_number)}  className='cursor-pointer bg-container py-2 rounded-md text-center'>
+                                        <dl>رقم القضية</dl>
+                                        <dd className='font-semibold'>{Case?.case_number}</dd>
+                                    </div>
+                                ))
+                            :   
+                                <div className='text-center'>لا توجد نتائج  بحث</div>
+                    }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </>
+  )
+}
+
+export default NavBarSearch

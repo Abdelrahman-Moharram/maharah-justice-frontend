@@ -1,6 +1,5 @@
 
 export const handleCaseBadgeColor = (state:string) =>{
-    
     if (state === 'منتهية')
         return '#3091F2'
     else if (state === 'قيد النظر')

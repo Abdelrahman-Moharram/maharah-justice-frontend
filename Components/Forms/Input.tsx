@@ -47,7 +47,7 @@ const Input = ({
 					defaultValue={defaultValue}
 					required={required}
 					placeholder={placeholder}
-					className={"mt-1 w-full py-2 px-4 bg-card border-[#F8F8F8] border rounded-xl outline-none "+ (errors?.length?"border-red-500":" border-none ")}
+					className={"mt-1 w-full py-2 px-4 bg-card border-[#F8F8F8]  blur-none border rounded-xl outline-none "+ (errors?.length?"border-red-500":" border-none ")}
 				/>
 				{
 					type === 'password'?

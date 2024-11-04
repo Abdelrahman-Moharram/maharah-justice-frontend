@@ -47,7 +47,6 @@ const CaseDetails = ({case_number}:{case_number:string}) => {
     if(case_number)
       caseDetails({case_number})
   }, [case_number])
-  console.log(handleCaseBadgeColor(data?.case?.state));
   
   return (
     <div className='p-5'>
