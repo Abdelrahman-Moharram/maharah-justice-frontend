@@ -2,7 +2,6 @@
 import React from 'react'
 import UserNavDropDown from './UserNavDropDown';
 import { useAppSelector } from '@/redux/hooks';
-import SearchCase from './NavBarSearch';
 import NavBarSearch from './NavBarSearch';
 
 const NavBar = () => {

@@ -6,38 +6,37 @@ import Link from 'next/link'
 import React, { useEffect } from 'react'
 import IncludedSessionsTable from './Tables/IncludedSessionsTable'
 import { handleCaseBadgeColor } from '@/Components/utils/helper'
+import { FaPlusCircle } from 'react-icons/fa'
 
 const LoadingCaseSkeleton = () =>(
     <div className='p-4'>
         <ImageSkeleton 
-            height='400px'
-            width='100%'
-            rounded='10px'
-            shadow
-            margin='10px 0px'
+          height='400px'
+          width='100%'
+          rounded='10px'
+          shadow
+          margin='10px 0px'
         />
         <ImageSkeleton 
-            height='200px'
-            width='100%'
-            rounded='10px'
-            margin='10px 0px'
-            shadow
-
+          height='200px'
+          width='100%'
+          rounded='10px'
+          margin='10px 0px'
+          shadow
         />
 
         <ImageSkeleton 
-            height='200px'
-            width='100%'
-            rounded='10px'
-            margin='10px 0px'
-            shadow
+          height='200px'
+          width='100%'
+          rounded='10px'
+          margin='10px 0px'
+          shadow
         />
     </div>
 )
 
 interface CaseType{
-    case_number:string,
-
+  case_number:string,
 }
 
 const CaseDetails = ({case_number}:{case_number:string}) => {
@@ -183,7 +182,10 @@ const CaseDetails = ({case_number}:{case_number:string}) => {
             <div className="mt-8 bg-card p-4 rounded-md">
               <div className="flex justify-between">
                 <h3 className='font-bold text-lg my-3'>الجلسات</h3>
-                <Link href={`/cases/${case_number}/sessions/add`}>إضافة جلسة</Link>
+                <Link className='bg-primary h-fit p-2 rounded-md text-negitaive-color flex items-center gap-3' href={`/cases/${case_number}/sessions/add`}>
+                  إضافة جلسة
+                  <FaPlusCircle />
+                </Link>
               </div>
               <IncludedSessionsTable 
                 sessions={data?.case?.sessions}
