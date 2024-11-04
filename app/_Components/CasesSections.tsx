@@ -23,6 +23,7 @@ const CasesSections = () => {
       />
       <div className="space-y-10">
         <CardsSwiperWithTitle 
+          isLoading={isLoading}
           cases={data?.daily?.cases}
           count={data?.daily?.count}
           link={'/sessions?filter=daily'}
@@ -31,6 +32,7 @@ const CasesSections = () => {
           handleDetailsModal={handleDetailsModal}
         />
         <CardsSwiperWithTitle 
+          isLoading={isLoading}
           cases={data?.finished?.cases}
           count={data?.finished?.count}
           link={'/sessions?filter=finished'}

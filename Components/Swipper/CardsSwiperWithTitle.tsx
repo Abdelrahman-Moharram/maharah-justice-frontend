@@ -3,6 +3,7 @@ import { Divider, ImageSkeleton } from '@/Components/Common';
 import { CardsSwiper } from '@/Components/Swipper';
 import { caseHomeCardType } from '../Types/case';
 import Link from 'next/link';
+import EmptyData from '../Common/EmptyData';
 
 interface props{
     cases:caseHomeCardType[];
@@ -10,10 +11,12 @@ interface props{
     handleCaseNumber:(case_number:string)=>void
     handleDetailsModal:()=>void,
     count:number,
-    link:string
+    link:string,
+    isLoading: boolean
+
 }
 
-const CardsSwiperWithTitle = ({cases, title, handleCaseNumber, handleDetailsModal, count, link}:props) => {
+const CardsSwiperWithTitle = ({cases, title, handleCaseNumber, handleDetailsModal, count, link, isLoading}:props) => {
   const handleImageSkeleton = ()=>{
     const total = [];
     for(let i=0; i < 4; i ++)
@@ -28,6 +31,11 @@ const CardsSwiperWithTitle = ({cases, title, handleCaseNumber, handleDetailsModa
         </div>
         <div className="my-4">
           {
+            isLoading?
+              <div className="flex gap-3">
+                {handleImageSkeleton()}
+              </div>
+            :
             cases?.length?
               <CardsSwiper 
                 cases={cases} 
@@ -35,9 +43,10 @@ const CardsSwiperWithTitle = ({cases, title, handleCaseNumber, handleDetailsModa
                 handleDetailsModal={handleDetailsModal}
               />
             :
-            <div className="flex gap-3">
-              {handleImageSkeleton()}
-            </div>
+            <EmptyData 
+              height='200px'
+              message='لا توجد قضايا'
+            />            
           }
         </div>
     </div>
