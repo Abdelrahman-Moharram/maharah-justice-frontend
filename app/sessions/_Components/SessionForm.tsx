@@ -2,35 +2,19 @@ import React, { ChangeEvent, FormEvent, useState } from 'react'
 import HijriDateInput from '@/Components/Forms/HijriDateInput'
 import { DateObject } from 'react-multi-date-picker'
 import { ImageInput, Input } from '@/Components/Forms'
-import Time from 'react-datepicker/dist/time'
 import LawyerSearchInput from './Inputs/LawyerSearchInput'
 import SelectInput from '@/Components/Forms/SelectInput'
 import Textarea from '@/Components/Forms/TextArea'
 import Button from '@/Components/Common/Button'
 import Link from 'next/link'
+import { SessionFormType } from '@/Components/Types/sessions'
 
-interface SessionType{
-    case_number: string,
-    court: string,
-    city: string,
-    date_ar: DateObject | null,
-    time: Time | null,
-    link: string,
-    next_session_req: string,
-    notes: string,
-    record: string,
-    defenses: string,
-    lawyer: string,
-    alterlawyer: string,
-    session_attachments: File[] | null,
-    state: string
-}
 interface baseType{
     id: string;
     name: string
 }
 interface Props{
-    session: SessionType
+    session: SessionFormType
     formErrors: any,
     courts: baseType[],
     cities: baseType[],
@@ -140,7 +124,7 @@ const SessionForm = ({
                     labelId='lawyer'
                     label='المحامي'
                     onChange={changeLawyer}
-                    oldNameValue={session?.lawyer}
+                    oldNameValue={session?.lawyer_name}
                     // errors={formErrors?.lawyer}
                 />
             </div>
@@ -150,7 +134,7 @@ const SessionForm = ({
                     labelId='alterlawyer'
                     label='المحامي البديل'
                     onChange={changeLawyer}
-                    oldNameValue={session?.alterlawyer}
+                    oldNameValue={session?.alterlawyer_name}
                     exclude={session?.lawyer}
                     required={false}
                     // errors={formErrors?.lawyer}
@@ -197,7 +181,7 @@ const SessionForm = ({
                                 label='الضبط'
                                 onChange={onChange}
                                 value={session?.record}
-                                required
+                                required={false}
                                 errors={formErrors?.record}
                             />
                         </div>
@@ -207,7 +191,7 @@ const SessionForm = ({
                                 label='طلبات الجلسة القادمة'
                                 onChange={onChange}
                                 value={session?.next_session_req}
-                                required
+                                required={false}
                                 errors={formErrors?.next_session_req}
                             />
                         </div>

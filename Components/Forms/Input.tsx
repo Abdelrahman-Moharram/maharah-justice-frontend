@@ -37,7 +37,7 @@ const Input = ({
 			> 
 				{label} 
 			</label>
-			<div className='relative'>
+			<div className='relative mt-[4px]'>
 				<input
 					type={inputType}
 					name={labelId}

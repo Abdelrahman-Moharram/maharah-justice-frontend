@@ -43,10 +43,12 @@ const CardsSwiperWithTitle = ({cases, title, handleCaseNumber, handleDetailsModa
                 handleDetailsModal={handleDetailsModal}
               />
             :
-            <EmptyData 
-              height='200px'
-              message='لا توجد قضايا'
-            />            
+            <div className="px-12">
+              <EmptyData 
+                height='200px'
+                message='لا توجد قضايا'
+              />  
+            </div>          
           }
         </div>
     </div>

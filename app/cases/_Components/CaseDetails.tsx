@@ -189,6 +189,7 @@ const CaseDetails = ({case_number}:{case_number:string}) => {
               </div>
               <IncludedSessionsTable 
                 sessions={data?.case?.sessions}
+                case_number={case_number}
               />
             </div>
           </>

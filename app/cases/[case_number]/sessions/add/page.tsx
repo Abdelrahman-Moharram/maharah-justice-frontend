@@ -53,7 +53,7 @@ const page = () => {
     .unwrap()
     .then(data=>{
         toast.success(data?.message)
-        router.push("/cases")
+        router.push("/sessions")
       })
       .catch((err:any)=>{     
         console.log(err);

@@ -26,15 +26,19 @@ const LawyerSearchInput = ({
     oldNameValue,
     required=true
 }:Props) => {
-    const [nameValue, setNameValue] = useState(oldNameValue)
+    const [nameValue, setNameValue] = useState<string>(oldNameValue)
     const [menu, setMenu] = useState(false)
     const [searchCustomer, {data}] = useSearchLawyerByNameMutation()
     
     useEffect(()=>{
-      if(nameValue){
-        searchCustomer({query:nameValue, exclude:exclude||''})
+      setNameValue(nameValue)
+    },[oldNameValue])
+
+    useEffect(()=>{
+      if(nameValue || oldNameValue){       
+        searchCustomer({query:nameValue || oldNameValue, exclude:exclude||''})
       }
-    },[nameValue])
+    },[nameValue, oldNameValue])
 
     const handleNameValue = (e:ChangeEvent<HTMLInputElement>) =>{
       setNameValue(e.target.value)
@@ -46,7 +50,7 @@ const LawyerSearchInput = ({
       onChange(id)
       setMenu(false)      
     }
-
+    
 
   return (
     <div className='relative'>
@@ -55,12 +59,11 @@ const LawyerSearchInput = ({
         labelId={labelId}
         onChange={handleNameValue}
         type={type}
-        value={nameValue}
-        defaultValue={oldNameValue}
+        value={nameValue || oldNameValue}
         required={required}
       />
       {
-        data?.lawyers?.length && nameValue && menu  ?
+        data?.lawyers?.length && (nameValue || oldNameValue) && menu  ?
         <div className='w-full absolute z-[100] max-h-[500px] overflow-y-auto bg-gray-100 p-1 space-y-2 rounded-md'>
         {
             data?.lawyers.map((customer:customerType)=>(

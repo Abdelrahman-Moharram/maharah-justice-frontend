@@ -29,21 +29,23 @@ const SelectInput = ({
         > 
             {label} 
         </label>
-        <select
-            name={labelId}
-            id={labelId}
-            onChange={onChange}
-            value={value}
-            required={required}
-            className={"mt-1 w-full py-1 px-4 bg-card border-[#F8F8F8] border rounded-xl outline-none "+ (errors?.length?"border-red-500":" border-none ")}
-            >
-            {
-                emptyoption?
-                    <option value=""></option>
-                :null
-            }
-            {children}
-        </select>
+        <div className="mt-1">
+            <select
+                    name={labelId}
+                    id={labelId}
+                    onChange={onChange}
+                    value={value}
+                    required={required}
+                    className={"mt-1 w-full  py-1 px-4 bg-card border-[#F8F8F8] border rounded-xl outline-none "+ (errors?.length?"border-red-500":" border-none ")}
+                >
+                {
+                    emptyoption?
+                        <option value=""></option>
+                    :null
+                }
+                {children}
+            </select>
+        </div>
 
         <div className="absolute">
             {

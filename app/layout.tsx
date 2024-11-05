@@ -6,7 +6,7 @@ import { Cairo } from "next/font/google";
 import { Setup } from "@/Components/utils";
 import CustomLayout from "./CustomLayout";
 
-const cairo = Cairo({ subsets: ["latin"],  });
+const cairo = Cairo({ subsets: ["latin"],display: 'swap', adjustFontFallback: false});
 
 
 

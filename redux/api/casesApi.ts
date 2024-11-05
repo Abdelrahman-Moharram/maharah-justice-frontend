@@ -38,8 +38,11 @@ const casesApiSlice = apiSlice.injectEndpoints({
                 }),
             }),
             getSessionForm: builder.query({
-                query:({case_number}:{case_number:string})=>({
+                query:({case_number, session_id}:{case_number:string, session_id?:string})=>({
                     url:base_url+case_number+"/session-form/",
+                    params:{
+                        session_id
+                    }
                 }),
             }),
             getCaseForm: builder.query({

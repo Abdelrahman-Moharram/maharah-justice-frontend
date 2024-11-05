@@ -2,33 +2,22 @@
 import arabic_en from "react-date-object/locales/arabic_en"
 import { useGetSessionFormDropDownsQuery } from "@/redux/api/utilsApi"
 import { useParams } from "next/navigation"
-import { ChangeEvent, useState } from "react"
-import Time from "react-datepicker/dist/time"
+import { ChangeEvent, useEffect, useState } from "react"
 import { DateObject } from "react-multi-date-picker"
+import { useEditSessionFormMutation } from "@/redux/api/sessionsApi"
+import { SessionFormType } from "@/Components/Types/sessions"
+import arabic_ar from "react-date-object/locales/arabic_ar"
 
-interface SessionType{
-    case_number: string,
-    court: string,
-    city: string,
-    state: string,
-    date_ar: DateObject | null,
-    time: Time | null,
-    link: string,
-    next_session_req: string,
-    notes: string,
-    record: string,
-    defenses: string,
-    lawyer: string,
-    alterlawyer: string,
-    session_attachments: File[] | null
-}
+import arabic from "react-date-object/calendars/arabic"
+
 
 export default function useSessionForm(){
     const [formErrors, setFormErrors] = useState<any>(null)
     const {data:dropDowns} = useGetSessionFormDropDownsQuery(undefined)
-    const {case_number}:{case_number:string} = useParams()
+    const [editSessionForm] = useEditSessionFormMutation()
+    const {case_number, id}:{case_number:string, id:string} = useParams()
     
-    const [session, setSession] = useState<SessionType>({
+    const [session, setSession] = useState<SessionFormType>({
         case_number:case_number,
         court:'',
         city:'',
@@ -42,8 +31,23 @@ export default function useSessionForm(){
         defenses:'',
         lawyer:'',
         alterlawyer:'',
+        lawyer_name:'',
+        alterlawyer_name:'',
         session_attachments:[]
     })
+    useEffect(()=>{
+        
+        if(id){
+            editSessionForm({id})
+            .then(res=>{
+                
+                setSession(res?.data?.session)      
+                const date = new DateObject({ date: res?.data?.session?.date_ar, format:'DD-MM-YYYY', calendar:arabic, locale:arabic_ar })
+                setSession(prev=>({...prev, date_ar: date}))          
+            })
+        }
+    },[id])
+    
     const onChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement> ) => {
         const { name, value } = event.target;
         setSession({ ...session, [name]: value });
@@ -66,6 +70,7 @@ export default function useSessionForm(){
     }
 
     const getSessionAsFormData = () =>{
+        
         const formData = new FormData()
         formData.append('case_number', session.case_number)
         formData.append('notes', session.notes)

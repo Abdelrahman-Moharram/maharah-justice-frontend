@@ -1,3 +1,4 @@
+
 export interface caseHomeCardType{
     case_number: string,
     customer_number: string,
@@ -8,3 +9,4 @@ export interface caseHomeCardType{
     defendant: string,
     state: string
 }
+

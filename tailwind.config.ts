@@ -8,6 +8,12 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      blur: {
+        DEFAULT: '0px', // Changes default blur to 0px
+        sm: '0px',
+        md: '0px',
+        lg: '0px',
+      },
       colors: {
         foreground: "var(--foreground)",
         'primary': '#FBB827',
@@ -28,5 +34,8 @@ const config: Config = {
     },    
   },
   plugins: [],
+  corePlugins:{
+    blur: false, // Disables all blur utilities
+  }
 };
 export default config;

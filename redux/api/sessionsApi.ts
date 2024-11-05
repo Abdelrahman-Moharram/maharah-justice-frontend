@@ -133,6 +133,23 @@ const sessionsApiSlice = apiSlice.injectEndpoints({
             invalidatesTags:['sessions']
 
         }),
+        editSession: builder.mutation({
+            query:({id, form}:{id:string, form:FormData})=>({
+                url:base_url + id + "/edit/",
+                body:form,
+                method:'PUT'
+            }),
+            invalidatesTags:['sessions']
+
+        }),
+        editSessionForm: builder.mutation({
+            query:({id}:{id:string})=>({
+                url:base_url +id+"/form/",
+                method:'GET'
+            }),
+            invalidatesTags:['sessions']
+
+        }),
         // ------------------------------------------
 
         deleteSession: builder.mutation({
@@ -161,5 +178,7 @@ export const {
     useGetWeeklySessionsListQuery,   
     useGetWeeklySessionsExcelMutation,   
     useDeleteSessionMutation,
-    useAddSessionMutation
+    useAddSessionMutation,
+    useEditSessionFormMutation,
+    useEditSessionMutation
 } = sessionsApiSlice    

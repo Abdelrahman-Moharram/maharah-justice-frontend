@@ -17,10 +17,10 @@ interface sessionsType{
     'أضيف بواسطة'           :string
 
 }
-const IncludedSessionsTable = ({sessions}:{sessions:sessionsType}) => {
+const IncludedSessionsTable = ({sessions, case_number}:{sessions:sessionsType, case_number:string}) => {
     const options = (id:string)=>(
         <div className='flex gap-4 items-start'>
-          <Link className=' text-green-600 text-lg transition-all rounded-full' href={`/sessions/${id}/edit`}><BiEdit /></Link>
+          <Link className=' text-green-600 text-lg transition-all rounded-full' href={`/cases/${case_number}/sessions/${id}/edit`}><BiEdit /></Link>
         </div>
       )
   return (

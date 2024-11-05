@@ -67,7 +67,7 @@ const page = () => {
               setDetailsSessionNumber(row?.case_number)
               handleDetailsModel()
             }} className=' text-blue-600 text-lg transition-all rounded-full' ><BsEye /></button>
-          <Link className=' text-green-600 text-lg transition-all rounded-full' href={`/sessions/${row?.id}/edit`}><BiEdit /></Link>
+          <Link className=' text-green-600 text-lg transition-all rounded-full' href={`/cases/${row?.case_number}/sessions/${row?.id}/edit`}><BiEdit /></Link>
           <button 
             onClick={()=>{
               setDeleteSession(row?.id)

@@ -15,7 +15,9 @@
   background-color: #fff;
 
 }
-
+.tw-blur, .blur, .blur-sm, .blur-md, .blur-lg {
+  filter: none !important; /* Removes any blur effect */
+}
 .dark {
   --background:37, 35, 41;
 
