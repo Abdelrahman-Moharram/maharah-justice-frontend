@@ -1,4 +1,3 @@
-import { useUpdateUser } from '@/Components/Hooks';
 import { createSlice } from '@reduxjs/toolkit';
 import Cookies from "js-cookie"
 const colormode = Cookies.get('colormode') || 'light'
