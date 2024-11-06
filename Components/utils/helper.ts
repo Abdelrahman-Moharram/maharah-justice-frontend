@@ -19,3 +19,14 @@ export const handleCaseBadgeColor = (state:string) =>{
     else
         return '#7E7E7E'
 }
+
+
+export const to_int_or_default = (val:string|null)=>{
+    try{
+        if(val)
+            return parseInt(val)
+    }
+    catch{
+    }
+    return null
+  }

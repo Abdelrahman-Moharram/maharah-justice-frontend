@@ -2,7 +2,7 @@
 
 import Breadcrumb from '@/Components/Common/Breadcrumb';
 import CaseForm from '@/Components/Forms/CaseForm'
-import { useEditCaseMutation, useGetCaseFormQuery } from '@/redux/api/casesApi';
+import { useEditCaseMutation } from '@/redux/api/casesApi';
 import { useGetCaseFormDropDownsQuery } from '@/redux/api/utilsApi';
 import { useParams, useRouter } from 'next/navigation';
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
@@ -10,6 +10,8 @@ import { HiBuildingLibrary } from 'react-icons/hi2';
 import { DateObject } from 'react-multi-date-picker';
 import { toast } from 'react-toastify';
 import arabic_en from "react-date-object/locales/arabic_en"
+import useCasesForm from '@/Components/Hooks/Cases/useCasesForm';
+import { isErrorsList } from '@/Components/Hooks/Common/useValidations';
 
 interface CaseType{
   case_number:  string;
@@ -33,11 +35,22 @@ interface CaseType{
 
 
 const page = () => {
-    const {case_number}:{case_number:string} = useParams()
+  const {
+    caseForm,
+    formErrors,
+    dropDowns,
+    case_number,
+    onChange,
+    changeDate,
+    selectChange,
+    changeCustomer,
+    changeCheckBox,
+    imageChange,
+    setFormErrors,
+    getCaseAsFormData
+  } = useCasesForm()
   const router = useRouter()
-  const {data:old_case_data, isLoading:getCaseFormLoading} = useGetCaseFormQuery({case_number})
   const [editCase, {isLoading}] = useEditCaseMutation()
-  const [caseForm, setcaseForm] = useState<CaseType>(old_case_data?.case)
 
   const BreadcrumbData = [
     {
@@ -55,79 +68,28 @@ const page = () => {
       title: 'تعديل قضية رقم "' + case_number+'"',
     }
   ]
-  useEffect(()=>{
-    setcaseForm(old_case_data?.case)
-  }, [getCaseFormLoading])
-  const [formErrors, setFormErrors] = useState(null)
-  const onChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement> ) => {
-    const { name, value } = event.target;
-    setcaseForm({ ...caseForm, [name]: value });
-  };
-  const changeCustomer = (val:string)=>{
-    setcaseForm({ ...caseForm, customer: val })
-  }
-  const selectChange = (e: ChangeEvent<HTMLSelectElement> )=>{
-      const { name, value } = e.target;        
-      setcaseForm({ ...caseForm, [name]: value });
-  }
-
-  const imageChange = (file:File )=>{
-      if(caseForm.case_attachment?.length)
-        setcaseForm({ ...caseForm, case_attachment: [...caseForm.case_attachment, file] });
-      else
-        setcaseForm({ ...caseForm, case_attachment: [file] });
-
-  }
-  const changeCheckBox = (event: ChangeEvent<HTMLInputElement>)  =>{
-    const { name, checked} = event.target;   
-      setcaseForm({ ...caseForm, [name]: checked })
-  }
-  const changeDate = (date:DateObject | null)=>{
-    setcaseForm({ ...caseForm, date_ar: date });
-  }
-  const {data: dropDowns} = useGetCaseFormDropDownsQuery(undefined)
+  
 
   
 
 
   const formSubmit = (event: FormEvent<HTMLFormElement>) =>{
     event.preventDefault()
-    const formData = new FormData()
-    formData.append('case_number', caseForm.case_number)
-    formData.append('agreement_number', caseForm.agreement_number)
-    formData.append('amount', caseForm.amount)
-    formData.append('notes', caseForm.notes)
-    formData.append('is_aganist_company', JSON.stringify(caseForm.is_aganist_company))
-    formData.append('court', caseForm.court)
-    formData.append('circular', caseForm.circular)
-    formData.append('city', caseForm.city)
-    formData.append('state', caseForm.state)
-    formData.append('litigation_type', caseForm.litigation_type)
-    formData.append('company_representative', caseForm.company_representative)
-    formData.append('customer', caseForm.customer)
-    formData.append('cust_phone_number', caseForm.cust_phone_number)
-    formData.append('commercial_number', caseForm.commercial_number)
-    formData.append('date_ar', caseForm.date_ar?.setLocale(arabic_en).toString()??'')
-
-    if(caseForm?.case_attachment?.length)
-      for (let attch of caseForm?.case_attachment){
-        formData.append('case_attachments', attch)
-      }
-
-    
-    
-    
-    
-      editCase({case_number ,form:formData})
-    .unwrap()
-    .then(data=>{
-        toast.success(data?.message)
-        router.push("/cases")
-      })
-      .catch((err:any)=>{     
-        setFormErrors(err.data.errors)
-      })
+    if(isErrorsList(formErrors)){
+      toast.error('برجاء التأكد من إدخال بيانات القضية بشكل صحيح أولا')
     }
+    else{
+      editCase({case_number ,form:getCaseAsFormData()})
+      .unwrap()
+      .then(data=>{
+          toast.success(data?.message)
+          router.push("/cases")
+        })
+        .catch((err:any)=>{     
+          setFormErrors(err.data.errors)
+        })
+    }
+  }
     
   return (
   <div className='p-5 space-y-10 rounded-lg'>

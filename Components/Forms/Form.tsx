@@ -8,7 +8,7 @@ interface Config {
 	labelId: string;
 	type: string;
 	value: string;
-	placeholder: string;
+	placeholder?: string;
 	link?: {
 		linkText: string;
 		linkUrl: string;

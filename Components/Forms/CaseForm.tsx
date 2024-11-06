@@ -5,6 +5,8 @@ import ToggledCard from '../Cards/ToggledCard';
 import CustomerSearchInput from './CustomerSearchInput';
 import { DateObject } from 'react-multi-date-picker';
 import Link from 'next/link';
+import { ValidationsType } from '../Types/Others';
+import { caseNumberRegex, commercialNumberRegex, hijriDateRegex, phoneNumberRegex } from '../Hooks/Common/validationsRegexRepo';
 
 interface circularType{
     id: string;
@@ -42,19 +44,18 @@ interface Props{
     company_representatives:baseType[];
     courts:baseType[];
     circulars:circularType[];
-  
-    onChange:(event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement> )=>void;
-    changeCheckBox:(event: ChangeEvent<HTMLInputElement> )=>void;
-    selectChange:(e: ChangeEvent<HTMLSelectElement> )=> void;
-    imageChange?: (file:File )=> void | undefined;
-    changeCustomer: (val:string)=>void,
     caseForm:CaseType,
-    formSubmit:(e:FormEvent<HTMLFormElement>) =>void
     isLoading:boolean
     errors?:any | null
-    type?: string
     add?:boolean,
-    changeDate:(date:DateObject | null)=>void
+
+    onChange:(event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>, validationSchema?:ValidationsType )=>void;
+    changeCheckBox:(event: ChangeEvent<HTMLInputElement>, validationSchema?:ValidationsType )=>void;
+    selectChange:(e: ChangeEvent<HTMLSelectElement>, validationSchema?:ValidationsType )=> void;
+    imageChange?: (file:File )=> void | undefined;
+    changeCustomer: (val:string, validationSchema?:ValidationsType)=>void,
+    formSubmit:(e:FormEvent<HTMLFormElement>) =>void
+    changeDate:(date:DateObject | null, validationSchema?:ValidationsType)=>void
 }
 const CaseForm = ({
     onChange, 
@@ -64,7 +65,6 @@ const CaseForm = ({
     changeCustomer, 
     caseForm, 
     imageChange, 
-    type, 
     add, 
     isLoading, 
     LitigationTypes,
@@ -102,7 +102,7 @@ const CaseForm = ({
                     <Input
                         labelId={'case_number'}
                         type={'text'}
-                        onChange={onChange}
+                        onChange={e=>onChange(e, {minLength:{value:10}, alter_name:'رقم القضية', regex:{value:caseNumberRegex, message:'برجاء التأكد من رقم القضية'}})}
                         value={caseForm?.case_number}
                         label={'رقم القضية'}
                         required= {true}
@@ -111,7 +111,7 @@ const CaseForm = ({
                 </div>
                 <HijriDateInput
                     labelId={'date_ar'}
-                    onChange={changeDate}
+                    onChange={e=>changeDate(e,  {regex:{value:hijriDateRegex, message:'تاريخ القضية غير صحيح'}})}
                     value={caseForm?.date_ar}
                     label={'تاريخ القضية'}
                     required= {true}
@@ -220,7 +220,7 @@ const CaseForm = ({
                 </SelectInput>
 
                 <Input
-                    labelId={'amount'}
+                    labelId={'amount'} // need to add pattern to it
                     type={'text'}
                     onChange={onChange}
                     value={caseForm?.amount}
@@ -232,7 +232,7 @@ const CaseForm = ({
                 <Input
                     labelId={'agreement_number'}
                     type={'text'}
-                    onChange={onChange}
+                    onChange={e=>onChange(e)}
                     value={caseForm?.agreement_number}
                     label={'رقم الإتفاقية'}
                     required= {true}
@@ -256,7 +256,7 @@ const CaseForm = ({
                     labelId='custumer'
                     onChange={changeCustomer}
                     // emptyoption={true}
-                    // errors={errors?.litigation_type}
+                    errors={errors?.customer}
                     oldNameValue={caseForm?.customer_name}
                     type='text'
                 >
@@ -265,7 +265,7 @@ const CaseForm = ({
                 <Input
                     labelId={'cust_phone_number'}
                     type={'text'}
-                    onChange={onChange}
+                    onChange={e=>onChange(e, {alter_name:"رقم جوال العميل", regex:{value:phoneNumberRegex, message:'برجاء التأكد من رقم جوال العميل'}})}
                     value={caseForm?.cust_phone_number}
                     label={'رقم جوال العميل'}
                     required= {true}
@@ -276,7 +276,7 @@ const CaseForm = ({
                 <Input
                     labelId={'commercial_number'}
                     type={'text'}
-                    onChange={onChange}
+                    onChange={(e)=>onChange(e, {minLength:{value:10}, regex:{value:commercialNumberRegex, message:'برجاء التأكد من رقم السجل التجاري'}})}
                     value={caseForm?.commercial_number}
                     label={'رقم السجل التجاري'}
                     required= {true}

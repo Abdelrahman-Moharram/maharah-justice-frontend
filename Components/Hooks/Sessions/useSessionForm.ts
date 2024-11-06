@@ -9,6 +9,8 @@ import { SessionFormType } from "@/Components/Types/sessions"
 import arabic_ar from "react-date-object/locales/arabic_ar"
 
 import arabic from "react-date-object/calendars/arabic"
+import { ValidationsType } from "@/Components/Types/Others"
+import { DefaultInputValidate } from "../Common/useValidations"
 
 
 export default function useSessionForm(){
@@ -40,7 +42,6 @@ export default function useSessionForm(){
         if(id){
             editSessionForm({id})
             .then(res=>{
-                
                 setSession(res?.data?.session)      
                 const date = new DateObject({ date: res?.data?.session?.date_ar, format:'DD-MM-YYYY', calendar:arabic, locale:arabic_ar })
                 setSession(prev=>({...prev, date_ar: date}))          
@@ -48,19 +49,27 @@ export default function useSessionForm(){
         }
     },[id])
     
-    const onChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement> ) => {
+    const onChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>, validationSchema?:ValidationsType ) => {
         const { name, value } = event.target;
+        if(validationSchema)
+            setFormErrors({...formErrors, [name]:DefaultInputValidate({name, value, validationSchema})})
         setSession({ ...session, [name]: value });
     };
-    const changeDate = (date:DateObject | null)=>{
+    const changeDate = (date:DateObject | null, validationSchema?:ValidationsType)=>{
+        if(validationSchema)
+            setFormErrors({...formErrors, date_ar:DefaultInputValidate({name:'date_ar', value:date||"", validationSchema})})
         setSession({ ...session, date_ar: date });
     }
-    const selectChange = (e: ChangeEvent<HTMLSelectElement> )=>{
+    const selectChange = (e: ChangeEvent<HTMLSelectElement>,  validationSchema?:ValidationsType)=>{
         const { name, value } = e.target;        
+        if(validationSchema)
+            setFormErrors({...formErrors, [name]:DefaultInputValidate({name, value, validationSchema})})
         setSession({ ...session, [name]: value });
     }
-    const changeLawyer = (val:string)=>{
-    setSession({ ...session, lawyer: val })
+    const changeLawyer = (val:string,  validationSchema?:ValidationsType)=>{
+        if(validationSchema)
+            setFormErrors({...formErrors, lawyer:DefaultInputValidate({name:'lawyer', value:val, validationSchema})})
+        setSession({ ...session, lawyer: val })
     }
     const imageChange = (file:File)=>{
         if(session.session_attachments?.length)
@@ -80,7 +89,6 @@ export default function useSessionForm(){
         formData.append('date_ar', session.date_ar?.setLocale(arabic_en).toString()??'')
         formData.append('time', String(session.time))
         formData.append('lawyer', session.lawyer)
-        formData.append('alterlawyer', session.alterlawyer)
         formData.append('link', session.link)
 
         formData.append('notes', session.notes)
@@ -88,11 +96,13 @@ export default function useSessionForm(){
         formData.append('record', session.record)
         formData.append('next_session_req', session.next_session_req)
 
-
+        if(session.alterlawyer)
+            formData.append('alterlawyer', session.alterlawyer)
+    
         if(session?.session_attachments?.length)
-        for (let attch of session?.session_attachments){
-            formData.append('session_attachments', attch)
-        }
+            for (let attch of session?.session_attachments){
+                formData.append('session_attachments', attch)
+            }
 
         return formData
     }

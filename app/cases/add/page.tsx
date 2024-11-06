@@ -3,149 +3,76 @@
 import Breadcrumb from '@/Components/Common/Breadcrumb';
 import CaseForm from '@/Components/Forms/CaseForm'
 import { useCreateCaseMutation } from '@/redux/api/casesApi';
-import { useGetCaseFormDropDownsQuery } from '@/redux/api/utilsApi';
 import { useRouter } from 'next/navigation';
-import React, { ChangeEvent, FormEvent, useState } from 'react'
-import { HiBuildingLibrary } from 'react-icons/hi2';
-import { DateObject } from 'react-multi-date-picker';
+import React, { FormEvent} from 'react'
 import { toast } from 'react-toastify';
-import arabic_en from "react-date-object/locales/arabic_en"
+import useCasesForm from '@/Components/Hooks/Cases/useCasesForm';
+import { isErrorsList } from '@/Components/Hooks/Common/useValidations';
 
-interface CaseType{
-  case_number:  string;
-  agreement_number: string;
-  amount: string;
-  notes:  string;
-  is_aganist_company: boolean;
-  court:  string;
-  circular: string;
-  city: string;
-  state:  string;
-  litigation_type:  string;
-  company_representative: string;
-  customer: string;
-  cust_phone_number:  string;
-  commercial_number:  string;
-  date_ar:  DateObject|null;
-  case_attachment?: File[] | null,
-  customer_name:''
-}
-
+const BreadcrumbData = [
+  {
+    href: '/',
+    title: 'الصفحة الرئيسية',
+  },
+  {
+    href: '/cases',
+    title: 'القضايا',
+    // icon: <HiBuildingLibrary />
+  },
+  {
+    href: '/cases/add',
+    title: 'إنشاء قضية',
+    current:true
+  }
+]
 
 const page = () => {
   const router = useRouter()
   const [createCase, {isLoading}] = useCreateCaseMutation()
-  const [caseForm, setcaseForm] = useState<CaseType>({
-    case_number:'',
-    agreement_number:'',
-    amount:'',
-    notes:'',
-    is_aganist_company:false,
-    court:'',
-    circular:'',
-    city:'',
-    state:'',
-    litigation_type:'',
-    company_representative:'',
-    customer:'',
-    cust_phone_number:'',
-    commercial_number:'',
-    date_ar:null,
-    case_attachment:[],
-    customer_name:''
-  })
+  const {
+    caseForm,
+    formErrors,
+    dropDowns,
+    case_number,
+    onChange,
+    changeDate,
+    selectChange,
+    changeCustomer,
+    changeCheckBox,
+    imageChange,
+    setFormErrors,
+    getCaseAsFormData
+  } = useCasesForm()
 
-  const BreadcrumbData = [
-    {
-      href: '/',
-      title: 'الصفحة الرئيسية',
-    },
-    {
-      href: '/cases',
-      title: 'القضايا',
-      // icon: <HiBuildingLibrary />
-    },
-    {
-      href: '/cases/add',
-      title: 'إنشاء قضية',
-      current:true
-    }
-  ]
-  const [formErrors, setFormErrors] = useState(null)
-  const onChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement> ) => {
-    const { name, value } = event.target;
-    setcaseForm({ ...caseForm, [name]: value });
-  };
-  const changeCustomer = (val:string)=>{
-    setcaseForm({ ...caseForm, customer: val })
-  }
-  const selectChange = (e: ChangeEvent<HTMLSelectElement> )=>{
-      const { name, value } = e.target;        
-      setcaseForm({ ...caseForm, [name]: value });
-  }
-
-  const imageChange = (file:File )=>{
-      if(caseForm.case_attachment?.length)
-        setcaseForm({ ...caseForm, case_attachment: [...caseForm.case_attachment, file] });
-      else
-        setcaseForm({ ...caseForm, case_attachment: [file] });
-  }
-  const changeCheckBox = (event: ChangeEvent<HTMLInputElement>)  =>{
-    const { name, checked } = event.target;   
-      setcaseForm({ ...caseForm, [name]: checked })
-  }
-  const changeDate = (date:DateObject | null)=>{
-    setcaseForm({ ...caseForm, date_ar: date });
-  }
-  const {data: dropDowns} = useGetCaseFormDropDownsQuery(undefined)
-
+  
   
 
 
   const formSubmit = (event: FormEvent<HTMLFormElement>) =>{
     event.preventDefault()
-    const formData = new FormData()
-    formData.append('case_number', caseForm.case_number)
-    formData.append('agreement_number', caseForm.agreement_number)
-    formData.append('amount', caseForm.amount)
-    formData.append('notes', caseForm.notes)
-    formData.append('is_aganist_company', JSON.stringify(caseForm.is_aganist_company))
-    formData.append('court', caseForm.court)
-    formData.append('circular', caseForm.circular)
-    formData.append('city', caseForm.city)
-    // formData.append('state', caseForm.state)
-    formData.append('litigation_type', caseForm.litigation_type)
-    formData.append('company_representative', caseForm.company_representative)
-    formData.append('customer', caseForm.customer)
-    formData.append('cust_phone_number', caseForm.cust_phone_number)
-    formData.append('commercial_number', caseForm.commercial_number)
-    formData.append('date_ar', caseForm.date_ar?.setLocale(arabic_en).toString()??'')
-
-    if(caseForm?.case_attachment?.length)
-      for (let attch of caseForm?.case_attachment){
-        formData.append('case_attachments', attch)
-      }
+    console.log(isErrorsList(formErrors));
     
-    
-    
-    
-    createCase({form:formData})
-    .unwrap()
-    .then(data=>{
-        toast.success(data?.message)
-        router.push("/cases")
-      })
-      .catch((err:any)=>{     
-        setFormErrors(err.data.errors)
-      })
+    if(isErrorsList(formErrors)){
+      toast.error('برجاء التأكد من إدخال بيانات القضية بشكل صحيح أولا')
     }
+    else{
+      createCase({form:getCaseAsFormData()})
+      .unwrap()
+      .then(data=>{
+          toast.success(data?.message)
+          router.push("/cases")
+        })
+        .catch((err:any)=>{     
+          setFormErrors(err.data.errors)
+        })
+    }
+  }
     
   return (
   <div className='p-5 space-y-10 rounded-lg'>
     <Breadcrumb 
       items={BreadcrumbData}
     />
-    
     <CaseForm 
       caseForm={caseForm}
       LitigationTypes={dropDowns?.litigation_types}

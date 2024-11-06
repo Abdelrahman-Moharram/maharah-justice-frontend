@@ -3,6 +3,8 @@ import CaseDetailsOverLay from '@/app/cases/_Components/CaseDetailsOverLay'
 import React, { ChangeEvent, useState } from 'react'
 import { ImageSkeleton } from '../Common'
 import { useGetNavBarSearchQuery } from '@/redux/api/casesApi'
+import { IoCloseSharp } from 'react-icons/io5'
+import { IoMdCloseCircle } from 'react-icons/io'
 
 const NavBarSearch = () => {
     const [searchValue, setSearchValue] = useState('')
@@ -13,9 +15,6 @@ const NavBarSearch = () => {
         setSearchValue(e.target.value)
     }
     const handleDetailsModal = () =>{
-        if(modal){
-            setSearchValue('')
-        }
         setModal(!modal)
     }
     const handleCaseNumber = (case_number:string|null) =>{
@@ -37,12 +36,21 @@ const NavBarSearch = () => {
             open={modal}
         />
         <div className="w-[60%] relative">
-            <input
-                className='w-full py-2 px-5 bg-card outline-none border-none rounded-lg'
-                placeholder='ابحث برقم العميل أو القضية أو رقم الهوية أو رقم الجوال'
-                value={searchValue}
-                onChange={handleSearchValue}
-            />
+            <div className="flex">
+                <input
+                    className='w-full py-2 px-5 bg-card outline-none border-none rounded-lg'
+                    placeholder='ابحث برقم العميل أو القضية أو رقم الهوية أو رقم الجوال'
+                    value={searchValue}
+                    onChange={handleSearchValue}
+                />
+                {
+                    searchValue?
+                        <button onClick={()=>setSearchValue('')} className="p-1.5 hover:bg-secondary/20 top-1.5 rounded-full end-2 absolute">
+                            <IoMdCloseCircle />
+                        </button>
+                    :null
+                }
+            </div>
             <div className={"absolute drop-shadow-lg z-[3] w-[100%] mt-2 transition-all ease-in duration-300 rounded-md bg-card overflow-y-auto "+(searchValue?'max-h-[20rem]':'max-h-0')}>
                 <div className='p-5'>
                     {/* <p className="text-xs">القضايا</p> */}

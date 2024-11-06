@@ -125,3 +125,34 @@ animation: fadein 0.35s ease forwards;
 .swiper-button-next:hover, .swiper-button-prev:hover {
   color: #BDBFBF !important ; 
 }
+
+
+
+
+
+
+
+
+/*Scroll bar nav*/
+.side-nav-ul::-webkit-scrollbar {
+  width: 0px;
+}
+
+/* Track */
+body::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #F5F5F5;
+}
+
+body::-webkit-scrollbar {
+  width: 6px;
+  background-color: #fab826;
+}
+
+body::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+  background-color: #fab826;
+}
+

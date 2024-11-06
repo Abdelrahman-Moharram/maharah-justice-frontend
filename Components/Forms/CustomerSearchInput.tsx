@@ -13,7 +13,8 @@ interface Props{
     type        :string
     onChange:(val:string)=>void | undefined;
     exclude?: string[],
-    oldNameValue:string
+    oldNameValue:string,
+    errors?:any[]
 }
 const CustomerSearchInput = ({
     label,
@@ -21,7 +22,8 @@ const CustomerSearchInput = ({
     exclude,
     type,
     onChange,
-    oldNameValue
+    oldNameValue,
+    errors
 }:Props) => {
     const [nameValue, setNameValue] = useState(oldNameValue)
     const [menu, setMenu] = useState(false)
@@ -55,7 +57,7 @@ const CustomerSearchInput = ({
         value={nameValue}
         defaultValue={oldNameValue}
         required
-        
+        errors={errors}
       />
       {
         data?.customers?.length && nameValue && menu  ?
@@ -63,8 +65,9 @@ const CustomerSearchInput = ({
         {
             data?.customers.map((customer:customerType)=>(
                 <div 
-                    className="bg-container hover:bg-card transition-all w-full p-2 rounded-md cursor-pointer"
-                    onClick={()=>handleValues({name: customer.name, id: customer.id})}
+                  key={customer?.id}
+                  className="bg-container hover:bg-card transition-all w-full p-2 rounded-md cursor-pointer"
+                  onClick={()=>handleValues({name: customer.name, id: customer.id})}
                 >
                     {customer.name}
                 </div>

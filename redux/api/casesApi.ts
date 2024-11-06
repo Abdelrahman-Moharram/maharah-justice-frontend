@@ -45,11 +45,10 @@ const casesApiSlice = apiSlice.injectEndpoints({
                     }
                 }),
             }),
-            getCaseForm: builder.query({
+            getCaseForm: builder.mutation({
                 query:({case_number}:{case_number:string})=>({
                     url:base_url+case_number+"/form/",
                 }),
-                providesTags:['cases']
             }),
             exportCasesExcel: builder.mutation({
                 query:()=>({
@@ -93,7 +92,7 @@ export const {
     useExportCasesExcelMutation,
     useCreateCaseMutation,
     useDeleteCaseMutation,
-    useGetCaseFormQuery,
+    useGetCaseFormMutation,
     useGetCaseDetailsMutation,
     useEditCaseMutation,
     useGetSessionFormQuery,

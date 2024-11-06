@@ -1,6 +1,6 @@
 'use client';
 
-import { useVerify } from '@/Components/Hooks';
+import { useVerify } from '@/Components/Hooks/Auth';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 

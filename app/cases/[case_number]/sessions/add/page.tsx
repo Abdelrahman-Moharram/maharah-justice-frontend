@@ -1,14 +1,14 @@
 'use client'
+import React, { FormEvent } from 'react'
 import SessionForm from '@/app/sessions/_Components/SessionForm'
 import Breadcrumb from '@/Components/Common/Breadcrumb'
 import { useRouter } from 'next/navigation'
-import React, { FormEvent } from 'react'
-
 import { useAddSessionMutation } from '@/redux/api/sessionsApi'
 import { toast } from 'react-toastify'
-import useSessionForm from '@/app/sessions/_Components/useSessionForm'
 import { useGetSessionFormQuery } from '@/redux/api/casesApi'
 import CaseInfo from './_Components/CaseInfo'
+import { useSessionForm } from '@/Components/Hooks/Sessions'
+import { isErrorsList } from '@/Components/Hooks/Common/useValidations'
 
 
 const BreadcrumbData = [
@@ -42,27 +42,31 @@ const page = () => {
     setFormErrors, 
     case_number,
     getSessionAsFormData,
-
   } = useSessionForm()
 
  
   const {data, isLoading:caseLoading} = useGetSessionFormQuery({case_number})
   const formSubmit = (event: FormEvent<HTMLFormElement>) =>{
     event.preventDefault()
-    addSession({form:getSessionAsFormData()})
-    .unwrap()
-    .then(data=>{
-        toast.success(data?.message)
-        router.push("/sessions")
-      })
-      .catch((err:any)=>{     
-        console.log(err);
-        if(err.data.errors)
-          setFormErrors(err.data.errors)
-        if(err.data.message)
-          toast.error(err.data.message)
+    if(!isErrorsList(formErrors)){
+      toast.error('برجاء التأكد من إدخال بيانات الجلسة بشكل صحيح أولا')
+    }
+    else{
+      addSession({form:getSessionAsFormData()})
+      .unwrap()
+      .then(data=>{
+          toast.success(data?.message)
+          router.push("/sessions")
+        })
+        .catch((err:any)=>{     
+          console.log(err);
+          if(err.data.errors)
+            setFormErrors(err.data.errors)
+          if(err.data.message)
+            toast.error(err.data.message)
       })
     }
+  }
   
   return (
     <div className='min-h-[300px]  space-y-4'>

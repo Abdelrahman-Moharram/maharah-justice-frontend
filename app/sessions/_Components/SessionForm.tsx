@@ -8,6 +8,7 @@ import Textarea from '@/Components/Forms/TextArea'
 import Button from '@/Components/Common/Button'
 import Link from 'next/link'
 import { SessionFormType } from '@/Components/Types/sessions'
+import { ValidationsType } from '@/Components/Types/Others'
 
 interface baseType{
     id: string;
@@ -23,7 +24,7 @@ interface Props{
     isLoading:boolean,
     formSubmit:(e:FormEvent<HTMLFormElement>) =>void
     changeDate: (date:DateObject | null) => void,
-    onChange: (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => void,
+    onChange: (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>, validationSchema?:ValidationsType) => void,
     selectChange: (e: ChangeEvent<HTMLSelectElement> ) => void,
     changeLawyer:(val:string)=>void
     imageChange:(file:File)=>void
@@ -53,7 +54,11 @@ const SessionForm = ({
         }
     }
   return (
-    <form onSubmit={formSubmit}>
+    <form 
+        encType='multipart/form-data'
+        onSubmit={formSubmit}
+        method='post'
+    >
         <div className="grid grid-cols-2 drop-shadow-md p-5 gap-4 ">
             <div className="mb-3">
                 <HijriDateInput
@@ -125,7 +130,7 @@ const SessionForm = ({
                     label='المحامي'
                     onChange={changeLawyer}
                     oldNameValue={session?.lawyer_name}
-                    // errors={formErrors?.lawyer}
+                    errors={formErrors?.lawyer}
                 />
             </div>
             <div className="mb-3">
@@ -137,7 +142,7 @@ const SessionForm = ({
                     oldNameValue={session?.alterlawyer_name}
                     exclude={session?.lawyer}
                     required={false}
-                    // errors={formErrors?.lawyer}
+                    errors={formErrors?.alterlawyer}
                 />
             </div>
 
@@ -166,7 +171,7 @@ const SessionForm = ({
                     type='url'
                     labelId='link'
                     label='رابط الجلسة'
-                    onChange={onChange}
+                    onChange={e=>onChange(e, {regex:{value:'(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})', message:'برجاء إدخال رابط جلسة صالح'}})}
                     value={session?.link??''}
                     errors={formErrors?.link}
                 />

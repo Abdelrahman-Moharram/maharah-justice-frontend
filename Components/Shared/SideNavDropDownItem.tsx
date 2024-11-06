@@ -38,7 +38,7 @@ const SideNavDropDownItem = ({title, icon, innerLinks, baseKey}:Props) => {
                             </span>
                         </>
                     :
-                        <Link href={"/"+baseKey} className="flex items-center gap-2 text-sm font-medium "> 
+                        <Link href={"/"+baseKey} className="flex whitespace-nowrap items-center gap-2 text-sm font-medium "> 
                             <div className="hover:text-primary">
                                 {icon}
                             </div> 
@@ -52,13 +52,13 @@ const SideNavDropDownItem = ({title, icon, innerLinks, baseKey}:Props) => {
             </summary>
             {
                 innerLinks?.length?
-                    <ul className="mt-2  space-y-1 px-5">
+                    <ul className="mt-2 space-y-1 px-5">
                         {
                             innerLinks.map((link, idx)=>(
                                 <li key={idx}>
                                     <Link
                                         href={link.link}
-                                        className="flex items-center gap-2 rounded-lg px-11 py-2 text-xs font-medium hover:text-primary hover:bg-secondary transition-all"
+                                        className="flex whitespace-nowrap items-center gap-2 rounded-lg px-11 py-2 text-xs font-medium hover:text-primary hover:bg-secondary transition-all"
                                     >
                                         {link?.icon}
                                         {link.title}

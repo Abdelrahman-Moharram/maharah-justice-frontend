@@ -12,16 +12,9 @@ import { FaTrash } from "react-icons/fa";
 import { toast } from 'react-toastify'
 import CaseDetailsOverLay from './_Components/CaseDetailsOverLay'
 import DeleteCaseModal from './_Components/DeleteCaseModal'
+import { to_int_or_default } from '@/Components/utils/helper'
 
-const to_int_or_default = (val:string|null)=>{
-  try{
-      if(val)
-          return parseInt(val)
-  }
-  catch{
-  }
-  return null
-}
+
 
 const page = () => {
     const [showCaseDetails, setShowCaseDetails] = useState<Boolean>(false)
@@ -45,14 +38,14 @@ const page = () => {
     )
     const router = useRouter()
     const pathname = usePathname()
-    const filter = searchParams.get('filter')
     if(!size){
-        router.push(pathname + '?' + createQueryString('size', "10"))
+      router.push(pathname + '?' + createQueryString('size', "10"))
     }
     if(!page){
-        page = 1
-        router.push(pathname + '?' + createQueryString('page', "1"))
+      page = 1
+      router.push(pathname + '?' + createQueryString('page', "1"))
     }
+    const filter = searchParams.get('filter')
 
     const {data, isLoading} = useGetCasesListQuery({page:page-1, size:size??10, filter:filter}, {skipPollingIfUnfocused:true})  
     const [ExportCases] = useExportCasesExcelMutation() 

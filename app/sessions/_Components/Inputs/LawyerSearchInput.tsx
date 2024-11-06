@@ -4,7 +4,7 @@ import { useSearchLawyerByNameMutation } from '@/redux/api/utilsApi'
 import { Input } from '@/Components/Forms';
 
 
-interface customerType{
+interface lawyerType{
     id: string;
     full_name: string;
 }
@@ -15,7 +15,9 @@ interface Props{
     onChange:(val:string)=>void | undefined;
     exclude?: string,
     oldNameValue:string,
-    required?:boolean
+    required?:boolean,
+    errors?:any[]
+
 }
 const LawyerSearchInput = ({
     label,
@@ -24,11 +26,12 @@ const LawyerSearchInput = ({
     type,
     onChange,
     oldNameValue,
-    required=true
+    required=true,
+    errors
 }:Props) => {
     const [nameValue, setNameValue] = useState<string>(oldNameValue)
     const [menu, setMenu] = useState(false)
-    const [searchCustomer, {data}] = useSearchLawyerByNameMutation()
+    const [searchLawyer, {data}] = useSearchLawyerByNameMutation()
     
     useEffect(()=>{
       setNameValue(nameValue)
@@ -36,7 +39,7 @@ const LawyerSearchInput = ({
 
     useEffect(()=>{
       if(nameValue || oldNameValue){       
-        searchCustomer({query:nameValue || oldNameValue, exclude:exclude||''})
+        searchLawyer({query:nameValue || oldNameValue, exclude:exclude||''})
       }
     },[nameValue, oldNameValue])
 
@@ -61,17 +64,19 @@ const LawyerSearchInput = ({
         type={type}
         value={nameValue || oldNameValue}
         required={required}
+        errors={errors}
       />
       {
         data?.lawyers?.length && (nameValue || oldNameValue) && menu  ?
         <div className='w-full absolute z-[100] max-h-[500px] overflow-y-auto bg-gray-100 p-1 space-y-2 rounded-md'>
         {
-            data?.lawyers.map((customer:customerType)=>(
+            data?.lawyers.map((lawyer:lawyerType)=>(
                 <div 
+                  key={lawyer?.id}
                   className="bg-container hover:bg-card transition-all w-full p-2 rounded-md cursor-pointer"
-                  onClick={()=>handleValues({name: customer.full_name, id: customer.id})}
+                  onClick={()=>handleValues({name: lawyer.full_name, id: lawyer.id})}
                 >
-                  {customer.full_name}
+                  {lawyer.full_name}
                 </div>
             ))
         }

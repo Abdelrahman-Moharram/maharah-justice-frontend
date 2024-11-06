@@ -56,10 +56,10 @@ const UserNavDropDown = ({ user }: Props) => {
                 <path
                   d="M16.6001 7.45825L11.1668 12.8916C10.5251 13.5333 9.47515 13.5333 8.83348 12.8916L3.40015 7.45825"
                   stroke="#3F4040"
-                  stroke-width="1.5"
-                  stroke-miterlimit="10"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="1.5"
+                  strokeMiterlimit="10"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
               </svg>
 
