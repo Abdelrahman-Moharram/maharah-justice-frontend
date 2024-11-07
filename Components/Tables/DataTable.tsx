@@ -38,7 +38,7 @@ const DataTable = ({options, startOptions, data, isLoading, emptyLinkHref, empty
         const rendered_row = []
         for(let cell in row){
             if(typeof row === 'object' && Object.keys(row).includes(cell) && (!fnKeys || !fnKeys.includes(cell))){
-                rendered_row.push(<td className="whitespace-nowrap px-4 py-2 ">{row[cell]}</td>)
+                rendered_row.push(<td className="whitespace-nowrap px-4 py-2 ">{row[cell]||'-'}</td>)
             }
         }
         return rendered_row

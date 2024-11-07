@@ -6,6 +6,8 @@ import { setAuth } from '@/redux/features/authSlice'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { usePathname, useRouter } from 'next/navigation'
 import React, { Suspense, useEffect } from 'react'
+import Cookies from "js-cookie"
+
 
 interface Props {
     children: React.ReactNode
@@ -20,7 +22,7 @@ const CustomLayout = ({ children }: Props) => {
     const { isAuthenticated, isLoading } = useAppSelector(state => state.auth)
 
     useEffect(() => {
-        // Set authentication state when data is retrieved
+        // Set authentication state when data is retrieved        
         if (data) {
             dispatch(setAuth(data))
         }
@@ -28,25 +30,31 @@ const CustomLayout = ({ children }: Props) => {
 
     useEffect(() => {
         // Redirect if not authenticated and loading is complete
-        if (!isAuthenticated && !isLoading) {
+        
+        if (!Cookies.get('access_token')) {
             router.push(`/auth/login?next=${pathName}`)
         }
-    }, [isAuthenticated, isLoading, pathName, router])
-
+    }, [Cookies.get('access_token')])
+    
     return (
-        <Suspense>
-            {isAuthenticated ? (
+        <>
+            {Cookies.get('access_token') ? (
                 <div className='flex gap-2'>
                     <SideNav />
                     <div className="px-10 w-full min-h-[calc(100vh-78px)] mx-auto overflow-hidden">
                         <NavBar />
-                        {children}
+                        <Suspense>
+                            {children}
+                        </Suspense>
                     </div>
                 </div>
             ) : (
-                <div>{children}</div>
+                <Suspense>
+                    {children}
+                </Suspense>
             )}
-        </Suspense>
+        </>
+        
     )
 }
 

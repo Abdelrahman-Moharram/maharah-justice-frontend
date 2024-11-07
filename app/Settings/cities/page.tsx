@@ -1,8 +1,12 @@
 'use client'
-
 import Breadcrumb from '@/Components/Common/Breadcrumb'
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import CitiesList from './_Components/CitiesList'
+import { usePathname, useSearchParams, useRouter } from 'next/navigation'
+import { to_int_or_default } from '@/Components/utils/helper'
+import { FaPlusCircle } from 'react-icons/fa'
+import CityFormModal from './_Components/CityFormModal'
+
 const BreadcrumbData = [
   {
     href: '/',
@@ -16,20 +20,59 @@ const BreadcrumbData = [
 ]
 
 const page = () => {
-  
+  const searchParams = useSearchParams()
+  const [modal, setModal] = useState(false)
+  const handleToggler = () =>{   
+    setModal(!modal)
+  }
+  let size = to_int_or_default(searchParams.get("size")) 
+  let page = to_int_or_default(searchParams.get("page")) 
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString())
+      params.set(name, value)
+      return params.toString()
+    },
+    [searchParams]
+  )
+  const router = useRouter()
+  const pathname = usePathname()
+  if(!size){
+    size = 24
+    router.push(pathname + '?' + createQueryString('size', '24'))
+  }
+  if(!page){
+    page = 1
+    router.push(pathname + '?' + createQueryString('page', "1"))
+  }
   
   return (
-    <div className='px-4'>
-      <div className="my-8">
-        <Breadcrumb
-          items={BreadcrumbData}
-        />
-      </div>
-      
-      <CitiesList
+    <>
+      <CityFormModal
+        handleToggler={handleToggler}
+        open={modal}
       />
-    
-    </div>
+      <div className='px-4'>
+        <div className="my-8 flex justify-between">
+          <Breadcrumb
+            items={BreadcrumbData}
+          />
+          <button 
+            onClick={handleToggler}
+            className="px-8 bg-primary hover:bg-primary/90 transition-all h-fit p-2 rounded-md text-negitaive-color flex items-center gap-3"
+          >
+            <FaPlusCircle /> 
+            إضافة مدينة 
+          </button>
+        </div>
+        
+        <CitiesList
+          page={page}
+          size={size}
+        />
+        
+      </div>
+    </>
   )
 }
 

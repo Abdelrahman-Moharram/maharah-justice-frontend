@@ -17,7 +17,7 @@ export default function useSessionForm(){
     const [formErrors, setFormErrors] = useState<any>(null)
     const {data:dropDowns} = useGetSessionFormDropDownsQuery(undefined)
     const [editSessionForm] = useEditSessionFormMutation()
-    const {case_number, id}:{case_number:string, id:string} = useParams()
+    const {case_number, id}:{case_number:string, id:string} = useParams() // to be removed
     
     const [session, setSession] = useState<SessionFormType>({
         case_number:case_number,

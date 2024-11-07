@@ -1,49 +1,49 @@
 import React, { useState } from 'react'
 import FnBasicCard from '@/Components/Cards/FnBasicCard'
 import { EditDeleteButtons } from '../../_Components/ButtonsGroups'
-import { useGetCitiesListQuery } from '@/redux/api/utilsApi'
+import { useGetCourtsListQuery } from '@/redux/api/utilsApi'
 import EmptyData from '@/Components/Common/EmptyData'
 import { ImageSkeleton } from '@/Components/Common'
 import DeleteModal from '@/Components/Modals/DeleteModal'
-import DeleteCityModal from './DeleteCityModal'
+import DeleteCourtModal from './DeleteCourtModal'
 import Paginition from '@/Components/Lists/Paginition'
-import CityFormModal from './CityFormModal'
+import CourtFormModal from './CourtFormModal'
 
 interface Props{
     page: number,
     size: number
 }
-interface cityType{
+interface courtType{
     id:string, 
     name:string
 }
-const CitiesList = ({page, size}:Props) => {
-    const [currCity, setCurrCity] = useState<cityType|null>(null)
+const CourtsList = ({page, size}:Props) => {
+    const [currCourt, setCurrCourt] = useState<courtType|null>(null)
     const [deleteModal, setDeleteModal] = useState(false)
     const [editModal, setEditModal] = useState(false)
-    const {data, isLoading} = useGetCitiesListQuery({page:page-1, size})
+    const {data, isLoading} = useGetCourtsListQuery({page:page-1, size})
 
     const handleDeleteModal = () =>{
         setDeleteModal(!deleteModal)
-        if(currCity){
-            setCurrCity(null)
+        if(currCourt){
+            setCurrCourt(null)
         }
     }
     const handleEditModal = () =>{
         setEditModal(!editModal)
-        if(currCity){
-            setCurrCity(null)
+        if(currCourt){
+            setCurrCourt(null)
         }
     }
     
 
-    const editAction = (city:cityType) =>{     
+    const editAction = (court:courtType) =>{     
         setEditModal(true)
-        setCurrCity(city)
+        setCurrCourt(court)
     }
-    const deleteAction = (city:cityType) =>{
+    const deleteAction = (court:courtType) =>{
         setDeleteModal(true)
-        setCurrCity(city)
+        setCurrCourt(court)
     }
     const handleImageSkeleton = () =>{
         const l = []
@@ -58,30 +58,30 @@ const CitiesList = ({page, size}:Props) => {
     }
     return (
         <>
-            <DeleteCityModal
+            <DeleteCourtModal
                 handleToggler={handleDeleteModal}
                 open={deleteModal}
-                city={currCity}
+                court={currCourt}
             />
-            <CityFormModal
+            <CourtFormModal
                 handleToggler={handleEditModal}
                 open={editModal}
-                oldCity={currCity}
+                oldCourt={currCourt}
             />
             {
                 !isLoading?
-                    data?.cities?.length?
+                    data?.courts?.length?
                         <div className="grid lg:grid-cols-4 md:lg:grid-cols-3 sm:lg:grid-cols-2 xs:lg:grid-cols-1 gap-3">
                             {
-                                data?.cities.map((city:{id:string, name:string})=>(
+                                data?.courts.map((court:{id:string, name:string})=>(
                                     <FnBasicCard
-                                        key={city?.id}
-                                        keyName={city?.name}
+                                        key={court?.id}
+                                        keyName={court?.name}
                                     >
                                         <EditDeleteButtons 
                                             editAction={editAction}
                                             deleteAction={deleteAction}
-                                            item={city}
+                                            item={court}
                                         />
                                     </FnBasicCard>
                                 ))
@@ -91,7 +91,7 @@ const CitiesList = ({page, size}:Props) => {
                     :
                         <EmptyData
                             height='100px'
-                            message='لا توجد مدن'
+                            message='لا توجد محاكم'
                         />
                 :
                     <div className="grid lg:grid-cols-4 md:lg:grid-cols-3 sm:lg:grid-cols-2 xs:lg:grid-cols-1 gap-3">
@@ -113,4 +113,4 @@ const CitiesList = ({page, size}:Props) => {
     )
 }
 
-export default CitiesList
+export default CourtsList

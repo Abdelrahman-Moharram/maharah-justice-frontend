@@ -1,5 +1,5 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useAppDispatch } from '@/redux/hooks';
 import { useLoginMutation } from '@/redux/features/authApiSlice';
 import { setAuth } from '@/redux/features/authSlice';
@@ -10,6 +10,10 @@ import { jwtDecode } from "jwt-decode"
 export default function useLogin() {
 	const router = useRouter();
 	const [errors, setErrors] = useState();
+	const searchParams = useSearchParams()
+
+	const next = searchParams.get('next')
+
 	const dispatch = useAppDispatch();
 	const [login, { isLoading }] = useLoginMutation();
 
@@ -33,8 +37,9 @@ export default function useLogin() {
 			.then((data) => {
 				Cookies.set('access_token', data?.access)
 				dispatch(setAuth(jwtDecode(data?.access)));
-				toast.success('Logged in');
-				return router.push('/');
+				toast.success('تم تسجيل الدخول');
+
+				return router.push(next || '/');
 			})
 			.catch((err) => {
 				toast.error('حدث خطأ اثناء تسجيل الدخول');

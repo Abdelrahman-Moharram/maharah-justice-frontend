@@ -63,17 +63,24 @@ const Input = ({
 			</div>
 			{children}
 			{
-				errors?.length?
+				typeof(errors) === 'string'?
 					<div className="mb-3">
-						<div className="absolute">
-							{
-								errors?.map(error=>
-									<span key={error} className='text-red-500 block'>{error}</span>
-								)
-							}
-						</div>
+							<div className="absolute">
+								<span key={errors} className='text-red-500 block'>{errors}</span>
+							</div>
 					</div>
-				:null
+				:
+					errors?.length?
+						<div className="mb-3">
+							<div className="absolute">
+								{
+									errors?.map(error=>
+										<span key={error} className='text-red-500 block'>{error}</span>
+									)
+								}
+							</div>
+						</div>
+					:null
 			}
 		</div>
 	);

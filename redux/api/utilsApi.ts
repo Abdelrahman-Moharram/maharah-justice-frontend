@@ -31,36 +31,21 @@ const casesApiSlice = apiSlice.injectEndpoints({
                 }),
             }),
             
-            getCitiesList:builder.query({
-                query:({page, size}:{page:number, size:number})=>({
-                    url:base_url+'cities/list/',
-                    params:{page, size}
-                }),
-            }),
+            
             getcircularList:builder.query({
                 query:({page, size}:{page:number, size:number})=>({
                     url:base_url+'circulars/list/',
                     params:{page, size}
                 }),
             }),
-            getcourtList:builder.query({
-                query:({page, size}:{page:number, size:number})=>({
-                    url:base_url+'courts/list/',
-                    params:{page, size}
-                }),
-            }),
+            
             getCourtCircularList:builder.query({
                 query:({page, size}:{page:number, size:number})=>({
                     url:base_url+'court_circulars/list/',
                     params:{page, size}
                 }),
             }),
-            getstateList:builder.query({
-                query:({page, size}:{page:number, size:number})=>({
-                    url:base_url+'states/list/',
-                    params:{page, size}
-                }),
-            }),
+            
             getLitigation_typeList:builder.query({
                 query:({page, size}:{page:number, size:number})=>({
                     url:base_url+'litigation_types/list/',
@@ -80,6 +65,114 @@ const casesApiSlice = apiSlice.injectEndpoints({
                 }),
             }),
 
+
+
+            //----------------------------  cities   ----------------------------
+
+            getCitiesList:builder.query({
+                query:({page, size}:{page:number, size:number})=>({
+                    url:base_url+'cities/list/',
+                    params:{page, size}
+                }),
+                providesTags:['cities']
+            }),
+            addCity:builder.mutation({
+                query:({name}:{name:string})=>({
+                    url:base_url+`cities/add/`,
+                    method:'POST',
+                    body:{name:name},
+                }),
+                invalidatesTags:['cities']
+            }),
+            editCity:builder.mutation({
+                query:({id, name}:{id:string, name:string})=>({
+                    url:base_url+`cities/${id}/edit/`,
+                    method:'PUT',
+                    body:{name}
+                }),
+                invalidatesTags:['cities']
+            }),
+            deleteCity:builder.mutation({
+                query:({id}:{id:string})=>({
+                    url:base_url+`cities/${id}/delete/`,
+                    method:'DELETE'
+                }),
+                invalidatesTags:['cities']
+            }),
+
+            //---------------------------------------------------------------------
+
+            //----------------------------  courts   ----------------------------
+            
+            getCourtsList:builder.query({
+                query:({page, size}:{page:number, size:number})=>({
+                    url:base_url+'courts/list/',
+                    params:{page, size}
+                }),
+                providesTags:['courts']
+            }),
+            addCourt:builder.mutation({
+                query:({name}:{name:string})=>({
+                    url:base_url+`courts/add/`,
+                    method:'POST',
+                    body:{name:name},
+                }),
+                invalidatesTags:['courts']
+            }),
+            editCourt:builder.mutation({
+                query:({id, name}:{id:string, name:string})=>({
+                    url:base_url+`courts/${id}/edit/`,
+                    method:'PUT',
+                    body:{name}
+                }),
+                invalidatesTags:['courts']
+            }),
+            deleteCourt:builder.mutation({
+                query:({id}:{id:string})=>({
+                    url:base_url+`courts/${id}/delete/`,
+                    method:'DELETE'
+                }),
+                invalidatesTags:['courts']
+            }),
+
+            //---------------------------------------------------------------------
+
+            //----------------------------  states   ----------------------------
+
+            getStateList:builder.query({
+                query:({page, size}:{page:number, size:number})=>({
+                    url:base_url+'states/list/',
+                    params:{page, size}
+                }),
+                providesTags:['states']
+            }),
+
+            addState:builder.mutation({
+                query:({name}:{name:string})=>({
+                    url:base_url+`states/add/`,
+                    method:'POST',
+                    body:{name:name},
+                }),
+                invalidatesTags:['states']
+            }),
+            editState:builder.mutation({
+                query:({id, name}:{id:string, name:string})=>({
+                    url:base_url+`states/${id}/edit/`,
+                    method:'PUT',
+                    body:{name}
+                }),
+                invalidatesTags:['states']
+            }),
+            deleteState:builder.mutation({
+                query:({id}:{id:string})=>({
+                    url:base_url+`states/${id}/delete/`,
+                    method:'DELETE'
+                }),
+                invalidatesTags:['states']
+            }),
+
+            //---------------------------------------------------------------------
+
             
     }) 
 })
@@ -90,13 +183,30 @@ export const {
     useSearchCustomerByNameMutation,
     useSearchLawyerByNameMutation,
     useGetSessionFormDropDownsQuery,
-    useGetCitiesListQuery,
     useGetcircularListQuery,
-    useGetcourtListQuery,
     useGetCourtCircularListQuery,
-    useGetstateListQuery,
     useGetLitigation_typeListQuery,
     useGetCustomer_typeListQuery,
     useGetCustomerListQuery,
+    
+    useGetCitiesListQuery,
+    useEditCityMutation,
+    useAddCityMutation,
+    useDeleteCityMutation,
+    
+    
+    useGetCourtsListQuery,
+    useAddCourtMutation, 
+    useEditCourtMutation,
+    useDeleteCourtMutation,
+
+
+
+    useGetStateListQuery,
+    useAddStateMutation,
+    useEditStateMutation,
+    useDeleteStateMutation,
+
+
 } = casesApiSlice
 

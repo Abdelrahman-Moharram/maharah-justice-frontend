@@ -2,6 +2,7 @@
 import { useAppSelector } from '@/redux/hooks';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect } from 'react'
+import Cookies from "js-cookie"
 
 interface Props{
     children: React.ReactNode
@@ -13,12 +14,12 @@ const layout = ({children}:Props) => {
   const router = useRouter();
   const {isAuthenticated, isLoading} = useAppSelector(state=>state.auth)
   useEffect(() => {   
-    if (isAuthenticated && !isLoading) {
+    if (Cookies.get('access_token')) {
       if (next?.includes('login'))
         return router.push('/');
       return router.push(next || '/');
     }
-  }, [router, isAuthenticated, isLoading]);
+  }, [Cookies.get('access_token')]);
   return (
     children
   )

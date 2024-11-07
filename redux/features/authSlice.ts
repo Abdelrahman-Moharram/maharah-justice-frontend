@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import Cookies from "js-cookie"
 const colormode = Cookies.get('colormode') || 'light'
-const isAuthenticated = Cookies.get('access_token') ? true : false
+// const isAuthenticated = Cookies.get('access_token') ? true : false
 
 
 
@@ -26,7 +26,7 @@ interface AuthState {
 }
 
 const initialState = {
-    isAuthenticated: isAuthenticated,
+    isAuthenticated: false,
 	isLoading: true,
     user: emptyUser,
 	colormode:colormode
@@ -39,10 +39,12 @@ const authSlice = createSlice({
 		setAuth: (state, action) => {
 			if(action.payload)
 			{
-				state.isAuthenticated = true;
+				if(!state.isAuthenticated)
+					state.isAuthenticated = true;
 				state.user = action.payload
 			}
-			state.isLoading = false
+			if(state.isLoading)
+				state.isLoading = false
 		},
 		changeColorMode: (state)=>{
 			Cookies.set('colormode', state.colormode === 'light'?'dark':'light') 
@@ -51,9 +53,12 @@ const authSlice = createSlice({
 		setLogout: state => {
 			
 			Cookies.remove('access_token')
-			state.isAuthenticated = false;
-			state.isLoading = false;
 			state.user = emptyUser
+
+			if(state.isAuthenticated)
+				state.isAuthenticated = false;
+			if(state.isLoading)
+				state.isLoading = false;
 
 		},
 		finishInitialLoad: state => {
