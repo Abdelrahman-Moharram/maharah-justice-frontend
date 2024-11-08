@@ -71,3 +71,32 @@ export const useCaseStates = () =>{
         setCaseState
     }
 } 
+
+
+
+
+
+
+
+
+export const useLitigationTypes = () =>{
+    const [error, setError] = useState<any>([])
+    const [litigationType, setLitigationType] = useState<baseType>({
+        id:'',
+        name:''
+    })
+    const onChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>, validationSchema?:ValidationsType ) => {
+        const { name, value } = event.target;
+        if(validationSchema)
+            setError(DefaultInputValidate({name, value, validationSchema}))
+        setLitigationType({ ...litigationType, name: value });
+    };
+
+    return {
+        litigationType,
+        onChange,
+        error,
+        setError,
+        setLitigationType
+    }
+} 

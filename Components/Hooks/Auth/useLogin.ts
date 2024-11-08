@@ -35,7 +35,7 @@ export default function useLogin() {
 		login({ username, password })
 			.unwrap()
 			.then((data) => {
-				Cookies.set('access_token', data?.access)
+				Cookies.set('access_token', data?.access, {expires: new Date(new Date().getTime() + 72 * 60 * 60 * 1000)})
 				dispatch(setAuth(jwtDecode(data?.access)));
 				toast.success('تم تسجيل الدخول');
 

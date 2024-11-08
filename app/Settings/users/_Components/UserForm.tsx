@@ -67,69 +67,75 @@ const UserForm = ({action, open, userId}:{action:()=>void, open:boolean, userId?
         }
     }
   return (
-    <div className='relative min-h-[80%]'>
+    <div className='relative min-h-[80%] px-12 mt-12'>
       <div className="grid grid-cols-2 gap-3 h-[80%] overflow-y-auto">
-        <Input
-            onChange={e=>onChange(e, {regex:usernameRegex})}
-            value={user.username}
-            label='اسم المستخدم'
-            labelId='username'
-            type='text'
-            errors={formErrors?.username}
-            required={true}
-        />
-
-        <Input
-            onChange={e=>onChange(e, {regex:fullNameRegex})}
-            value={user.full_name}
-            label='الاسم المستخدم باللغة العربية'
-            labelId='full_name'
-            type='text'
-            errors={formErrors?.full_name}
-            required={true}
-        />
-
-        <SelectInput
-            labelId='role'
-            label='الدور'
-            onChange={selectChange}
-            value={user?.role}
-            required={true}
-            errors={formErrors?.role}
-        >
-            {
-                dropDowns?.roles?.length?
-                    dropDowns?.roles.map((role:baseType)=>(
-                        <option key={role?.id} value={role?.id}>{role?.name}</option>   
-                    ))
-                :
-                null
-            }  
-        </SelectInput>
-
-        <SelectInput
-            labelId='user_type'
-            label='نوع المستخدم'
-            onChange={selectChange}
-            value={user?.user_type}
-            required={true}
-            errors={formErrors?.user_type}
-        >
-            {
-                dropDowns?.user_types?.length?
-                    dropDowns?.user_types.map((user_type:baseType)=>(
-                        <option key={user_type?.id} value={user_type?.id}>{user_type?.name}</option>   
-                    ))
-                :
-                null
-            }  
-        </SelectInput>
+        <div className="mb-2">
+            <Input
+                onChange={e=>onChange(e, {regex:usernameRegex})}
+                value={user.username}
+                label='اسم المستخدم'
+                labelId='username'
+                type='text'
+                errors={formErrors?.username}
+                required={true}
+            />
+        </div>
+        <div className="mb-2">
+            <Input
+                onChange={e=>onChange(e, {regex:fullNameRegex})}
+                value={user.full_name}
+                label='الاسم المستخدم باللغة العربية'
+                labelId='full_name'
+                type='text'
+                errors={formErrors?.full_name}
+                required={true}
+            />
+        </div>
+        
+        <div className="mb-2">
+            <SelectInput
+                labelId='role'
+                label='الدور'
+                onChange={selectChange}
+                value={user?.role}
+                required={true}
+                errors={formErrors?.role}
+            >
+                {
+                    dropDowns?.roles?.length?
+                        dropDowns?.roles.map((role:baseType)=>(
+                            <option key={role?.id} value={role?.id}>{role?.name}</option>   
+                        ))
+                    :
+                    null
+                }  
+            </SelectInput>
+        </div>
+        <div className="mb-2">
+            <SelectInput
+                labelId='user_type'
+                label='نوع المستخدم'
+                onChange={selectChange}
+                value={user?.user_type}
+                required={true}
+                errors={formErrors?.user_type}
+            >
+                {
+                    dropDowns?.user_types?.length?
+                        dropDowns?.user_types.map((user_type:baseType)=>(
+                            <option key={user_type?.id} value={user_type?.id}>{user_type?.name}</option>   
+                        ))
+                    :
+                    null
+                }  
+            </SelectInput>
+        </div>
         {
             userId
             ?
                 null
             :
-            <div className="col-span-2">
+            <div className="col-span-2 mb-2">
                 <Input
                     onChange={e=>onChange(e, {minLength:{value:8, message:'يجب أن تحتوي كلمة المرور على 8 أحرف على الأقل'}})}
                     value={user.password}
@@ -142,7 +148,7 @@ const UserForm = ({action, open, userId}:{action:()=>void, open:boolean, userId?
             </div>
         }
       </div>
-        <div className={`grid grid-cols-2 gap-2 absolute left-10 right-10  bg-container transition-all delay-200 bottom-0 ${open?'mb-0':'-mb-10'}`}>
+        <div className={`grid grid-cols-2 gap-2 absolute bottom-10 left-10 right-10  bg-container transition-all delay-200`}>
                 <Button onClick={handleUser} className='bg-primary hover:bg-transparent border-primary' title={'حفظ'} isLoading={addLoading||editLoading} />
                 <Button 
                     onClick={action}

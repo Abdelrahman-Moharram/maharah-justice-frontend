@@ -46,12 +46,7 @@ const casesApiSlice = apiSlice.injectEndpoints({
                 }),
             }),
             
-            getLitigation_typeList:builder.query({
-                query:({page, size}:{page:number, size:number})=>({
-                    url:base_url+'litigation_types/list/',
-                    params:{page, size}
-                }),
-            }),
+            
             getCustomer_typeList:builder.query({
                 query:({page, size}:{page:number, size:number})=>({
                     url:base_url+'customer_types/list/',
@@ -172,6 +167,41 @@ const casesApiSlice = apiSlice.injectEndpoints({
             }),
 
             //---------------------------------------------------------------------
+            //----------------------------  states   ----------------------------
+
+            getLitigationTypeList:builder.query({
+                query:({page, size}:{page:number, size:number})=>({
+                    url:base_url+'litigation-types/list/',
+                    params:{page, size}
+                }),
+                providesTags:['litigtion_types']
+            }),
+
+            addLitigationType:builder.mutation({
+                query:({name}:{name:string})=>({
+                    url:base_url+`litigation-types/add/`,
+                    method:'POST',
+                    body:{name:name},
+                }),
+                invalidatesTags:['litigtion_types']
+            }),
+            editLitigationType:builder.mutation({
+                query:({id, name}:{id:string, name:string})=>({
+                    url:base_url+`litigation-types/${id}/edit/`,
+                    method:'PUT',
+                    body:{name}
+                }),
+                invalidatesTags:['litigtion_types']
+            }),
+            deleteLitigationType:builder.mutation({
+                query:({id}:{id:string})=>({
+                    url:base_url+`litigation-types/${id}/delete/`,
+                    method:'DELETE'
+                }),
+                invalidatesTags:['litigtion_types']
+            }),
+
+            //---------------------------------------------------------------------
 
             
     }) 
@@ -185,7 +215,6 @@ export const {
     useGetSessionFormDropDownsQuery,
     useGetcircularListQuery,
     useGetCourtCircularListQuery,
-    useGetLitigation_typeListQuery,
     useGetCustomer_typeListQuery,
     useGetCustomerListQuery,
     
@@ -206,6 +235,12 @@ export const {
     useAddStateMutation,
     useEditStateMutation,
     useDeleteStateMutation,
+
+
+    useGetLitigationTypeListQuery,
+    useAddLitigationTypeMutation,
+    useEditLitigationTypeMutation,
+    useDeleteLitigationTypeMutation,
 
 
 } = casesApiSlice

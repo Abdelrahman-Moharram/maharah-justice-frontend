@@ -14,7 +14,7 @@ export default function useVerify() {
 			.unwrap()
 			.then((data:{access:string}) => {
 				if(data?.access)
-					Cookies.set('access_token', data?.access)
+					Cookies.set('access_token', data?.access, {expires: new Date(new Date().getTime() + 72 * 60 * 60 * 1000)})
 			})
 			.catch(()=>{
 				dispatch(setLogout())
