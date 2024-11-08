@@ -14,6 +14,7 @@ const defaultMinLengthError = (name:string, minLength:number, alter_name?:string
 
 export const DefaultInputValidate = ({name, value, validationSchema}:DefaultInputProps) =>{    
     // const errors = []
+    
     if(typeof(value) === 'number'){
         if (validationSchema.maxValue && value > validationSchema?.maxValue?.value){
             return [validationSchema?.maxValue?.message || defaultMaxValueError(name, validationSchema?.maxValue?.value)]
@@ -26,7 +27,7 @@ export const DefaultInputValidate = ({name, value, validationSchema}:DefaultInpu
     if(validationSchema?.maxLength && value.toString().length > validationSchema.maxLength.value){
         return [validationSchema?.maxLength?.message || defaultMaxLengthError(name, validationSchema?.maxLength?.value, validationSchema.alter_name)]
     }
-    if(validationSchema?.minLength && value.toString().length > validationSchema.minLength.value){
+    if(validationSchema?.minLength && value.toString().length < validationSchema.minLength.value){
         return [validationSchema?.minLength?.message || defaultMinLengthError(name, validationSchema?.minLength?.value, validationSchema.alter_name)]
     }
 
@@ -43,9 +44,9 @@ export const DefaultInputValidate = ({name, value, validationSchema}:DefaultInpu
 } 
 
 
-export const isErrorsList = (errors:any) =>{
+export const isErrorsList = (errors:any, ignore?:string[]) =>{
     for(let key in errors){
-        if(errors[key])
+        if(errors[key] && !ignore?.includes(key))
             return true
     }
     return false

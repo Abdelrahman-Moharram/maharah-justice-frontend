@@ -22,7 +22,21 @@ const casesApiSlice = apiSlice.injectEndpoints({
                 body:form,
             }),
             invalidatesTags:['users']
-
+        }),
+        editUser: builder.mutation({
+            query:({id, form}:{form:FormData, id:string})=>({
+                url:base_url+id+'/edit/',
+                method:'PUT',
+                body:form,
+            }),
+            invalidatesTags:['users']
+        }),
+        userDetails: builder.mutation({
+            query:({id}:{id:string})=>({
+                url:base_url+id+'/',
+                method:'GET',
+            }),
+            // invalidatesTags:['users']
         }),
     }) 
 })
@@ -31,8 +45,9 @@ const casesApiSlice = apiSlice.injectEndpoints({
 export const {
     useGetUsersListQuery,
     useGetAddUserDropDownsQuery,
-    useAddUserMutation
-    
+    useAddUserMutation,
+    useUserDetailsMutation,
+    useEditUserMutation
 
 
 } = casesApiSlice

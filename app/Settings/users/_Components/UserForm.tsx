@@ -1,17 +1,27 @@
 import Button from '@/Components/Common/Button'
 import { Input, SelectInput } from '@/Components/Forms'
 import { useUsersForm } from '@/Components/Hooks/Auth/useAccounts'
+import { isErrorsList } from '@/Components/Hooks/Common/useValidations'
 import { fullNameRegex, usernameRegex } from '@/Components/Hooks/Common/validationsRegexRepo'
-import { useAddUserMutation } from '@/redux/api/accountsApi'
+import { useAddUserMutation, useEditUserMutation } from '@/redux/api/accountsApi'
 import React from 'react'
 import { toast } from 'react-toastify'
-
+interface UserType{
+    id?: string,
+    full_name: string,
+    username: string,
+    role: string,
+    user_type: string,
+}
 interface baseType{
     id:string,
-    name:string
+    name:string,
+    
+    
 }
-const UserForm = ({action, open}:{action:()=>void, open:boolean}) => {
-    const [addUser, {isLoading}] = useAddUserMutation()
+const UserForm = ({action, open, userId}:{action:()=>void, open:boolean, userId?:string}) => {
+    const [addUser, {isLoading:addLoading}] = useAddUserMutation()
+    const [editUser, {isLoading:editLoading}] = useEditUserMutation()
     const {
         user,
         formErrors,
@@ -20,18 +30,41 @@ const UserForm = ({action, open}:{action:()=>void, open:boolean}) => {
         selectChange,
         setFormErrors,
         getUserAsFormData,
-    } = useUsersForm()
+    } = useUsersForm({userId})
     const handleUser = () =>{
-        addUser({form:getUserAsFormData()})
+        if(userId){
+            setFormErrors({...formErrors, password:null})
+            console.log(userId, formErrors);
+        }
+        
+        if(isErrorsList(formErrors, userId?['password']:[])){
+            toast.error('برجاء التأكد من إدخال بيانات المستخدم بشكل صحيح أولا')
+            return
+        }
+        if(userId)
+        {
+            editUser({id:userId, form:getUserAsFormData()})
             .unwrap()
             .then(res=>{
-                toast.success(res?.data?.message || 'تم إضافة المستخدم بنجاح')
+                toast.success(res?.data?.message || 'تم تعديل المستخدم بنجاح')
                 action()
             })
             .catch(err=>{
                 setFormErrors(err?.data?.errors)
                 toast.error('حدث خطأ ما أثناء إضافة المستخدم')
             })
+        }else{
+            addUser({form:getUserAsFormData()})
+                .unwrap()
+                .then(res=>{
+                    toast.success(res?.data?.message || 'تم إضافة المستخدم بنجاح')
+                    action()
+                })
+                .catch(err=>{
+                    setFormErrors(err?.data?.errors)
+                    toast.error('حدث خطأ ما أثناء إضافة المستخدم')
+                })
+        }
     }
   return (
     <div className='relative min-h-[80%]'>
@@ -43,7 +76,7 @@ const UserForm = ({action, open}:{action:()=>void, open:boolean}) => {
             labelId='username'
             type='text'
             errors={formErrors?.username}
-            required
+            required={true}
         />
 
         <Input
@@ -53,7 +86,7 @@ const UserForm = ({action, open}:{action:()=>void, open:boolean}) => {
             labelId='full_name'
             type='text'
             errors={formErrors?.full_name}
-            required
+            required={true}
         />
 
         <SelectInput
@@ -61,6 +94,8 @@ const UserForm = ({action, open}:{action:()=>void, open:boolean}) => {
             label='الدور'
             onChange={selectChange}
             value={user?.role}
+            required={true}
+            errors={formErrors?.role}
         >
             {
                 dropDowns?.roles?.length?
@@ -74,9 +109,11 @@ const UserForm = ({action, open}:{action:()=>void, open:boolean}) => {
 
         <SelectInput
             labelId='user_type'
-            label='الدور'
+            label='نوع المستخدم'
             onChange={selectChange}
             value={user?.user_type}
+            required={true}
+            errors={formErrors?.user_type}
         >
             {
                 dropDowns?.user_types?.length?
@@ -87,21 +124,26 @@ const UserForm = ({action, open}:{action:()=>void, open:boolean}) => {
                 null
             }  
         </SelectInput>
-
-        <div className="col-span-2">
-            <Input
-                onChange={e=>onChange(e)}
-                value={user.password}
-                label='كلمة المرور'
-                labelId='password'
-                type='password'
-                errors={formErrors?.password}
-                required
-            />
-        </div>
+        {
+            userId
+            ?
+                null
+            :
+            <div className="col-span-2">
+                <Input
+                    onChange={e=>onChange(e, {minLength:{value:8, message:'يجب أن تحتوي كلمة المرور على 8 أحرف على الأقل'}})}
+                    value={user.password}
+                    label='كلمة المرور'
+                    labelId='password'
+                    type='password'
+                    errors={formErrors?.password}
+                    required={true}
+                />
+            </div>
+        }
       </div>
         <div className={`grid grid-cols-2 gap-2 absolute left-10 right-10  bg-container transition-all delay-200 bottom-0 ${open?'mb-0':'-mb-10'}`}>
-                <Button onClick={handleUser} className='bg-primary hover:bg-transparent border-primary' title={'حفظ'} isLoading={isLoading} />
+                <Button onClick={handleUser} className='bg-primary hover:bg-transparent border-primary' title={'حفظ'} isLoading={addLoading||editLoading} />
                 <Button 
                     onClick={action}
                     className='w-full py-2 rounded-lg border border-secondary text-center hover:bg-secondary hover:text-white transition-all'
