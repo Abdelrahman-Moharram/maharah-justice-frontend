@@ -99,14 +99,14 @@ const page = () => {
           options={options}
         />
         <div className='flex justify-center my-10 font-extrabold'>
-              {
-                data?.total_pages?
-                    <Paginition
-                        page={page}
-                        totalPages={data?.total_pages}
-                    />                
-                :null
-              }
+          {
+            data?.total_pages?
+              <Paginition
+                page={page}
+                totalPages={data?.total_pages}
+              />                
+            :null
+          }
           </div>
       </div>
     </>

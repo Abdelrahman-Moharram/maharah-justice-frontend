@@ -1,13 +1,8 @@
 import React, { useState } from 'react'
-import FnBasicCard from '@/Components/Cards/FnBasicCard'
-import { EditDeleteButtons } from '../../_Components/ButtonsGroups'
 import { useGetCitiesListQuery } from '@/redux/api/utilsApi'
-import EmptyData from '@/Components/Common/EmptyData'
-import { ImageSkeleton } from '@/Components/Common'
-import DeleteModal from '@/Components/Modals/DeleteModal'
 import DeleteCityModal from './DeleteCityModal'
-import Paginition from '@/Components/Lists/Paginition'
 import CityFormModal from './CityFormModal'
+import { CardsListWithPagination } from '../../_Components'
 
 interface Props{
     page: number,
@@ -45,17 +40,7 @@ const CitiesList = ({page, size}:Props) => {
         setDeleteModal(true)
         setCurrCity(city)
     }
-    const handleImageSkeleton = () =>{
-        const l = []
-        for(let i = 0; i < 24; i ++){
-            l.push(<ImageSkeleton
-                height='80px'
-                width='100%'
-                rounded='10px'
-            />)
-        }
-        return l
-    }
+    
     return (
         <>
             <DeleteCityModal
@@ -68,47 +53,15 @@ const CitiesList = ({page, size}:Props) => {
                 open={editModal}
                 oldCity={currCity}
             />
-            {
-                !isLoading?
-                    data?.cities?.length?
-                        <div className="grid lg:grid-cols-4 md:lg:grid-cols-3 sm:lg:grid-cols-2 xs:lg:grid-cols-1 gap-3">
-                            {
-                                data?.cities.map((city:{id:string, name:string})=>(
-                                    <FnBasicCard
-                                        key={city?.id}
-                                        keyName={city?.name}
-                                    >
-                                        <EditDeleteButtons 
-                                            editAction={editAction}
-                                            deleteAction={deleteAction}
-                                            item={city}
-                                        />
-                                    </FnBasicCard>
-                                ))
-                            }
-                        </div>
-
-                    :
-                        <EmptyData
-                            height='100px'
-                            message='لا توجد مدن'
-                        />
-                :
-                    <div className="grid lg:grid-cols-4 md:lg:grid-cols-3 sm:lg:grid-cols-2 xs:lg:grid-cols-1 gap-3">
-                        {handleImageSkeleton()}
-                    </div>
-            }
-            
-            <div className='flex justify-center my-10 font-extrabold'>
-              {
-                data?.total_pages?
-                    <Paginition
-                        page={page}
-                        totalPages={data?.total_pages}
-                    />                
-                :null
-              }
-          </div>
+            <CardsListWithPagination
+                data={data?.cities}
+                deleteAction={deleteAction}
+                editAction={editAction}
+                isLoading={isLoading}
+                page={page}
+                total_pages={data?.total_pages}
+                emptyMessage='لا توجد مدن'
+            />
         </>
     )
 }

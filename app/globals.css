@@ -156,3 +156,16 @@ body::-webkit-scrollbar-thumb {
   background-color: #fab826;
 }
 
+
+
+.overlay-fn-keys{
+  position: fixed;
+  background-color: #fff;
+  transition: all .5s ease .3s;
+}
+.overlay-fn-keys-active{
+  top: 78%;
+}
+.overlay-fn-keys-hidden{
+  top: 101%;
+}
