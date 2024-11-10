@@ -17,7 +17,6 @@ const LitigationTypesList = ({page, size}:Props) => {
     const [deleteModal, setDeleteModal] = useState(false)
     const [editModal, setEditModal] = useState(false)
     const {data, isLoading} = useGetLitigationTypeListQuery({page:page-1, size})
-    console.log(data);
     
     const handleDeleteModal = () =>{
         setDeleteModal(!deleteModal)

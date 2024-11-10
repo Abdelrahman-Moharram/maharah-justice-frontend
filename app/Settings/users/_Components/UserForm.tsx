@@ -29,7 +29,6 @@ const UserForm = ({action, open, userId}:{action:()=>void, open:boolean, userId?
     const handleUser = () =>{
         if(userId){
             setFormErrors({...formErrors, password:null})
-            console.log(userId, formErrors);
         }
         
         if(isErrorsList(formErrors, userId?['password']:[])){
@@ -46,7 +45,8 @@ const UserForm = ({action, open, userId}:{action:()=>void, open:boolean, userId?
             })
             .catch(err=>{
                 setFormErrors(err?.data?.errors)
-                toast.error('حدث خطأ ما أثناء إضافة المستخدم')
+                if(err?.status !== 403)
+                    toast.error(err?.data?.message || 'حدث خطأ ما أثناء إضافة المستخدم')
             })
         }else{
             addUser({form:getUserAsFormData()})

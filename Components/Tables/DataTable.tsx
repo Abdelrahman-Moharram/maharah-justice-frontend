@@ -38,7 +38,7 @@ const DataTable = ({options, startOptions, data, isLoading, emptyLinkHref, empty
         const rendered_row = []
         for(let cell in row){
             if(typeof row === 'object' && Object.keys(row).includes(cell) && (!fnKeys || !fnKeys.includes(cell))){
-                rendered_row.push(<td className="whitespace-nowrap px-4 py-2 ">{row[cell]||'-'}</td>)
+                rendered_row.push(<td className="whitespace-nowrap px-4 py-2 ">{row[cell]||<div className='text-center'>-</div>}</td>)
             }
         }
         return rendered_row
@@ -75,7 +75,7 @@ const DataTable = ({options, startOptions, data, isLoading, emptyLinkHref, empty
                         <tbody className="divide-y divide-gray-200">
                             {
                                 data?.map((row:any, index:number)=>(
-                                        <tr key={index+"-"+row}>
+                                        <tr key={index+"-"+Math.random()*20}>
                                             {
                                                 isOptions && startOptions?
                                                     <td className="whitespace-nowrap px-4 py-2">

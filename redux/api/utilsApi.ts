@@ -32,12 +32,7 @@ const casesApiSlice = apiSlice.injectEndpoints({
             }),
             
             
-            getcircularList:builder.query({
-                query:({page, size}:{page:number, size:number})=>({
-                    url:base_url+'circulars/list/',
-                    params:{page, size}
-                }),
-            }),
+            
             
             getCourtCircularList:builder.query({
                 query:({page, size}:{page:number, size:number})=>({
@@ -202,6 +197,42 @@ const casesApiSlice = apiSlice.injectEndpoints({
             }),
 
             //---------------------------------------------------------------------
+            //---------------------------  circulars   ----------------------------
+
+            getCircularsList:builder.query({
+                query:({page, size}:{page:number, size:number})=>({
+                    url:base_url+'circulars/list/',
+                    params:{page, size}
+                }),
+                providesTags:['litigtion_types']
+
+            }),
+
+            addCircular:builder.mutation({
+                query:({name}:{name:string})=>({
+                    url:base_url+`circulars/add/`,
+                    method:'POST',
+                    body:{name:name},
+                }),
+                invalidatesTags:['litigtion_types']
+            }),
+            editCircular:builder.mutation({
+                query:({id, name}:{id:string, name:string})=>({
+                    url:base_url+`circulars/${id}/edit/`,
+                    method:'PUT',
+                    body:{name}
+                }),
+                invalidatesTags:['litigtion_types']
+            }),
+            deleteCircular:builder.mutation({
+                query:({id}:{id:string})=>({
+                    url:base_url+`circulars/${id}/delete/`,
+                    method:'DELETE'
+                }),
+                invalidatesTags:['litigtion_types']
+            }),
+
+            //---------------------------------------------------------------------
 
             
     }) 
@@ -213,7 +244,6 @@ export const {
     useSearchCustomerByNameMutation,
     useSearchLawyerByNameMutation,
     useGetSessionFormDropDownsQuery,
-    useGetcircularListQuery,
     useGetCourtCircularListQuery,
     useGetCustomer_typeListQuery,
     useGetCustomerListQuery,
@@ -241,6 +271,13 @@ export const {
     useAddLitigationTypeMutation,
     useEditLitigationTypeMutation,
     useDeleteLitigationTypeMutation,
+
+
+
+    useGetCircularsListQuery,
+    useAddCircularMutation,
+    useEditCircularMutation,
+    useDeleteCircularMutation
 
 
 } = casesApiSlice

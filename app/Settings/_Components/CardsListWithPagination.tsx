@@ -18,13 +18,13 @@ const handleImageSkeleton = () =>{
 }
 interface baseObjType{
     id: string,
-    name: string,
+    name?: string,
 }
 interface Props{
     isLoading: boolean,
-    data: baseObjType[],
-    editAction:(row:baseObjType)=>void,
-    deleteAction:(row:baseObjType)=>void,
+    data: any[],
+    editAction:(row:any)=>void,
+    deleteAction:(row:any)=>void,
     total_pages:number,
     page:number,
     emptyMessage?:string
