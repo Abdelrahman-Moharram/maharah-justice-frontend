@@ -259,13 +259,12 @@ const CaseForm = ({
                     errors={errors?.customer}
                     oldNameValue={caseForm?.customer_name}
                     type='text'
-                >
-                </CustomerSearchInput>
+                />
 
                 <Input
                     labelId={'cust_phone_number'}
                     type={'text'}
-                    onChange={e=>onChange(e, {alter_name:"رقم جوال العميل", regex:{value:phoneNumberRegex, message:'برجاء التأكد من رقم جوال العميل'}})}
+                    onChange={e=>onChange(e, {alter_name:"رقم جوال العميل", regex:phoneNumberRegex})}
                     value={caseForm?.cust_phone_number}
                     label={'رقم جوال العميل'}
                     required= {true}

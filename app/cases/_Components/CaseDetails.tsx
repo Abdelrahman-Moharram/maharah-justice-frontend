@@ -46,7 +46,9 @@ const CaseDetails = ({case_number}:{case_number:string}) => {
     if(case_number)
       caseDetails({case_number})
   }, [case_number])
-  
+  console.log('====================================');
+  console.log(data);
+  console.log('====================================');
   return (
     <div className='p-5'>
       {
@@ -134,7 +136,7 @@ const CaseDetails = ({case_number}:{case_number:string}) => {
                   />
                   <SmallCard 
                     keyName={'المدعي عليه'}
-                    value={data?.case?.circular}
+                    value={data?.case?.prosecuter}
                   />
                   {/* ---------- */}
                   {
