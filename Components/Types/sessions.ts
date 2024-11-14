@@ -7,6 +7,7 @@ export interface SessionFormType{
     city: string,
     state: string,
     date_ar: DateObject | null,
+    date?: string,
     time: Time | null,
     link: string,
     next_session_req: string,

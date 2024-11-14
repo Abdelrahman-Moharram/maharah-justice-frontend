@@ -150,6 +150,16 @@ const sessionsApiSlice = apiSlice.injectEndpoints({
             invalidatesTags:['sessions']
 
         }),
+
+        getSessionCaseInfo: builder.query({
+            query:({case_number, session_id}:{case_number?:string, session_id?:string})=>({
+                url:base_url+"case-info/",
+                params:{
+                    session_id,
+                    case_number
+                }
+            }),
+        }),
         // ------------------------------------------
 
         deleteSession: builder.mutation({
@@ -179,6 +189,7 @@ export const {
     useGetWeeklySessionsExcelMutation,   
     useDeleteSessionMutation,
     useAddSessionMutation,
+    useGetSessionCaseInfoQuery,
     useEditSessionFormMutation,
     useEditSessionMutation
 } = sessionsApiSlice    

@@ -1,36 +1,37 @@
 'use client'
 import React, { FormEvent } from 'react'
-import SessionForm from '@/app/sessions/_Components/SessionForm'
+
+import CaseInfo from '@/app/cases/[case_number]/sessions/add/_Components/CaseInfo'
+import { toast } from 'react-toastify'
 import Breadcrumb from '@/Components/Common/Breadcrumb'
 import { useParams, useRouter } from 'next/navigation'
-import { useAddSessionMutation, useGetSessionCaseInfoQuery } from '@/redux/api/sessionsApi'
-import { toast } from 'react-toastify'
-import CaseInfo from './_Components/CaseInfo'
 import { useSessionForm } from '@/Components/Hooks/Sessions'
+import SessionForm from '@/app/sessions/_Components/SessionForm'
+import { useEditSessionMutation, useGetSessionCaseInfoQuery } from '@/redux/api/sessionsApi'
 import { isErrorsList } from '@/Components/Hooks/Common/useValidations'
 
-
 const BreadcrumbData = [
-  {
-    href: '/',
-    title: 'الصفحة الرئيسية',
-  },
-  {
-    href: '/sessions',
-    title: 'الجلسات',
-    // icon: <HiBuildingLibrary />
-  },
-  {
-    href: '/sessions/add',
-    title: 'إنشاء جلسة',
-    current:true
-  }
-]
+    {
+      href: '/',
+      title: 'الصفحة الرئيسية',
+    },
+    {
+      href: '/sessions',
+      title: 'الجلسات',
+      // icon: <HiBuildingLibrary />
+    },
+    {
+      href: '/sessions/edit',
+      title: 'تعديل جلسة',
+      current:true
+    }
+  ]
 const page = () => {
-  const router = useRouter()
-  const [addSession, {isLoading}] = useAddSessionMutation()
-  const {case_number}:{case_number:string} = useParams()
-
+    const router = useRouter()
+  const [editSession, {isLoading}] = useEditSessionMutation()
+  // const {id}:{id:string} = useParams()
+  const {id}:{id:string} = useParams()
+  const {data, isLoading:caseLoading} = useGetSessionCaseInfoQuery({session_id:id})
   const {
     session, 
     onChange, 
@@ -41,40 +42,40 @@ const page = () => {
     dropDowns, 
     formErrors, 
     setFormErrors, 
+    // case_number,
     getSessionAsFormData,
-  } = useSessionForm({case_number})
+  } = useSessionForm({id:id, case_number:data?.case_number})
 
  
-  const {data, isLoading:caseLoading} = useGetSessionCaseInfoQuery({case_number})
   const formSubmit = (event: FormEvent<HTMLFormElement>) =>{
     event.preventDefault()
-    if(isErrorsList(formErrors)){
-      toast.error('برجاء التأكد من إدخال بيانات الجلسة بشكل صحيح أولا')
-      return
+    if(!isErrorsList(formErrors)){
+      editSession({form:getSessionAsFormData(), id:id})
+      .unwrap()
+      .then(data=>{
+          toast.success(data?.message)
+          router.push("/sessions")
+        })
+        .catch((err:any)=>{     
+          console.log(err);
+          if(err.data.errors)
+            setFormErrors(err.data.errors)
+          if(err.data.message)
+            toast.error(err.data.message)
+        })
     }
-    addSession({form:getSessionAsFormData()})
-    .unwrap()
-    .then(data=>{
-        toast.success(data?.message)
-        router.push("/sessions")
-      })
-      .catch((err:any)=>{     
-        console.log(err);
-        if(err.data.errors)
-          setFormErrors(err.data.errors)
-        if(err.data.message)
-          toast.error(err.data.message)
-    })
-
-  }
-  
+    else{
+      toast.error('برجاء التأكد من إدخال بيانات الجلسة بشكل صحيح أولا')
+    }
+    
+    }
   return (
     <div className='min-h-[300px]  space-y-4'>
       <Breadcrumb 
         items={BreadcrumbData}
       />
       
-      <CaseInfo 
+      <CaseInfo
         data={data?.case}
         isLoading={caseLoading}
       />
@@ -93,7 +94,7 @@ const page = () => {
           imageChange={imageChange}
           formSubmit={formSubmit}
           isLoading={isLoading}
-          add
+          add={false}
         />
       </>
     </div>

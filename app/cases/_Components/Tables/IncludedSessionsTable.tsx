@@ -18,22 +18,22 @@ interface sessionsType{
 
 }
 const IncludedSessionsTable = ({sessions, case_number}:{sessions:sessionsType, case_number:string}) => {
-    const options = (id:string)=>(
-        <div className='flex gap-4 items-start'>
-          <Link className=' text-green-600 text-lg transition-all rounded-full' href={`/cases/${case_number}/sessions/${id}/edit`}><BiEdit /></Link>
-        </div>
-      )
+  const options = (row:sessionsType)=>(
+    <div className='flex gap-4 items-start'>
+      <Link className=' text-green-600 text-lg transition-all rounded-full' href={`/sessions/${row?.id}/edit`}><BiEdit /></Link>
+    </div>
+  )
   return (
     <div className='rounded-md'>
-        <DataTable 
-            data={sessions}
-            emptyLinkHref='#'
-            emptyText='لا توجد جلسات لهذه القضية'
-            isLoading={false}
-            isOptions
-            startOptions={options}
-            fnKeys={['id']}
-        />
+      <DataTable 
+        data={sessions}
+        emptyLinkHref='#'
+        emptyText='لا توجد جلسات لهذه القضية'
+        isLoading={false}
+        isOptions
+        startOptions={options}
+        fnKeys={['id']}
+      />
     </div>
   )
 }

@@ -13,7 +13,7 @@ const BasicCard = ({title, value, textcolor, cardBg, textSize='24px'}:Props) => 
   return (
     <div className={cardBg+" py-5 rounded-md text-center"}>
         {
-            title && value ?
+            title && (value !== null || value!== undefined) ?
             <>
                 <span className={`block text-[${textSize}]`}>
                     {title}

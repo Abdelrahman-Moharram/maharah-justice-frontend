@@ -13,11 +13,11 @@ import { ValidationsType } from "@/Components/Types/Others"
 import { DefaultInputValidate } from "../Common/useValidations"
 
 
-export default function useSessionForm(){
+export default function useSessionForm({case_number, id}:{case_number:string, id?:string}){
     const [formErrors, setFormErrors] = useState<any>(null)
     const {data:dropDowns} = useGetSessionFormDropDownsQuery(undefined)
     const [editSessionForm] = useEditSessionFormMutation()
-    const {case_number, id}:{case_number:string, id:string} = useParams() // to be removed
+    // const {case_number, id}:{case_number:string, id:string} = useParams() // to be removed
     
     const [session, setSession] = useState<SessionFormType>({
         case_number:case_number,

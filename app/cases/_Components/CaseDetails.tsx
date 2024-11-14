@@ -7,6 +7,8 @@ import React, { useEffect } from 'react'
 import IncludedSessionsTable from './Tables/IncludedSessionsTable'
 import { handleCaseBadgeColor } from '@/Components/utils/helper'
 import { FaPlusCircle } from 'react-icons/fa'
+import IncludedSessionDependants from './Tables/IncludedSessiosJudgements'
+import IncludedSessiosJudgements from './Tables/IncludedSessiosJudgements'
 
 const LoadingCaseSkeleton = () =>(
     <div className='p-4'>
@@ -46,9 +48,6 @@ const CaseDetails = ({case_number}:{case_number:string}) => {
     if(case_number)
       caseDetails({case_number})
   }, [case_number])
-  console.log('====================================');
-  console.log(data);
-  console.log('====================================');
   return (
     <div className='p-5'>
       {
@@ -181,6 +180,7 @@ const CaseDetails = ({case_number}:{case_number:string}) => {
                 </div>
             </div>
 
+            {/* الجلسات */}
             <div className="mt-8 bg-card p-4 rounded-md">
               <div className="flex justify-between">
                 <h3 className='font-bold text-lg my-3'>الجلسات</h3>
@@ -194,6 +194,23 @@ const CaseDetails = ({case_number}:{case_number:string}) => {
                 case_number={case_number}
               />
             </div>
+            {/* ------------------------------ */}
+
+            {/* الأحكام */}
+            <div className="mt-8 bg-card p-4 rounded-md">
+              <div className="flex justify-between">
+                <h3 className='font-bold text-lg my-3'>الأحكام</h3>
+                <Link className='bg-primary h-fit p-2 rounded-md text-negitaive-color flex items-center gap-3' href={`/cases/${case_number}/sessions/add`}>
+                  إضافة حكم
+                  <FaPlusCircle />
+                </Link>
+              </div>
+              <IncludedSessiosJudgements 
+                data={data?.case?.judgements}
+                case_number={case_number}
+              />
+            </div>
+            {/* ------------------------------ */}
           </>
       }
     </div>

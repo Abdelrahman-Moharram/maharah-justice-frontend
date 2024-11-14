@@ -178,7 +178,7 @@ const SessionForm = ({
             </div>
 
             {
-                !add?
+                !add && session.date && new Date() > new Date(session.date)?
                     <>
                         <div className="">
                             <Textarea 

@@ -5,10 +5,9 @@ import CaseInfo from '@/app/cases/[case_number]/sessions/add/_Components/CaseInf
 import { toast } from 'react-toastify'
 import Breadcrumb from '@/Components/Common/Breadcrumb'
 import { useParams, useRouter } from 'next/navigation'
-import { useGetSessionFormQuery } from '@/redux/api/casesApi'
 import { useSessionForm } from '@/Components/Hooks/Sessions'
 import SessionForm from '@/app/sessions/_Components/SessionForm'
-import { useEditSessionMutation } from '@/redux/api/sessionsApi'
+import { useEditSessionMutation, useGetSessionCaseInfoQuery } from '@/redux/api/sessionsApi'
 import { isErrorsList } from '@/Components/Hooks/Common/useValidations'
 
 const BreadcrumbData = [
@@ -30,7 +29,7 @@ const BreadcrumbData = [
 const page = () => {
     const router = useRouter()
   const [editSession, {isLoading}] = useEditSessionMutation()
-  const {id}:{id:string} = useParams()
+  const {id, case_number}:{id:string, case_number:string} = useParams()
 
   const {
     session, 
@@ -42,12 +41,11 @@ const page = () => {
     dropDowns, 
     formErrors, 
     setFormErrors, 
-    case_number,
     getSessionAsFormData,
-  } = useSessionForm()
+  } = useSessionForm({id:id, case_number:case_number})
 
  
-  const {data, isLoading:caseLoading} = useGetSessionFormQuery({case_number, session_id:id})
+  const {data, isLoading:caseLoading} = useGetSessionCaseInfoQuery({case_number, session_id:id})
   const formSubmit = (event: FormEvent<HTMLFormElement>) =>{
     event.preventDefault()
     if(!isErrorsList(formErrors)){
