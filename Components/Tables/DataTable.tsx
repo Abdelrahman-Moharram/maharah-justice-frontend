@@ -104,7 +104,7 @@ const DataTable = ({options, startOptions, data, isLoading, emptyLinkHref, empty
                 <div className="flex justify-center">
                     <EmptyContent 
                         href={emptyLinkHref}
-                        title={emptyText}
+                        // title={emptyText}
                     />
                 </div>
         }

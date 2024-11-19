@@ -18,6 +18,7 @@ export default function useVerify() {
 			})
 			.catch(()=>{
 				dispatch(setLogout())
+				
 			})
 			.finally(() => {
 				dispatch(finishInitialLoad());

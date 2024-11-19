@@ -7,6 +7,7 @@ interface DefaultInputProps{
     validationSchema:ValidationsType,
     alter_name?:string
 }
+const defaultNumberValueError = (name:string, alter_name?:string)=> `برجاء إدخال قيمة رقمية فقط في ${alter_name||name}`
 const defaultMaxValueError = (name:string, maxValue:number, alter_name?:string)=> `قيمة ${alter_name||name} لايجب أن تكون أكبر من ${maxValue}`
 const defaultMinValueError = (name:string, MinValue:number, alter_name?:string)=> `قيمة ${alter_name||name} لايجب أن تكون أقل من ${MinValue}`
 const defaultMaxLengthError = (name:string, maxLength:number, alter_name?:string)=> `لا يجب أن يكون ${alter_name||name} أقل من ${maxLength} أحرف`
@@ -15,12 +16,19 @@ const defaultMinLengthError = (name:string, minLength:number, alter_name?:string
 export const DefaultInputValidate = ({name, value, validationSchema}:DefaultInputProps) =>{    
     // const errors = []
     
-    if(typeof(value) === 'number'){
-        if (validationSchema.maxValue && value > validationSchema?.maxValue?.value){
-            return [validationSchema?.maxValue?.message || defaultMaxValueError(name, validationSchema?.maxValue?.value)]
-        }
-        if (validationSchema.minValue && value > validationSchema?.minValue?.value){
-            return [validationSchema?.minValue?.message || defaultMinValueError(name, validationSchema?.minValue?.value)]
+    if(validationSchema.minValue || validationSchema.maxValue){
+        if(Number.isNaN(Number(value)))
+            return [validationSchema?.maxValue?.message || defaultNumberValueError(name, validationSchema.alter_name)]
+        
+        value = Number(value)
+
+        if(typeof(value) === 'number'){
+            if (validationSchema.maxValue && value > validationSchema?.maxValue?.value){
+                return [validationSchema?.maxValue?.message || defaultMaxValueError(name, validationSchema?.maxValue?.value, validationSchema.alter_name)]
+            }
+            if (validationSchema.minValue && value < validationSchema?.minValue?.value){
+                return [validationSchema?.minValue?.message || defaultMinValueError(name, validationSchema?.minValue?.value, validationSchema.alter_name)]
+            }
         }
     }
 

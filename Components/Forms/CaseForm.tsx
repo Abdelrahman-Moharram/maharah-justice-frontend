@@ -181,24 +181,16 @@ const CaseForm = ({
                 </SelectInput>
 
             
-                <SelectInput
+                <Input
                     label='رقم الدائرة'
                     labelId='circular'
                     value={caseForm?.circular}
                     required={true}
-                    onChange={selectChange}
-                    emptyoption={true}
+                    onChange={e=>onChange(e,  {minValue:{value:1}, maxValue:{value:50}, alter_name:'رقم الدائرة'})}
                     errors={errors?.circular}
-                >
-                    {
-                        circulars?.length?
-                            circulars.map(circular=>(
-                                <option key={circular.id} value={circular.id}>{circular.number}</option>   
-                            ))
-                        :
-                        null
-                    }
-                </SelectInput>
+                    type='text'
+                />
+                
                     
 
                 <SelectInput

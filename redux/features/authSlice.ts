@@ -53,6 +53,8 @@ const authSlice = createSlice({
 		setLogout: state => {
 			
 			Cookies.remove('access_token')
+			Cookies.remove('access')
+			Cookies.remove('refresh')
 			state.user = emptyUser
 
 			if(state.isAuthenticated)
