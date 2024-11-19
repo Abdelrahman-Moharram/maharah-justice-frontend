@@ -7,17 +7,24 @@ import { FaPlusCircle } from 'react-icons/fa'
 const IncludedSessiosJudgements = ({data, case_number}:{data:any, case_number:string}) => {
   const startOptions = (row:any)=>(
     <div className='flex gap-4 items-start'>
-      <Link className=' text-green-600 text-lg transition-all rounded-full' href={`/cases/${case_number}/sessions/${row.id}/edit`}><BiEdit /></Link>
+      <Link className=' text-green-600 text-lg transition-all rounded-full' href={`/judgements/${row.number}/edit`}><BiEdit /></Link>
     </div>
   )
-  const endOptions = (row:any)=>(
-    <div className='flex gap-4 items-start'>
-      <Link className='bg-primary h-fit p-2 rounded-md text-negitaive-color flex items-center gap-3' href={`/sessions/${row.session_id}/judgements/add`}>
-        إضافة إعتراض
-        <FaPlusCircle />
-      </Link>
-    </div>
-  )
+  const endOptions = (row:any)=>{
+    
+    return (
+      <div className='flex gap-4 items-start'>
+        {
+          row?.is_objectionable ?
+            <Link className='bg-primary h-fit p-2 rounded-md text-negitaive-color flex items-center gap-3' href={`/judgements/${row.id}/appeal/add`}>
+              إضافة إعتراض
+              <FaPlusCircle />
+            </Link>
+          :null
+        }
+      </div>
+    )
+  }
   
   return (
     <div className='rounded-md'>
@@ -29,8 +36,8 @@ const IncludedSessiosJudgements = ({data, case_number}:{data:any, case_number:st
         isOptions
         startOptions={startOptions}
         options={endOptions}
-        fnKeys={['id', 'session_id']}
-        optionsHeader='الإعتراضات'
+        fnKeys={['id', 'session_id', 'is_aganist_company', 'is_objectionable', 'is_executable', 'number']}
+        optionsHeader={'الإعتراضات'}
       />
     </div>
   )

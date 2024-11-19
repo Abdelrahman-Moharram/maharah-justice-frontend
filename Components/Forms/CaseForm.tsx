@@ -7,6 +7,7 @@ import { DateObject } from 'react-multi-date-picker';
 import Link from 'next/link';
 import { ValidationsType } from '../Types/Others';
 import { caseNumberRegex, commercialNumberRegex, hijriDateRegex, phoneNumberRegex } from '../Hooks/Common/validationsRegexRepo';
+import AmountInputField from './AmountInputField';
 
 interface circularType{
     id: string;
@@ -219,9 +220,8 @@ const CaseForm = ({
                     }
                 </SelectInput>
 
-                <Input
+                <AmountInputField
                     labelId={'amount'} // need to add pattern to it
-                    type={'text'}
                     onChange={onChange}
                     value={caseForm?.amount}
                     label={'مبلغ القضية'}

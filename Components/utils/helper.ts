@@ -29,4 +29,8 @@ export const to_int_or_default = (val:string|null)=>{
     catch{
     }
     return null
-  }
+}
+
+
+export const numberToMoney = (value:number|string|null) =>
+    value ?  value.toLocaleString().replace(/[^0-9]/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ',') : ''

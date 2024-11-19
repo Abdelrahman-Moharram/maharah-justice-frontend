@@ -13,6 +13,9 @@ const cairo = Cairo({ subsets: ["latin"],display: 'swap', adjustFontFallback: fa
 export const metadata: Metadata = {
   title: "Justice",
   description: "",
+  icons:{
+    icon:'/logo.png'
+  }
 };
 
 export default function RootLayout({

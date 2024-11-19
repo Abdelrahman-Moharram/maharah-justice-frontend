@@ -57,7 +57,7 @@ const CaseDetails = ({case_number}:{case_number:string}) => {
           <>
             <div className='bg-card rounded-md'>
                 <div className='flex justify-between items-center p-4 rounded-md mb-4'>
-                    <div className="font-bold">{data?.case?.case_number}</div>
+                    <div className="font-bold text-2xl">{data?.case?.case_number}</div>
                     <DefaultBadge 
                       title={data?.case?.state}
                       color={handleCaseBadgeColor(data?.case?.state)}
@@ -173,8 +173,7 @@ const CaseDetails = ({case_number}:{case_number:string}) => {
                           <Link download={attch} className='bg-container rounded-xl h-[100px] overflow-hidden text-center p-4 drop-shadow-md'  href={process.env.NEXT_PUBLIC_HOST+"/media/"+attch} >
                             {attch}
                           </Link>
-                      )
-                      )
+                      ))
                     }
                   </div>
                 </div>
@@ -200,7 +199,7 @@ const CaseDetails = ({case_number}:{case_number:string}) => {
             <div className="mt-8 bg-card p-4 rounded-md">
               <div className="flex justify-between">
                 <h3 className='font-bold text-lg my-3'>الأحكام</h3>
-                <Link className='bg-primary h-fit p-2 rounded-md text-negitaive-color flex items-center gap-3' href={`/cases/${case_number}/sessions/add`}>
+                <Link className='bg-primary h-fit p-2 rounded-md text-negitaive-color flex items-center gap-3' href={`/cases/${case_number}/judgements/add`}>
                   إضافة حكم
                   <FaPlusCircle />
                 </Link>

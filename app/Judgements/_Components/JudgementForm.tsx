@@ -1,7 +1,10 @@
+import Button from '@/Components/Common/Button';
 import { CheckBox, HijriDateInput, Input, SelectInput, TextArea } from '@/Components/Forms'
+import AmountInputField from '@/Components/Forms/AmountInputField';
 import { amountRegex, judgementNumberRegex } from '@/Components/Hooks/Common/validationsRegexRepo';
 import { JudgementsFormType } from '@/Components/Types/Judgements'
 import { ValidationsType } from '@/Components/Types/Others';
+import Link from 'next/link';
 import React, { ChangeEvent, FormEvent } from 'react'
 import { DateObject } from 'react-multi-date-picker';
 interface baseType{
@@ -17,7 +20,7 @@ interface Props{
   add:boolean,
   isLoading:boolean,
   formSubmit:(e:FormEvent<HTMLFormElement>) =>void
-  changeDate: (date:DateObject | null) => void,
+  // changeDate: (date:DateObject | null) => void,
   onChange: (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>, validationSchema?:ValidationsType) => void,
   selectChange: (event: ChangeEvent<HTMLSelectElement> ) => void,
   changeCheckBox: (event: ChangeEvent<HTMLInputElement>, validationSchema?:ValidationsType)=>void,
@@ -29,14 +32,14 @@ const JudgementForm = ({
   courts,
   add,
   isLoading,
-  changeDate,
+  // changeDate,
   onChange,
   selectChange,
   imageChange,
   changeCheckBox,
   formSubmit,
 }:Props) => {
-
+ 
   return (
     <form 
       encType='multipart/form-data'
@@ -57,16 +60,7 @@ const JudgementForm = ({
           />
         </div>
 
-        <div className="">
-          <HijriDateInput
-            labelId={'date_ar'}
-            onChange={changeDate}
-            value={judgement?.date_ar}
-            label={'تاريخ الحكم'}
-            required= {true}
-            errors={formErrors?.date_ar}
-          />
-        </div>
+        
         <div className="mb-3">
           <SelectInput
             label='المحكمة'
@@ -87,26 +81,58 @@ const JudgementForm = ({
             }    
           </SelectInput>
         </div>
+        <div className="mt-8">
+          <CheckBox 
+            changeCheckBox={changeCheckBox}
+            checked={judgement?.is_aganist_company}
+            label='هل الحكم ضد الشركة ؟ '
+            labelId='is_aganist_company'
+            name='is_aganist_company'
+            />
+        </div>
         <div className="mb-3">
-          <Input
+          {/* <Input
             labelId={'amount'}
             onChange={e=>onChange(e, {regex:amountRegex})}
             value={judgement?.amount}
-            label={'الملبغ'}
+            label={'القيمة المالية'}
             required= {true}
             errors={formErrors?.amount}
             type='text'
+          /> */}
+          <AmountInputField
+            labelId={'amount'}
+            onChange={e=>onChange(e, {regex:amountRegex})}
+            value={judgement?.amount}
+            label={'القيمة المالية'}
+            required= {true}
+            errors={formErrors?.amount}
+            currency='ر.س'
           />
         </div>
-        <div className="my-5 col-span-2">
-            <CheckBox 
+
+        <div className="my-8 col-span-2">
+          {
+            judgement?.is_aganist_company?
+              <CheckBox 
                 changeCheckBox={changeCheckBox}
-                checked={judgement?.is_aganist_company}
-                label='هل الحكم ضد الشركة ؟ '
-                labelId='is_aganist_company'
-                name='is_aganist_company'
-            />
+                checked={judgement?.is_objectionable}
+                label='هل الحكم قابل للإعتراض ؟ '
+                labelId='is_objectionable'
+                name='is_objectionable'
+              />
+            :
+              <CheckBox 
+                changeCheckBox={changeCheckBox}
+                checked={judgement?.is_executable}
+                label='هل الحكم قابل للتنفيذ ؟ '
+                labelId='is_executable'
+                name='is_executable'
+              />
+          }
         </div>
+
+
         <div className="">
           <TextArea 
             labelId='result'
@@ -129,6 +155,16 @@ const JudgementForm = ({
         </div>
       
 
+      </div>
+
+      <div className="grid grid-cols-2 gap-2 mt-4">
+            <Button submit className='bg-primary hover:bg-transparent border-primary' title={'حفظ'} isLoading={isLoading} />
+            <Link 
+                href={'/cases'} 
+                className='w-full py-2 rounded-lg border border-secondary text-center hover:bg-secondary hover:text-white transition-all'
+            >
+                إلغاء
+            </Link>
       </div>
 
     </form>
