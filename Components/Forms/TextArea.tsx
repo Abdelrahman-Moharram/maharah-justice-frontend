@@ -29,7 +29,7 @@ const TextArea = ({labelId,
             rows={4}
             id={labelId}
             required={required}
-            className={"mt-1 resize-none w-full py-2 px-4 bg-card border-[#F8F8F8] border rounded-xl outline-none "+ (errors?.length?"border-red-500":" border-none ")}
+            className={"mt-1 resize-none w-full py-2 px-4 bg-card border border-[#E3E5E5] rounded-xl outline-none "+ (errors?.length?"border-red-500":" ")}
             defaultValue={value}
             onChange={onChange}
         >

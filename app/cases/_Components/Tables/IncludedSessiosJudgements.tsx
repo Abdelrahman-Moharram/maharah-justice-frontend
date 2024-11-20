@@ -38,6 +38,7 @@ const IncludedSessiosJudgements = ({data, case_number}:{data:any, case_number:st
         options={endOptions}
         fnKeys={['id', 'session_id', 'is_aganist_company', 'is_objectionable', 'is_executable', 'number']}
         optionsHeader={'الإعتراضات'}
+        amounts={['المبلغ']}
       />
     </div>
   )

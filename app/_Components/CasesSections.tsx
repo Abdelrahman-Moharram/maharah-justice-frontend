@@ -14,6 +14,7 @@ const CasesSections = () => {
   const handleCaseNumber = (case_number:string) =>{
     setModalCaseNumber(case_number)
   }
+
   return (
     <>
       <CaseDetailsOverLay 
@@ -37,6 +38,15 @@ const CasesSections = () => {
           count={data?.finished?.count}
           link={'/sessions?filter=finished'}
           title='القضايا المنتهية'
+          handleCaseNumber={handleCaseNumber}
+          handleDetailsModal={handleDetailsModal}
+        />
+        <CardsSwiperWithTitle 
+          isLoading={isLoading}
+          cases={data?.weekly?.cases}
+          count={data?.weekly?.count}
+          link={'/sessions?filter=weekly'}
+          title='القضايا الأسبوعية'
           handleCaseNumber={handleCaseNumber}
           handleDetailsModal={handleDetailsModal}
         />

@@ -60,7 +60,7 @@ const SessionForm = ({
         method='post'
     >
         <div className="grid grid-cols-2 drop-shadow-md p-5 gap-4 ">
-            <div className="mb-3">
+            <div className="">
                 <HijriDateInput
                     labelId={'date_ar'}
                     onChange={changeDate}

@@ -30,6 +30,9 @@ const config: Config = {
       },
       height:{
         'custom-screen': 'calc(100vh-64px)'
+      },
+      backgroundImage:{
+        'login-image':"url('/Login.png')"
       }
     },    
   },

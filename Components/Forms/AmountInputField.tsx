@@ -48,7 +48,7 @@ const AmountInputField = ({
             
         />
         <span 
-            className='absolute end-2.5 font-bold text-sm top-8 p-1.5 transition-all '
+            className='absolute end-2.5 font-bold text-sm top-[35px] p-1.5 transition-all '
         >
             {currency}
         </span>

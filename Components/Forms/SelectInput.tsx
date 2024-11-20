@@ -22,7 +22,7 @@ const SelectInput = ({
     errors
 }: props) => {
   return (
-    <div className='p-0'>
+    <div className='p-0 '>
         <label 
             htmlFor={labelId}
             className={"block text-md font-medium shadow-none drop-shadow-none outline-none text-gray-700 "+ (errors?.length?"border-red-500":" border-none ")}
@@ -36,7 +36,7 @@ const SelectInput = ({
                     onChange={onChange}
                     value={value}
                     required={required}
-                    className={"mt-1 w-full  py-1 px-4 bg-card border-[#F8F8F8] border rounded-xl outline-none "+ (errors?.length?"border-red-500":" border-none ")}
+					className={"mt-1 w-full select-wrapper py-1 px-4 pl-0 bg-card blur-none border border-[#E3E5E5] rounded-xl outline-none "+ (errors?.length?"border-red-500":"  ")}
                 >
                 {
                     emptyoption?

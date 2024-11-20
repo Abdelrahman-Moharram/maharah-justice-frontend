@@ -138,6 +138,8 @@ const page = () => {
             emptyLinkHref='/sessions'
             emptyText='صفحة جميع الجلسات'
             fnKeys={['case_number', 'id']}
+            amounts={['المبلغ']}
+
           />
         </div>
         <div className='flex justify-center my-10 font-extrabold'>

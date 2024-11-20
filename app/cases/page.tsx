@@ -124,6 +124,7 @@ const page = () => {
               emptyLinkHref='/cases'
               emptyText='صفحة القضايا الرئيسية'
               fnKeys={['id']}
+              amounts={['المبلغ']}
             />
           </div>
           <div className='flex justify-center my-10 font-extrabold'>

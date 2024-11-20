@@ -1,6 +1,7 @@
 import React from 'react'
 import { ImageSkeleton } from '../Common';
 import EmptyContent from '../Common/EmptyContent';
+import { numberToMoney } from '../utils/helper';
 
 interface Props{
     data:any
@@ -12,11 +13,12 @@ interface Props{
     startOptions?:(row:any)=>React.ReactNode,
     fnKeys:string[]
     optionsHeader?:string
-    startOptionsHeader?:string
+    startOptionsHeader?:string,
+    amounts?:string[]
 }
 
 
-const DataTable = ({options, startOptions, data, isLoading, emptyLinkHref, emptyText, fnKeys, isOptions=false, optionsHeader,  startOptionsHeader}:Props) => {
+const DataTable = ({options, startOptions, data, isLoading, emptyLinkHref, amounts, emptyText, fnKeys, isOptions=false, optionsHeader,  startOptionsHeader}:Props) => {
     const getHeaders = () =>{
         const cols = []
         if(startOptions?.length){
@@ -40,7 +42,7 @@ const DataTable = ({options, startOptions, data, isLoading, emptyLinkHref, empty
         const rendered_row = []
         for(let cell in row){
             if(typeof row === 'object' && Object.keys(row).includes(cell) && (!fnKeys || !fnKeys.includes(cell))){
-                rendered_row.push(<td className="whitespace-nowrap px-4 py-2 ">{row[cell]||<span className='text-center block'>-</span>}</td>)
+                rendered_row.push(<td className="whitespace-nowrap px-4 py-2 ">{amounts?.includes(cell)?numberToMoney(row[cell]):row[cell]||<span className='text-center block'>-</span>}</td>)
             }
         }
         return rendered_row

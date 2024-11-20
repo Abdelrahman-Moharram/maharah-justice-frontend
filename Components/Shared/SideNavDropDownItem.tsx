@@ -24,11 +24,11 @@ const SideNavDropDownItem = ({title, icon, innerLinks, baseKey}:Props) => {
                 {
                     innerLinks?.length?
                         <>
-                            <div className="flex items-center gap-2 text-sm font-medium "> 
+                            <div className="flex items-center gap-2 text-sm font-medium whitespace-nowrap"> 
                                 <div className="w-[24px] text-center hover:text-primary">
                                     {icon}
                                 </div> 
-                                <span className='mx-4'>{title}</span> 
+                                <span className='mx-4 whitespace-nowrap'>{title}</span> 
                             </div>
                             <span className="shrink-0 transition duration-300 group-open:-rotate-180">
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">

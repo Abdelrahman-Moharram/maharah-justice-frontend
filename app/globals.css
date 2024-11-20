@@ -169,3 +169,17 @@ body::-webkit-scrollbar-thumb {
 .overlay-fn-keys-hidden{
   top: 101%;
 }
+
+
+
+
+.select-wrapper {
+  position: relative !important;
+}
+
+.select-wrapper::after {
+  content: "▼" !important;
+  top: 6px  !important;
+  right: 10px !important;
+  position: absolute !important;
+}
