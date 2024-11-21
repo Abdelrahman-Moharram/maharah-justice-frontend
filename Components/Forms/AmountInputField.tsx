@@ -30,7 +30,7 @@ const AmountInputField = ({
 
     const handleAmountValue = (e:ChangeEvent<HTMLInputElement>) =>{
         setAmountValue(numberToMoney(e.target.value))
-        e.target.value = e.target.value.replace(/[^0-9]/g, '')
+        e.target.value = e.target.value.replace(/[^0-9.]/g, '')
         onChange(e)        
     }
   return (

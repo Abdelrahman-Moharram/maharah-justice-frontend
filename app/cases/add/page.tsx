@@ -1,7 +1,7 @@
 'use client'
 
 import Breadcrumb from '@/Components/Common/Breadcrumb';
-import CaseForm from '@/Components/Forms/CaseForm'
+import CaseForm from '@/app/cases/_Components/CaseForm'
 import { useCreateCaseMutation } from '@/redux/api/casesApi';
 import { useRouter } from 'next/navigation';
 import React, { FormEvent} from 'react'

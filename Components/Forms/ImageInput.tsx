@@ -10,6 +10,7 @@ interface props {
 	label: string
 	required?: boolean;
     errors?: string[];
+    id?:string
     
 }
 
@@ -20,12 +21,13 @@ const ImageInput = ({labelId,
 	label,
 	required = false,
     errors,
-
+    id
 }: props) => {
     let objectUrl = undefined
     if(file && typeof(file) !== 'string'){
         objectUrl = URL.createObjectURL(file)
     }
+
   return (
     <div>
         <label
@@ -106,7 +108,7 @@ const ImageInput = ({labelId,
         <input
             type={type}
             name={labelId}
-            id={labelId}
+            id={id || labelId}
             onChange={onChange}
             required={required}
             className="hidden"

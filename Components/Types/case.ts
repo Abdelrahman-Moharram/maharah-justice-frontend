@@ -20,13 +20,34 @@ export interface CaseFormType{
     court:  string;
     circular: string;
     city: string;
-    state:  string;
+    // state:  string;
     litigation_type:  string;
     company_representative: string;
     customer: string;
     cust_phone_number:  string;
     commercial_number:  string;
     date_ar:  DateObject|null;
-    case_attachment?: File[] | null,
+    attachments?: File[] | null,
     customer_name:''
   }
+
+
+//   interface CaseFormType{
+//     case_number:  string;
+//     agreement_number: string;
+//     amount: string;
+//     notes:  string;
+//     is_aganist_company: boolean;
+//     court:  string;
+//     circular: string;
+//     city: string;
+//     // state:  string;
+//     litigation_type:  string;
+//     company_representative: string;
+//     customer: string;
+//     cust_phone_number:  string;
+//     commercial_number:  string;
+//     date_ar:  DateObject|null;
+//     attachments?: File[] | null
+//     customer_name:string
+// }

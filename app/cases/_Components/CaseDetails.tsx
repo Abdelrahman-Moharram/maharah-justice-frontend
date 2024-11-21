@@ -130,11 +130,11 @@ const CaseDetails = ({case_number}:{case_number:string}) => {
                   
                   {/* ---------- */}
                   <SmallCard 
-                    keyName={'المدعى'}
+                    keyName={'المدعي'}
                     value={data?.case?.defendant}
                   />
                   <SmallCard 
-                    keyName={'المدعي عليه'}
+                    keyName={'المدعى عليه'}
                     value={data?.case?.prosecuter}
                   />
                   {/* ---------- */}

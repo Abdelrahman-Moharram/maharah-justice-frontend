@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import Input from './Input'
+import Input from '../../../Components/Forms/Input'
 import { useSearchCustomerByNameMutation } from '@/redux/api/utilsApi'
 
 
@@ -8,13 +8,13 @@ interface customerType{
     name: string;
 }
 interface Props{
-    label       :string
-    labelId     :string
-    type        :string
-    onChange:(val:string)=>void | undefined;
-    exclude?: string[],
-    oldNameValue:string,
-    errors?:any[]
+    label         :string
+    labelId       :string
+    type          :string
+    onChange      :(val:string)=>void | undefined;
+    exclude?      : string[],
+    oldNameValue  :string,
+    errors?       :any[]
 }
 const CustomerSearchInput = ({
     label,
@@ -25,13 +25,18 @@ const CustomerSearchInput = ({
     oldNameValue,
     errors
 }:Props) => {
-    const [nameValue, setNameValue] = useState(oldNameValue)
+    const [nameValue, setNameValue] = useState<string>(oldNameValue)
     const [menu, setMenu] = useState(false)
     const [searchCustomer, {data}] = useSearchCustomerByNameMutation()
     
     useEffect(()=>{
-      if(nameValue){
-        searchCustomer({query:nameValue})
+      setNameValue(oldNameValue)
+    },[oldNameValue])
+
+
+    useEffect(()=>{
+      if(nameValue || oldNameValue){
+        searchCustomer({query:nameValue || oldNameValue})
       }
     },[nameValue])
 

@@ -19,7 +19,7 @@ const SideNavDropDownItem = ({title, icon, innerLinks, baseKey}:Props) => {
     return (
         <details className="group [&_summary::-webkit-details-marker]:hidden">
             <summary
-                className={"flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 hover:text-primary hover:bg-secondary transition-all "+(baseKey === path.split('/')[1]?'text-primary bg-secondary':'')}
+                className={"flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 hover:text-primary hover:bg-[#4A4A4A] transition-all "+(baseKey === path.split('/')[1]?'text-primary bg-[#4A4A4A]':'')}
             >
                 {
                     innerLinks?.length?
@@ -58,7 +58,7 @@ const SideNavDropDownItem = ({title, icon, innerLinks, baseKey}:Props) => {
                                 <li key={idx}>
                                     <Link
                                         href={link.link}
-                                        className="flex whitespace-nowrap items-center gap-2 rounded-lg px-11 py-2 text-xs font-medium hover:text-primary hover:bg-secondary transition-all"
+                                        className="flex whitespace-nowrap items-center gap-2 rounded-lg px-11 py-2 text-xs font-medium hover:text-primary hover:bg-[#4A4A4A] transition-all"
                                     >
                                         {link?.icon}
                                         {link.title}

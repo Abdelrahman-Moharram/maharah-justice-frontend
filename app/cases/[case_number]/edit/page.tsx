@@ -1,7 +1,7 @@
 'use client'
 
 import Breadcrumb from '@/Components/Common/Breadcrumb';
-import CaseForm from '@/Components/Forms/CaseForm'
+import CaseForm from '@/app/cases/_Components/CaseForm'
 import { useEditCaseMutation } from '@/redux/api/casesApi';
 import { useGetCaseFormDropDownsQuery } from '@/redux/api/utilsApi';
 import { useParams, useRouter } from 'next/navigation';
@@ -90,7 +90,7 @@ const page = () => {
         })
     }
   }
-    
+
   return (
   <div className='p-5 space-y-10 rounded-lg'>
     <Breadcrumb 

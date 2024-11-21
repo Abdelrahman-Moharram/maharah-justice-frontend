@@ -1,13 +1,14 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 import Button from '@/Components/Common/Button';
 import { Input, SelectInput, TextArea, ImageInput, HijriDateInput, CheckBox } from '@/Components/Forms'
-import ToggledCard from '../Cards/ToggledCard';
+import ToggledCard from '../../../Components/Cards/ToggledCard';
 import CustomerSearchInput from './CustomerSearchInput';
 import { DateObject } from 'react-multi-date-picker';
 import Link from 'next/link';
-import { ValidationsType } from '../Types/Others';
-import { caseNumberRegex, commercialNumberRegex, hijriDateRegex, phoneNumberRegex } from '../Hooks/Common/validationsRegexRepo';
-import AmountInputField from './AmountInputField';
+import { ValidationsType } from '../../../Components/Types/Others';
+import { caseNumberRegex, commercialNumberRegex, hijriDateRegex, phoneNumberRegex } from '../../../Components/Hooks/Common/validationsRegexRepo';
+import AmountInputField from '../../../Components/Forms/AmountInputField';
+import { CaseFormType } from '@/Components/Types/case';
 
 interface circularType{
     id: string;
@@ -19,25 +20,7 @@ interface baseType{
     name: string
 }
   
-interface CaseType{
-    case_number:  string;
-    agreement_number: string;
-    amount: string;
-    notes:  string;
-    is_aganist_company: boolean;
-    court:  string;
-    circular: string;
-    city: string;
-    // state:  string;
-    litigation_type:  string;
-    company_representative: string;
-    customer: string;
-    cust_phone_number:  string;
-    commercial_number:  string;
-    date_ar:  DateObject|null;
-    case_attachment?: File[] | null
-    customer_name:string
-}
+
 interface Props{
     LitigationTypes: baseType[];
     states: baseType[];
@@ -45,7 +28,7 @@ interface Props{
     company_representatives:baseType[];
     courts:baseType[];
     circulars:circularType[];
-    caseForm:CaseType,
+    caseForm:CaseFormType,
     isLoading:boolean
     errors?:any | null
     add?:boolean,
@@ -53,7 +36,7 @@ interface Props{
     onChange:(event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>, validationSchema?:ValidationsType )=>void;
     changeCheckBox:(event: ChangeEvent<HTMLInputElement>, validationSchema?:ValidationsType )=>void;
     selectChange:(e: ChangeEvent<HTMLSelectElement>, validationSchema?:ValidationsType )=> void;
-    imageChange?: (file:File )=> void | undefined;
+    imageChange?: (file:File, id?:string)=> void | undefined;
     changeCustomer: (val:string, validationSchema?:ValidationsType)=>void,
     formSubmit:(e:FormEvent<HTMLFormElement>) =>void
     changeDate:(date:DateObject | null, validationSchema?:ValidationsType)=>void
@@ -71,7 +54,7 @@ const CaseForm = ({
     LitigationTypes,
     cities,
     // states,
-    circulars,
+    // circulars,
     company_representatives,
     courts,
     changeCheckBox,
@@ -80,8 +63,9 @@ const CaseForm = ({
     const [file, setFile] = useState<File|null>(null)
     const changeCurrentFile = (e:ChangeEvent<HTMLInputElement> ) =>{
         const files = e.target.files
+        
         if (files?.length && imageChange){
-            imageChange(files[0])
+            imageChange(files[0], e.target.id)
             setFile(null)
         }
     }
@@ -218,6 +202,7 @@ const CaseForm = ({
                     value={caseForm?.amount}
                     label={'مبلغ القضية'}
                     required= {true}
+                    currency='ر.س'
                     errors={errors?.amount}
                 />
 
@@ -267,7 +252,7 @@ const CaseForm = ({
                 <Input
                     labelId={'commercial_number'}
                     type={'text'}
-                    onChange={(e)=>onChange(e, {minLength:{value:10}, regex:{value:commercialNumberRegex, message:'برجاء التأكد من رقم السجل التجاري'}})}
+                    onChange={(e)=>onChange(e, {regex:{value:commercialNumberRegex, message:'برجاء التأكد من رقم السجل التجاري'}})}
                     value={caseForm?.commercial_number}
                     label={'رقم السجل التجاري'}
                     required= {true}
@@ -332,17 +317,18 @@ const CaseForm = ({
         >
             <div className="grid lg:grid-cols-6 md:grid-cols-4 sm-grid-cols-2 gap-3 items-center">
                 {
-                    caseForm?.case_attachment?.length?
-                        caseForm.case_attachment?.map((attch:File|string, idx)=>(
+                    caseForm?.attachments?.length?
+                        caseForm.attachments?.map((attch:File|string, idx)=>(
                             <div className="" key={idx}>
                                 <ImageInput
-                                    labelId={'image'}
+                                    labelId={`image-${idx}`}
                                     type={'file'}
                                     onChange={changeCurrentFile}
                                     file={attch}
                                     label={`المرفق رقم(${idx})`}
                                     required= {false}
                                     errors={errors?.attch}
+                                    id={idx.toLocaleString()}
                                 />
                             </div>
                         ))
@@ -357,6 +343,7 @@ const CaseForm = ({
                         file={file}
                         label={`المرفقات`}
                         required= {false}
+
                         // errors={errors?.attch}
                     />
                 </div>

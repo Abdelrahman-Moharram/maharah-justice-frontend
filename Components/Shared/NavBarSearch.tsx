@@ -10,7 +10,7 @@ const NavBarSearch = () => {
     const [searchValue, setSearchValue] = useState('')
     const [modalCaseNumber, setModalCaseNumber] = useState('')
     const [modal, setModal] = useState(false)
-    const {data, isLoading} = useGetNavBarSearchQuery({query:searchValue}, {skip:searchValue === ''})
+    const {data, isLoading} = useGetNavBarSearchQuery({query:searchValue.trim()}, {skip:searchValue === ''})
     const handleSearchValue = (e:ChangeEvent<HTMLInputElement>) =>{
         setSearchValue(e.target.value)
     }

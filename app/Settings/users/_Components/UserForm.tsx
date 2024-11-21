@@ -79,7 +79,7 @@ const UserForm = ({action, open, userId}:{action:()=>void, open:boolean, userId?
                 <Input
                     onChange={e=>onChange(e, {regex:fullNameRegex})}
                     value={user.full_name}
-                    label='الاسم المستخدم باللغة العربية'
+                    label='الاسم بالكامل'
                     labelId='full_name'
                     type='text'
                     errors={formErrors?.full_name}
