@@ -2,6 +2,7 @@ import React from 'react'
 import { ImageSkeleton } from '../Common';
 import EmptyContent from '../Common/EmptyContent';
 import { numberToMoney } from '../utils/helper';
+import TableSkeleton from './TableSkeleton';
 
 interface Props{
     data:any
@@ -52,12 +53,7 @@ const DataTable = ({options, startOptions, data, isLoading, emptyLinkHref, amoun
     <div className="overflow-x-auto overflow-y-hidden">
         {
             isLoading?
-                <ImageSkeleton 
-                    height='800px'
-                    width='100%'
-                    shadow
-                    rounded='10px'
-                />
+                <TableSkeleton />
             :
                 data?.length?
                     <table className="min-w-full divide-y-2 divide-gray-200 bg-container text-color text-sm">

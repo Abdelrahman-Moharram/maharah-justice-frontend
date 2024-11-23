@@ -50,7 +50,7 @@ const AmountInputField = ({
         <span 
             className='absolute end-2.5 font-bold text-sm top-[35px] p-1.5 transition-all '
         >
-            {currency}
+            {currency?currency:'ر.س'}
         </span>
     </div>
   )

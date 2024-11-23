@@ -40,7 +40,7 @@ export default function SideNav() {
             {title:'المحاكم', link:'/settings/courts'},
             {title:'حالات القضايا', link:'/settings/states'},
             {title:'أنواع القضايا', link:'/settings/litigation-types'},
-            {title:'الدوائر', link:'/settings/circulars'},
+            // {title:'الدوائر', link:'/settings/circulars'},
             {title:'المستخدمين', link:'/settings/users'},
             {title:'الأدوار', link:'/settings/roles'}, 
         ]

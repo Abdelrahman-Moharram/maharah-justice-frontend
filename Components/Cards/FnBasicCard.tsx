@@ -11,10 +11,10 @@ const FnBasicCard = ({keyName, value, children}:props) => {
    
   return (
     <div
-      className="flex justify-between items-center transition-all rounded-lg p-4 bg-card focus:outline-none focus:ring"
+      className={`flex justify-between items-center transition-all rounded-lg p-4 bg-container ${{/* drop-shadow-xl  */}} default-shadow focus:outline-none focus:ring`}
     >
         <div>
-            <p className="">{keyName}</p>
+            <p className="text-color">{keyName}</p>
             <h2 className="font-bold">
                 {value}
             </h2>

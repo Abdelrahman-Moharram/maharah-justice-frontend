@@ -8,8 +8,8 @@ interface props{
 const ButtonLink = ({children, href}:props) => {
   return (
     <Link
-        href={href}
-        className="flex items-center gap-3 w-fit rounded border bg-secondry transition-all hover:bg-primary-hover px-12 py-3 text-sm font-medium text-white focus:outline-none focus:ring active:text-indigo-500"
+      href={href}
+      className="flex items-center gap-3 w-fit rounded border bg-secondry transition-all hover:bg-primary-hover px-12 py-3 text-sm font-medium text-white focus:outline-none focus:ring active:text-indigo-500"
     >
     {children}
     </Link>

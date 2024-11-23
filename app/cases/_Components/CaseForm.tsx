@@ -9,6 +9,8 @@ import { ValidationsType } from '../../../Components/Types/Others';
 import { caseNumberRegex, commercialNumberRegex, hijriDateRegex, phoneNumberRegex } from '../../../Components/Hooks/Common/validationsRegexRepo';
 import AmountInputField from '../../../Components/Forms/AmountInputField';
 import { CaseFormType } from '@/Components/Types/case';
+import DefaultFormButtons from '@/Components/Forms/DefaultFormButtons';
+import PhoneNumberInputField from '@/Components/Forms/PhoneNumberInputField';
 
 interface circularType{
     id: string;
@@ -79,7 +81,7 @@ const CaseForm = ({
       >
         <ToggledCard 
             title='البيانات الأساسية'
-            className='bg-container'
+            className='bg-container my-7'
         >
             <div className="grid lg:grid-cols-3 sm:grid-cols-1 space-y-5 gap-4 py-5 rounded-md items-center">
                 
@@ -87,7 +89,7 @@ const CaseForm = ({
                     <Input
                         labelId={'case_number'}
                         type={'text'}
-                        onChange={e=>onChange(e, {minLength:{value:10}, alter_name:'رقم القضية', regex:{value:caseNumberRegex, message:'برجاء التأكد من رقم القضية'}})}
+                        onChange={e=>onChange(e, {alter_name:'رقم القضية', regex:caseNumberRegex})}
                         value={caseForm?.case_number}
                         label={'رقم القضية'}
                         required= {true}
@@ -187,12 +189,12 @@ const CaseForm = ({
                     errors={errors?.litigation_type}
                 >
                     {
-                    LitigationTypes?.length?
-                        LitigationTypes.map(LitigationType=>(
-                        <option key={LitigationType.id} value={LitigationType.id}>{LitigationType.name}</option>   
-                        ))
-                    :
-                    null
+                            LitigationTypes?.length?
+                                LitigationTypes.map(LitigationType=>(
+                                    <option key={LitigationType.id} value={LitigationType.id}>{LitigationType.name}</option>   
+                                ))
+                        :
+                            null
                     }
                 </SelectInput>
 
@@ -238,9 +240,8 @@ const CaseForm = ({
                     type='text'
                 />
 
-                <Input
+                <PhoneNumberInputField
                     labelId={'cust_phone_number'}
-                    type={'text'}
                     onChange={e=>onChange(e, {alter_name:"رقم جوال العميل", regex:phoneNumberRegex})}
                     value={caseForm?.cust_phone_number}
                     label={'رقم جوال العميل'}
@@ -356,15 +357,12 @@ const CaseForm = ({
 
       
       
-      <div className="grid grid-cols-2 gap-2">
-            <Button submit className='bg-primary hover:bg-transparent border-primary' title={'حفظ'} isLoading={isLoading} />
-            <Link 
-                href={'/cases'} 
-                className='w-full py-2 rounded-lg border border-secondary text-center hover:bg-secondary hover:text-white transition-all'
-            >
-                إلغاء
-            </Link>
-      </div>
+        
+
+        <DefaultFormButtons
+            cancelHref='/cases'
+            isLoading={isLoading}
+        />
 
     </form>
     </div>

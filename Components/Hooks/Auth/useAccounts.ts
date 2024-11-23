@@ -19,7 +19,7 @@ const emptyUser = {
     user_type: '',
     password:''
 }
-export const useUsersForm = ({userId}:{userId?:string}) =>{
+export const useUsersForm = ({userId, toggler}:{userId?:string, toggler?:boolean}) =>{
     
     
     const [formErrors, setFormErrors] = useState<any>(null)
@@ -40,7 +40,7 @@ export const useUsersForm = ({userId}:{userId?:string}) =>{
         }else{
             setUser(emptyUser)
         }
-    }, [userId])
+    }, [userId, toggler])
 
     const onChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>, validationSchema?:ValidationsType ) => {
         const { name, value } = event.target;

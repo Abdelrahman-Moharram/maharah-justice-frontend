@@ -5,7 +5,7 @@ import { isErrorsList } from '@/Components/Hooks/Common/useValidations'
 import { fullNameRegex, usernameRegex } from '@/Components/Hooks/Common/validationsRegexRepo'
 import OverLayFuncArea from '@/Components/Modals/OverLayFuncArea'
 import { useAddUserMutation, useEditUserMutation } from '@/redux/api/accountsApi'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { toast } from 'react-toastify'
 
 interface baseType{
@@ -25,7 +25,7 @@ const UserForm = ({action, open, userId}:{action:()=>void, open:boolean, userId?
         selectChange,
         setFormErrors,
         getUserAsFormData,
-    } = useUsersForm({userId})
+    } = useUsersForm({userId, toggler:open})
     const handleUser = () =>{
         if(userId){
             setFormErrors({...formErrors, password:null})
