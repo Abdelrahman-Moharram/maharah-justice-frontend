@@ -24,7 +24,7 @@ export default function useJudgementsForm({case_number, number}:{case_number:str
         is_aganist_company:false, 
         is_executable:false, 
         is_objectionable:false, 
-        judgement_attachments:[]
+        attachments:[]
     })
     useEffect(()=>{
         
@@ -52,10 +52,10 @@ export default function useJudgementsForm({case_number, number}:{case_number:str
     }
 
     const imageChange = (file:File)=>{
-        if(judgement.judgement_attachments?.length)
-            ({ ...judgement, judgement_attachments: [...judgement.judgement_attachments, file] });
+        if(judgement.attachments?.length)
+            ({ ...judgement, attachments: [...judgement.attachments, file] });
         else
-            setJudgement({ ...judgement, judgement_attachments: [file] });
+            setJudgement({ ...judgement, attachments: [file] });
     }
 
     const changeCheckBox = (event: ChangeEvent<HTMLInputElement>, validationSchema?:ValidationsType )  =>{
@@ -86,9 +86,9 @@ export default function useJudgementsForm({case_number, number}:{case_number:str
         // formData.append('date_ar'        , judgement.date_ar?.setLocale(arabic_en).toString()??'')
         
 
-        if(judgement?.judgement_attachments?.length)
-            for (let attch of judgement?.judgement_attachments){
-                formData.append('judgement_attachments', attch)
+        if(judgement?.attachments?.length)
+            for (let attch of judgement?.attachments){
+                formData.append('attachments', attch)
             }
 
         return formData

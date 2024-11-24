@@ -11,6 +11,7 @@ import AmountInputField from '../../../Components/Forms/AmountInputField';
 import { CaseFormType } from '@/Components/Types/case';
 import DefaultFormButtons from '@/Components/Forms/DefaultFormButtons';
 import PhoneNumberInputField from '@/Components/Forms/PhoneNumberInputField';
+import DynamicFilesField from '@/Components/Forms/DynamicFilesField';
 
 interface circularType{
     id: string;
@@ -62,15 +63,7 @@ const CaseForm = ({
     changeCheckBox,
     changeDate
   }:Props) => {
-    const [file, setFile] = useState<File|null>(null)
-    const changeCurrentFile = (e:ChangeEvent<HTMLInputElement> ) =>{
-        const files = e.target.files
-        
-        if (files?.length && imageChange){
-            imageChange(files[0], e.target.id)
-            setFile(null)
-        }
-    }
+    
   return (
 
     <div>
@@ -316,39 +309,11 @@ const CaseForm = ({
             title='المرفقات'
             className='bg-container'
         >
-            <div className="grid lg:grid-cols-6 md:grid-cols-4 sm-grid-cols-2 gap-3 items-center">
-                {
-                    caseForm?.attachments?.length?
-                        caseForm.attachments?.map((attch:File|string, idx)=>(
-                            <div className="" key={idx}>
-                                <ImageInput
-                                    labelId={`image-${idx}`}
-                                    type={'file'}
-                                    onChange={changeCurrentFile}
-                                    file={attch}
-                                    label={`المرفق رقم(${idx})`}
-                                    required= {false}
-                                    errors={errors?.attch}
-                                    id={idx.toLocaleString()}
-                                />
-                            </div>
-                        ))
-                    :null
-                }
-
-                <div className="">
-                    <ImageInput
-                        labelId={'image'}
-                        type={'file'}
-                        onChange={changeCurrentFile}
-                        file={file}
-                        label={`المرفقات`}
-                        required= {false}
-
-                        // errors={errors?.attch}
-                    />
-                </div>
-            </div>
+            <DynamicFilesField
+                errors={errors?.attachments}
+                attachments={caseForm?.attachments}
+                imageChange={imageChange} 
+            />
         </ToggledCard>
       
       

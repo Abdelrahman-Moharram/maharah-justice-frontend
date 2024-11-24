@@ -35,7 +35,7 @@ export default function useSessionForm({case_number, id}:{case_number:string, id
         alterlawyer:'',
         lawyer_name:'',
         alterlawyer_name:'',
-        session_attachments:[]
+        attachments:[]
     })
     useEffect(()=>{
         
@@ -72,10 +72,10 @@ export default function useSessionForm({case_number, id}:{case_number:string, id
         setSession({ ...session, lawyer: val })
     }
     const imageChange = (file:File)=>{
-        if(session.session_attachments?.length)
-            ({ ...session, session_attachments: [...session.session_attachments, file] });
+        if(session.attachments?.length)
+            ({ ...session, attachments: [...session.attachments, file] });
         else
-            setSession({ ...session, session_attachments: [file] });
+            setSession({ ...session, attachments: [file] });
     }
 
     const getSessionAsFormData = () =>{
@@ -99,9 +99,9 @@ export default function useSessionForm({case_number, id}:{case_number:string, id
         if(session.alterlawyer)
             formData.append('alterlawyer', session.alterlawyer)
     
-        if(session?.session_attachments?.length)
-            for (let attch of session?.session_attachments){
-                formData.append('session_attachments', attch)
+        if(session?.attachments?.length)
+            for (let attch of session?.attachments){
+                formData.append('attachments', attch)
             }
 
         return formData

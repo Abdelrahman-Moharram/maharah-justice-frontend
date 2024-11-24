@@ -11,5 +11,5 @@ export interface JudgementsFormType{
     is_aganist_company: boolean,
     is_objectionable: boolean,
     is_executable: boolean,
-    judgement_attachments: File[] | null
+    attachments: File[] | null
 }

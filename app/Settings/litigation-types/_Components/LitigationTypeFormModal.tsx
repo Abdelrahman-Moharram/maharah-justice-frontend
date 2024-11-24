@@ -89,6 +89,7 @@ const LitigationTypeFormModal = ({handleToggler, open, oldLitigationType}:Props)
                     onChange={e=>onChange(e, {regex:{value:'^[ء-ي][ء-ي ]{2,}$', message:"اسم نوع القضية يجب ان يحتوي على الاقل من 3 أحرف باللغة العربية"}})}
                     errors={error}
                     placeholder='اسم نوع القضية'
+                    required
                 />
             </div>
             <div className="grid grid-cols-2 gap-2">

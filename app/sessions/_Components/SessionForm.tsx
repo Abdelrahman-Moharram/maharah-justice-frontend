@@ -9,6 +9,7 @@ import Button from '@/Components/Common/Button'
 import Link from 'next/link'
 import { SessionFormType } from '@/Components/Types/sessions'
 import { ValidationsType } from '@/Components/Types/Others'
+import DynamicFilesField from '@/Components/Forms/DynamicFilesField'
 
 interface baseType{
     id: string;
@@ -226,37 +227,11 @@ const SessionForm = ({
         </div>
         <div className="">
             <h3>مستندات الجلسة</h3>
-            <div className="grid lg:grid-cols-6 md:grid-cols-4 sm-grid-cols-2 gap-3 items-center">
-                    {
-                        session?.session_attachments?.length?
-                            session.session_attachments?.map((attch:File|string, idx)=>(
-                                <div className="" key={idx}>
-                                    <ImageInput
-                                        labelId={'image'}
-                                        type={'file'}
-                                        onChange={changeCurrentFile}
-                                        file={attch}
-                                        label={`المرفق رقم(${idx})`}
-                                        required= {false}
-                                        errors={formErrors?.attch}
-                                    />
-                                </div>
-                            ))
-                        :null
-                    }
-
-                    <div className="">
-                        <ImageInput
-                            labelId={'image'}
-                            type={'file'}
-                            onChange={changeCurrentFile}
-                            file={file}
-                            label={`إضافة مرفق`}
-                            required= {false}
-                            // errors={errors?.attch}
-                        />
-                    </div>
-                </div>
+            <DynamicFilesField
+                errors={formErrors?.attachments}
+                attachments={session?.attachments}
+                imageChange={imageChange}
+            />
         </div>
 
         <div className="grid grid-cols-2 gap-2 mt-4">

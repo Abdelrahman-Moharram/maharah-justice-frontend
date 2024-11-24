@@ -18,5 +18,5 @@ export interface SessionFormType{
     alterlawyer: string,
     lawyer_name: string,
     alterlawyer_name: string,
-    session_attachments: File[] | null
+    attachments: File[] | null
 }
