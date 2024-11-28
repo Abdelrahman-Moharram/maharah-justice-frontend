@@ -2,6 +2,7 @@ import React, { ChangeEvent, useEffect, useState } from 'react'
 
 import { useSearchLawyerByNameMutation } from '@/redux/api/utilsApi'
 import { Input } from '@/Components/Forms';
+import { ValidationsType } from '@/Components/Types/Others';
 
 
 interface lawyerType{
@@ -12,7 +13,7 @@ interface Props{
     label       :string
     labelId     :string
     type        :string
-    onChange:(val:string)=>void | undefined;
+    onChange:(val:string, name:string, validationSchema?:ValidationsType)=>void | undefined;
     exclude?: string,
     oldNameValue:string,
     required?:boolean,
@@ -34,7 +35,7 @@ const LawyerSearchInput = ({
     const [searchLawyer, {data}] = useSearchLawyerByNameMutation()
     
     useEffect(()=>{
-      setNameValue(nameValue)
+      setNameValue(nameValue||oldNameValue)
     },[oldNameValue])
     
     useEffect(()=>{
@@ -50,11 +51,10 @@ const LawyerSearchInput = ({
     
     const handleValues = ({name, id}:{name:string, id: string}) =>{
       setNameValue(name)
-      onChange(id)
+      onChange(id, labelId)
       setMenu(false)      
     }
     
-
   return (
     <div className='relative'>
       <Input
@@ -62,7 +62,8 @@ const LawyerSearchInput = ({
         labelId={labelId}
         onChange={handleNameValue}
         type={type}
-        value={nameValue || oldNameValue}
+        defaultValue={nameValue || oldNameValue}
+        value={nameValue}
         required={required}
         errors={errors}
       />

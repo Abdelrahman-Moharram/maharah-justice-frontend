@@ -183,3 +183,19 @@ body::-webkit-scrollbar-thumb {
   right: 10px !important;
   position: absolute !important;
 }
+
+.login-container{
+  background-image: url('/Login-container.png');
+  background-size: cover;
+  background-attachment: fixed;
+  animation: scale .3s linear;
+}
+
+@keyframes scale {
+  from{
+      transform: scale(.5);
+  }
+  to{
+      transform: scale(1);
+  }
+}

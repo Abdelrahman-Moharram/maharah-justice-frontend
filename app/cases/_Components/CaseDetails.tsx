@@ -9,6 +9,7 @@ import { handleCaseBadgeColor } from '@/Components/utils/helper'
 import { FaPlusCircle } from 'react-icons/fa'
 import IncludedSessionDependants from './Tables/IncludedSessiosJudgements'
 import IncludedSessiosJudgements from './Tables/IncludedSessiosJudgements'
+import DataTable from '@/Components/Tables/DataTable'
 
 const LoadingCaseSkeleton = () =>(
     <div className='p-4'>
@@ -170,7 +171,7 @@ const CaseDetails = ({case_number}:{case_number:string}) => {
                             src={process.env.NEXT_PUBLIC_HOST+"/media/"+attch}
                           />
                         :
-                          <Link download={attch} className='bg-container rounded-xl h-[100px] overflow-hidden text-center p-4 drop-shadow-md'  href={process.env.NEXT_PUBLIC_HOST+"/media/"+attch} >
+                          <Link target='_blank' download={attch} className='bg-container rounded-xl h-[100px] overflow-hidden text-center p-4 drop-shadow-md'  href={process.env.NEXT_PUBLIC_HOST+"/media/"+attch} >
                             {attch}
                           </Link>
                       ))
@@ -207,11 +208,25 @@ const CaseDetails = ({case_number}:{case_number:string}) => {
               <IncludedSessiosJudgements 
                 data={data?.case?.judgements}
                 case_number={case_number}
+                isLoading={isLoading}
+              />
+            </div>
+            {/* ------------------------------ */}
+
+            {/* الإعتراض */}
+            <div className="mt-8 bg-card p-4 rounded-md">
+              <DataTable
+                data={data?.case?.appeals}
+                emptyLinkHref=''
+                emptyText='لا يوجد إعتراضات'
+                fnKeys={['id', 'judgement_number']}
+                isLoading={isLoading}
               />
             </div>
             {/* ------------------------------ */}
           </>
       }
+      
     </div>
   )
 }

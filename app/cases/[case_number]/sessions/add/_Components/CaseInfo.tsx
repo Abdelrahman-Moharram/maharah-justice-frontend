@@ -24,7 +24,7 @@ const CaseInfo = ({data, isLoading}:{data:any, isLoading:boolean}) => {
             l.push(
                 <BasicCard 
                     cardBg='bg-[#F4F4F4]'
-                    textcolor={handleCaseBadgeColor(data[i])}
+                    textcolor={i === 'حالة القضية'?handleCaseBadgeColor(data[i]):data[i]}
                     title={i}
                     value={data[i]}
                 />

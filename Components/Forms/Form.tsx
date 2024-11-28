@@ -69,7 +69,7 @@ export default function Form({
 				/>
 			))}
 
-			<div className='pt-2'>
+			<div className='pt-8'>
 				<button
 					type='submit'
 					className='flex w-full justify-center rounded-xl bg-primary px-3 py-1.5 text-sm  leading-6 font-[700] shadow-sm hover:bg-primary-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'

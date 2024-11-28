@@ -27,7 +27,7 @@ interface Props{
     changeDate: (date:DateObject | null) => void,
     onChange: (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>, validationSchema?:ValidationsType) => void,
     selectChange: (e: ChangeEvent<HTMLSelectElement> ) => void,
-    changeLawyer:(val:string)=>void
+    changeLawyer:(val:string, name:string,  validationSchema?:ValidationsType)=>void
     imageChange:(file:File)=>void
 }
 const SessionForm = ({

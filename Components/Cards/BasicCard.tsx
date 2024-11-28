@@ -9,7 +9,7 @@ interface Props{
     textSize?: string
 }
 
-const BasicCard = ({title, value, textcolor, cardBg, textSize='24px'}:Props) => {    
+const BasicCard = ({title, value, textcolor, cardBg, textSize='24px'}:Props) => {       
   return (
     <div className={cardBg+" py-5 rounded-md text-center"}>
         {
@@ -18,7 +18,7 @@ const BasicCard = ({title, value, textcolor, cardBg, textSize='24px'}:Props) => 
                 <span className={`block text-[${textSize}]`}>
                     {title}
                 </span>
-                <span className={`text-[${textcolor}] text-[${textSize}] font-bold flex justify-center items-center fw-[700]`}>
+                <span className={`text-[${textSize}] font-bold flex justify-center items-center fw-[700]`} style={{color:textcolor}}>
                     {value}
                 </span>
             </>

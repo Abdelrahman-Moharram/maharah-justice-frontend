@@ -66,10 +66,10 @@ export default function useSessionForm({case_number, id}:{case_number:string, id
             setFormErrors({...formErrors, [name]:DefaultInputValidate({name, value, validationSchema})})
         setSession({ ...session, [name]: value });
     }
-    const changeLawyer = (val:string,  validationSchema?:ValidationsType)=>{
+    const changeLawyer = (val:string, name:string,  validationSchema?:ValidationsType)=>{
         if(validationSchema)
-            setFormErrors({...formErrors, lawyer:DefaultInputValidate({name:'lawyer', value:val, validationSchema})})
-        setSession({ ...session, lawyer: val })
+            setFormErrors({...formErrors, lawyer:DefaultInputValidate({name, value:val, validationSchema})})
+        setSession({ ...session, [name]: val })
     }
     const imageChange = (file:File)=>{
         if(session.attachments?.length)

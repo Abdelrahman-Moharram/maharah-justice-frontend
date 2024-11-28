@@ -67,6 +67,7 @@ export const apiSlice = createApi({
 		'customers', 
 		'users', 
 		'litigtion_types', 
-		'judgements'
+		'judgements',
+		'appeals'
 	],
 });

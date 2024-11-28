@@ -1,7 +1,8 @@
 import { apiSlice } from "../services/apiSlice";
 
 
-const base_url = 'judgements/'
+const base_url      = 'judgements/'
+const apeals_url    = base_url +'appeals/'
 const judgementsApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder)=>({
         
@@ -49,6 +50,8 @@ const judgementsApiSlice = apiSlice.injectEndpoints({
             invalidatesTags:['judgements']
 
         }),
+        
+        
 
         getJudgementCaseInfo: builder.query({
             query:({case_number, judgement_number}:{case_number?:string, judgement_number?:string})=>({
@@ -68,7 +71,37 @@ const judgementsApiSlice = apiSlice.injectEndpoints({
             }),
             invalidatesTags:['judgements']
 
-        })
+        }),
+
+
+        // -----------------------------------------------------------//
+
+
+
+        addAppeal: builder.mutation({
+            query:({form, number}:{form:FormData, number:string})=>({
+                url: base_url+number+"/appeals/add/",
+                body:form,
+                method:'POST'
+            }),
+            invalidatesTags:['appeals']
+
+        }),
+        editAppeal: builder.mutation({
+            query:({appeal_id, number, form}:{appeal_id:string, number:string, form:FormData})=>({
+                url:base_url+number+"/appeals/"+ appeal_id + "/edit/",
+                body:form,
+                method:'PUT'
+            }),
+            invalidatesTags:['appeals']
+
+        }),
+        getAppealForm: builder.query({
+            query:({number}:{number:string})=>({
+                url:base_url+number+"/appeals/form-data/",
+                method:'GET'
+            }),
+        }),
 
     }) 
 })
@@ -80,5 +113,9 @@ export const {
     useAddJudgementMutation,
     useGetJudgementCaseInfoQuery,
     useEditJudgementFormMutation,
-    useEditJudgementMutation
+    useEditJudgementMutation,
+
+    useAddAppealMutation,
+    useEditAppealMutation,
+    useGetAppealFormQuery,    
 } = judgementsApiSlice    
