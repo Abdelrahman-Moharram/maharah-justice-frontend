@@ -17,7 +17,7 @@ const BreadcrumbData = [
     title: 'الصفحة الرئيسية',
   },
   {
-    href: '/settings/states',
+    href: '/settings/users',
     title: 'إعدادات المستخدمين',
     current:true
   }

@@ -43,6 +43,7 @@ export default function SideNav() {
             // {title:'الدوائر', link:'/settings/circulars'},
             {title:'المستخدمين', link:'/settings/users'},
             {title:'الأدوار', link:'/settings/roles'}, 
+            {title:'العملاء', link:'/settings/customers'},
         ]
         
     
