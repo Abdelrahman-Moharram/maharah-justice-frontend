@@ -215,6 +215,7 @@ const CaseDetails = ({case_number}:{case_number:string}) => {
 
             {/* الإعتراض */}
             <div className="mt-8 bg-card p-4 rounded-md">
+              <h3 className='font-bold text-lg my-3'>الإعتراضات</h3>
               <DataTable
                 data={data?.case?.appeals}
                 emptyLinkHref=''
