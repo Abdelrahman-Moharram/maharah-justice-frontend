@@ -69,9 +69,22 @@ const casesApiSlice = apiSlice.injectEndpoints({
                     url:base_url+'customers/dropdowns/',
                 }),
             }),
+            getCustomerFormData: builder.mutation({
+                query:({customer_id}:{customer_id:string})=>({
+                    url:base_url+`customers/${customer_id}/form-data/`,
+                }),
+            }),
 
             
 
+            editCustomer:builder.mutation({
+                query:({form, customer_id}:{form:FormData, customer_id:string})=>({
+                    url:base_url+`customers/${customer_id}/edit/`,
+                    method:'PUT',
+                    body:form,
+                }),
+                invalidatesTags:['customers']
+            }),
             addCustomer:builder.mutation({
                 query:({form}:{form:FormData})=>({
                     url:base_url+`customers/add/`,
@@ -277,6 +290,8 @@ export const {
     
     useGetCustomerListQuery,
     useGetCustomerDropDownsQuery,
+    useGetCustomerFormDataMutation,
+    useEditCustomerMutation,
     useAddCustomerMutation,
 
     useGetCitiesListQuery,

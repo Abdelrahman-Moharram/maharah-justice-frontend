@@ -1,12 +1,13 @@
 import { CustomerFormType } from "@/Components/Types/customer";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { DefaultInputValidate } from "../Common/useValidations";
 import { ValidationsType } from "@/Components/Types/Others";
-import { useGetCustomerDropDownsQuery } from "@/redux/api/utilsApi";
+import { useGetCustomerDropDownsQuery, useGetCustomerFormDataMutation } from "@/redux/api/utilsApi";
 
 export const useCustomers = ({customerId}:{customerId?:string}) =>{
     const [errors, setErrors] = useState<any>([])
     const {data:dropdowns} = useGetCustomerDropDownsQuery(undefined)
+    const [getCustomerFormData] = useGetCustomerFormDataMutation()
     const [customer, setCustomer] = useState<CustomerFormType>({
         id:customerId,
         name:'',
@@ -16,6 +17,18 @@ export const useCustomers = ({customerId}:{customerId?:string}) =>{
         is_company:false,
         number:''
     })
+    useEffect(()=>{
+        if(customerId){
+            getCustomerFormData({customer_id:customerId})
+                .unwrap()
+                .then(res=>{                    
+                    setCustomer(res?.customer)
+                }).catch(err=>{
+                    console.log(err);
+                })
+        }
+    }
+    ,[customerId])
     const onChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>, validationSchema?:ValidationsType ) => {
         const { name, value } = event.target;
         
@@ -53,6 +66,7 @@ export const useCustomers = ({customerId}:{customerId?:string}) =>{
 
         return formData
     }
+    
     return {
         customer,
         errors,

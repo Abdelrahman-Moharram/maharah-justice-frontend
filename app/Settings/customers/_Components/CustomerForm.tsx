@@ -4,7 +4,7 @@ import { isErrorsList } from '@/Components/Hooks/Common/useValidations'
 import { customerRegex, fullNameRegex, identityNumberRegex } from '@/Components/Hooks/Common/validationsRegexRepo'
 import { useCustomers } from '@/Components/Hooks/Utils/useCustomers'
 import OverLayFuncArea from '@/Components/Modals/OverLayFuncArea'
-import { useAddCustomerMutation } from '@/redux/api/utilsApi'
+import { useAddCustomerMutation, useEditCustomerMutation } from '@/redux/api/utilsApi'
 import React, { FormEvent, useEffect } from 'react'
 import { toast } from 'react-toastify'
 
@@ -16,6 +16,7 @@ interface baseType{
 }
 const CustomerForm = ({action, open, customerId}:{action:()=>void, open:boolean, customerId?:string}) => {
     const [addCustomer] = useAddCustomerMutation()
+    const [editCustomer] = useEditCustomerMutation()
     const {
         customer,
         errors,
@@ -32,13 +33,21 @@ const CustomerForm = ({action, open, customerId}:{action:()=>void, open:boolean,
         e.preventDefault()
 
         if (customerId){
-
+            editCustomer({customer_id:customerId, form:getCustomerAsFormData()})
+            .unwrap()
+            .then(res=>{                
+                toast.success(res?.message || 'تم تعديل المستخدم بنجاح')
+                action()
+            })
+            .catch(err=>{
+                setErrors(err?.data?.errors)
+                if(err?.status !== 403)
+                    toast.error(err?.data?.message || 'حدث خطأ ما أثناء تعديل المستخدم')
+            })
         }else{
             addCustomer({form:getCustomerAsFormData()})
             .unwrap()
-            .then(res=>{
-                console.log(res);
-                
+            .then(res=>{                
                 toast.success(res?.message || 'تم إضافة المستخدم بنجاح')
                 action()
             })
