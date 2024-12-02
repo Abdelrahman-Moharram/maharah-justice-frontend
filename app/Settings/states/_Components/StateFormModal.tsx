@@ -1,6 +1,6 @@
 import Button from '@/Components/Common/Button'
 import { Input } from '@/Components/Forms'
-import { useCaseStates } from '@/Components/Hooks/utils'
+import { useCaseStates } from '@/Components/Hooks/Utils/useCaseStates'
 import BaseModal from '@/Components/Modals/BaseModal'
 import { useAddStateMutation, useEditStateMutation } from '@/redux/api/utilsApi'
 import React, { useEffect } from 'react'

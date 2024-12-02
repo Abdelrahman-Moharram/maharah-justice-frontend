@@ -13,6 +13,8 @@ const casesApiSlice = apiSlice.injectEndpoints({
                     url:base_url+'session/dropdowns/',
                 }),
             }),
+
+            
             searchCustomerByName: builder.mutation({
                 query:({query}:{query:string})=>({
                     url:base_url+'customers/search/',
@@ -30,6 +32,8 @@ const casesApiSlice = apiSlice.injectEndpoints({
                     }
                 }),
             }),
+
+
             
             
             
@@ -48,13 +52,36 @@ const casesApiSlice = apiSlice.injectEndpoints({
                     params:{page, size}
                 }),
             }),
+
+            //----------------------------  customers   ----------------------------
+            
             getCustomerList:builder.query({
                 query:({page, size}:{page:number, size:number})=>({
                     url:base_url+'customers/list/',
                     params:{page, size}
                 }),
+                providesTags:['customers']
             }),
 
+
+            getCustomerDropDowns: builder.query({
+                query:()=>({
+                    url:base_url+'customers/dropdowns/',
+                }),
+            }),
+
+            
+
+            addCustomer:builder.mutation({
+                query:({form}:{form:FormData})=>({
+                    url:base_url+`customers/add/`,
+                    method:'POST',
+                    body:form,
+                }),
+                invalidatesTags:['customers']
+            }),
+
+            //---------------------------------------------------------------------
 
 
             //----------------------------  cities   ----------------------------
@@ -246,8 +273,12 @@ export const {
     useGetSessionFormDropDownsQuery,
     useGetCourtCircularListQuery,
     useGetCustomer_typeListQuery,
-    useGetCustomerListQuery,
+
     
+    useGetCustomerListQuery,
+    useGetCustomerDropDownsQuery,
+    useAddCustomerMutation,
+
     useGetCitiesListQuery,
     useEditCityMutation,
     useAddCityMutation,

@@ -101,6 +101,7 @@ const judgementsApiSlice = apiSlice.injectEndpoints({
                 url:base_url+number+"/appeals/form-data/",
                 method:'GET'
             }),
+            providesTags:['appeals']
         }),
 
     }) 

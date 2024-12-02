@@ -6,3 +6,8 @@ export interface ValidationsType{
     minLength?:{value:number, message?:string},
     alter_name?:string
 }
+
+export interface baseType{
+    id?:string,
+    name:string
+}

@@ -5,7 +5,7 @@ import { isErrorsList } from '@/Components/Hooks/Common/useValidations'
 import { fullNameRegex, usernameRegex } from '@/Components/Hooks/Common/validationsRegexRepo'
 import OverLayFuncArea from '@/Components/Modals/OverLayFuncArea'
 import { useAddUserMutation, useEditUserMutation } from '@/redux/api/accountsApi'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { toast } from 'react-toastify'
 
 interface baseType{

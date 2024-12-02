@@ -1,6 +1,6 @@
 import Button from '@/Components/Common/Button'
 import { Input } from '@/Components/Forms'
-import { useCourts } from '@/Components/Hooks/utils'
+import { useCourts } from '@/Components/Hooks/Utils/useCourts'
 import BaseModal from '@/Components/Modals/BaseModal'
 import { useAddCourtMutation, useEditCourtMutation } from '@/redux/api/utilsApi'
 import React, { useEffect } from 'react'

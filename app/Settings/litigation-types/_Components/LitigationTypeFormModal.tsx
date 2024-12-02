@@ -1,6 +1,6 @@
 import Button from '@/Components/Common/Button'
 import { Input } from '@/Components/Forms'
-import { useLitigationTypes } from '@/Components/Hooks/utils'
+import { useLitigationTypes } from '@/Components/Hooks/Utils/useLitigitionTypes'
 import BaseModal from '@/Components/Modals/BaseModal'
 import { useAddLitigationTypeMutation, useEditLitigationTypeMutation } from '@/redux/api/utilsApi'
 import React, { useEffect } from 'react'

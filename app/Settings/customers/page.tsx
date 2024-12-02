@@ -86,13 +86,13 @@ const page = () => {
             </div>
 
             <DataTable
-            data={data?.customers}
-            isLoading={isLoading}
-            fnKeys={['id']}
-            emptyLinkHref='/settings/customers'
-            emptyText='صفحة إعدادات المستخدمين'
-            isOptions
-            options={options}
+              data={data?.customers}
+              isLoading={isLoading}
+              fnKeys={['id']}
+              emptyLinkHref='/settings/customers'
+              emptyText='صفحة إعدادات المستخدمين'
+              isOptions
+              options={options}
             />
             <div className='flex justify-center my-10 font-extrabold'>
             {

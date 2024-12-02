@@ -1,6 +1,6 @@
 import Button from '@/Components/Common/Button'
 import { Input } from '@/Components/Forms'
-import { useCirculars } from '@/Components/Hooks/utils'
+import { useCirculars } from '@/Components/Hooks/Utils/useCirculars'
 import BaseModal from '@/Components/Modals/BaseModal'
 import { useAddCircularMutation, useEditCircularMutation } from '@/redux/api/utilsApi'
 import React, { useEffect } from 'react'
