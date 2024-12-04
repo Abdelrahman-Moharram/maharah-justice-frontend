@@ -21,7 +21,7 @@ const sessionsApiSlice = apiSlice.injectEndpoints({
             providesTags:['sessions']
         }),
         getSessionsExcel: builder.mutation({
-            query:({search, filter}:{search?:string|null, filter:string|null;})=>{
+            query:({search, type, filter}:{search?:string|null, type:string, filter:string|null;})=>{
                 if (filter){
                     filter += "/"
                 }else{
@@ -29,7 +29,7 @@ const sessionsApiSlice = apiSlice.injectEndpoints({
                 }                
                 return {
                     url:base_url+filter,
-                    params:{search, excel:true},
+                    params:{search, [type]:true},
                     responseHandler: (response) => response.blob(), 
 
                 }

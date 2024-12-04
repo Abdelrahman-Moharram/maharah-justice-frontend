@@ -2,7 +2,7 @@
 import Paginition from '@/Components/Lists/Paginition'
 import DataTable from '@/Components/Tables/DataTable'
 import TableSettings from '@/Components/Tables/TableSettings'
-import { useGetCasesListQuery, useExportCasesExcelMutation, useDeleteCaseMutation } from '@/redux/api/casesApi'
+import { useGetCasesListQuery, useDeleteCaseMutation, useExportCasesFileMutation } from '@/redux/api/casesApi'
 import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import React, { useCallback, useState } from 'react'
@@ -48,16 +48,21 @@ const page = () => {
     const filter = searchParams.get('filter')
 
     const {data, isLoading} = useGetCasesListQuery({page:page-1, size:size??10, filter:filter}, {skipPollingIfUnfocused:true})  
-    const [ExportCases] = useExportCasesExcelMutation() 
+    const [ExportCases] = useExportCasesFileMutation() 
     
-    const downloadFile = () => {
-      ExportCases(undefined)
+    const exportData = (type:string) => {
+      let ext = ''
+      if (type==='pdf')
+        ext = 'pdf'
+      else if (type==='excel')
+        ext = 'xlsx' 
+      ExportCases({type})
       .unwrap()
       .then(res=>{        
         const url = window.URL.createObjectURL(res);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'القضايا.xlsx';
+        a.download = `القضايا.${ext}`;
         document.body.appendChild(a);
         a.click();
         a.remove();
@@ -113,7 +118,8 @@ const page = () => {
         />
         <div className='min-h-[300px] space-y-4'>
           <TableSettings 
-            excel={downloadFile}
+            excel={()=>exportData('excel')}
+            pdf={()=>exportData('pdf')}
           />
           <div className="p-4">
             <DataTable 

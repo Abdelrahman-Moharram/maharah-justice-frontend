@@ -5,8 +5,9 @@ import { FaFilter } from "react-icons/fa";
 
 interface Props{
     excel:()=>void
+    pdf:()=>void
 }
-const TableSettings = ({excel}:Props) => {
+const TableSettings = ({excel, pdf}:Props) => {
   return (
     <div className='grid grid-cols-2 p-3 bg-card text-color rounded-md'>
         <div className="col-span-1">
@@ -17,7 +18,7 @@ const TableSettings = ({excel}:Props) => {
         </div>
         <div className="flex gap-3 justify-end items-center">
             <button className='flex items-center gap-3 bg-container py-1 px-2 shadow-md shadow-color/20 rounded-md'>فلترة<FaFilter /></button>
-            <button className='flex items-center gap-3 bg-container py-1 px-2 shadow-md shadow-color/20 rounded-md'>طباعة<FiPrinter /></button>
+            <button className='flex items-center gap-3 bg-container py-1 px-2 shadow-md shadow-color/20 rounded-md' onClick={pdf}>طباعة<FiPrinter /></button>
             <button className='flex items-center gap-3 bg-container py-1 px-2 shadow-md shadow-color/20 rounded-md' onClick={excel}>إكسل<RiFileExcel2Line /></button>
         </div>
     </div>

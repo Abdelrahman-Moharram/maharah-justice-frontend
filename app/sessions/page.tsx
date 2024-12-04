@@ -79,14 +79,20 @@ const page = () => {
           </button>
         </div>
       )
-    const downloadFile = () => {
-      ExportSessions({filter:filter})
+    
+    const exportData = (type:string) => {
+      let ext = ''
+      if (type==='pdf')
+        ext = 'pdf'
+      else if (type==='excel')
+        ext = 'xlsx' 
+      ExportSessions({type, filter})
       .unwrap()
       .then(res=>{        
         const url = window.URL.createObjectURL(res);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'الجلسات.xlsx';
+        a.download = `الجلسات.${ext}`;
         document.body.appendChild(a);
         a.click();
         a.remove();
@@ -127,7 +133,8 @@ const page = () => {
       />
       <div className='min-h-[300px] p-5 space-y-4'>
         <TableSettings 
-          excel={downloadFile}
+          excel={()=>exportData('excel')}
+          pdf={()=>exportData('pdf')}
         />
         <div className="p-4">
           <DataTable 

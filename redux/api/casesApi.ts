@@ -43,9 +43,12 @@ const casesApiSlice = apiSlice.injectEndpoints({
                     url:base_url+case_number+"/form/",
                 }),
             }),
-            exportCasesExcel: builder.mutation({
-                query:()=>({
-                    url:base_url+"list/?excel=true",
+            exportCasesFile: builder.mutation({
+                query:({type}:{type:string})=>({
+                    url:base_url+`list/`,
+                    params:{
+                        [type]:true
+                    },
                     responseHandler: (response) => response.blob(), 
                 }),
             }),
@@ -82,7 +85,7 @@ const casesApiSlice = apiSlice.injectEndpoints({
 export const {
     useGetIndexPageQuery,
     useGetCasesListQuery,
-    useExportCasesExcelMutation,
+    useExportCasesFileMutation,
     useCreateCaseMutation,
     useDeleteCaseMutation,
     useGetCaseFormMutation,
