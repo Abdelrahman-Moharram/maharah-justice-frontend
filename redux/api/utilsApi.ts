@@ -74,6 +74,13 @@ const casesApiSlice = apiSlice.injectEndpoints({
                     url:base_url+`customers/${customer_id}/form-data/`,
                 }),
             }),
+            switchCustomerStatus: builder.mutation({
+                query:({customer_id}:{customer_id:string})=>({
+                    url:base_url+`customers/${customer_id}/switch-status/`,
+                    method:'POST'
+                }),
+                invalidatesTags:['customers']
+            }),
 
             
 
@@ -293,6 +300,7 @@ export const {
     useGetCustomerFormDataMutation,
     useEditCustomerMutation,
     useAddCustomerMutation,
+    useSwitchCustomerStatusMutation,
 
     useGetCitiesListQuery,
     useEditCityMutation,

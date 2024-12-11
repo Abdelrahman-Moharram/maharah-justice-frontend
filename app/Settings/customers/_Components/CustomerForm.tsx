@@ -1,11 +1,10 @@
 import Button from '@/Components/Common/Button'
 import { CheckBox, Input, SelectInput } from '@/Components/Forms'
-import { isErrorsList } from '@/Components/Hooks/Common/useValidations'
 import { customerRegex, fullNameRegex, identityNumberRegex } from '@/Components/Hooks/Common/validationsRegexRepo'
 import { useCustomers } from '@/Components/Hooks/Utils/useCustomers'
 import OverLayFuncArea from '@/Components/Modals/OverLayFuncArea'
 import { useAddCustomerMutation, useEditCustomerMutation } from '@/redux/api/utilsApi'
-import React, { FormEvent, useEffect } from 'react'
+import React, { FormEvent } from 'react'
 import { toast } from 'react-toastify'
 
 interface baseType{

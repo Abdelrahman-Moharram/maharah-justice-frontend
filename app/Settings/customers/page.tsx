@@ -3,12 +3,14 @@ import Breadcrumb from '@/Components/Common/Breadcrumb'
 import Paginition from '@/Components/Lists/Paginition'
 import DataTable from '@/Components/Tables/DataTable'
 import { to_int_or_default } from '@/Components/utils/helper'
-import { useGetCustomerListQuery } from '@/redux/api/utilsApi'
+import { useGetCustomerListQuery, useSwitchCustomerStatusMutation } from '@/redux/api/utilsApi'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import React, { useCallback, useState } from 'react'
 import { BiEdit } from 'react-icons/bi'
 import { FaPlusCircle } from 'react-icons/fa'
 import CustomerFormOverLay from './_Components/CustomerFormOverLay'
+import { toast } from 'react-toastify'
+import SwitchInputField from '@/Components/Forms/SwitchInputField'
 
 const BreadcrumbData = [
     {
@@ -54,13 +56,33 @@ const page = () => {
         page = 1
         router.push(pathname + '?' + createQueryString('page', "1"))
     }
-  
+    
     const {data, isLoading} = useGetCustomerListQuery({page:page-1, size})
+    const [switchCustomerStatus] = useSwitchCustomerStatusMutation()
+
+    const handleCustomerStatus = (customer_id:string) =>{
+      switchCustomerStatus({customer_id})
+        .unwrap()
+        .then(res=>{
+          toast.success(res?.message || 'تم تغيير حالة العميل')
+        }).catch(err=>{
+          console.log(err);
+          
+          toast.error(err?.message || 'حدث خطأ ما أثناء تغيير حالة العميل')
+        })
+    }
+
+
 
     const options = (row:any)=>(
-        <div className='flex gap-4 items-start'>
-          <button onClick={()=>{handleOverLay();setCustomerId(row?.id)}} className=' text-blue-600 text-lg transition-all rounded-full' ><BiEdit />
-          </button>
+        <div className='flex items-center'>
+          <div className="scale-[60%] h-fit w-fit">
+            <SwitchInputField 
+              checked={row?.is_active}
+              handleCheck={()=>handleCustomerStatus(row.id)}
+            />
+          </div>
+          <button onClick={()=>{handleOverLay();setCustomerId(row?.id)}} className=' text-blue-600 text-xl transition-all rounded-full' ><BiEdit /></button>
         </div>
       )
   return (
@@ -88,7 +110,7 @@ const page = () => {
             <DataTable
               data={data?.customers}
               isLoading={isLoading}
-              fnKeys={['id']}
+              fnKeys={['id', 'is_active']}
               emptyLinkHref='/settings/customers'
               emptyText='صفحة إعدادات المستخدمين'
               isOptions
