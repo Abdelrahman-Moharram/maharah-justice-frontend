@@ -12,6 +12,7 @@ import Paginition from '@/Components/Lists/Paginition'
 import CaseDetailsOverLay from '../cases/_Components/CaseDetailsOverLay'
 import DeleteModal from '@/Components/Modals/DeleteModal'
 import { toast } from 'react-toastify'
+import { HijriDateInput, Input } from '@/Components/Forms'
 
 
 const to_int_or_default = (val:string|null)=>{
@@ -136,6 +137,16 @@ const page = () => {
           excel={()=>exportData('excel')}
           pdf={()=>exportData('pdf')}
         />
+        <div className='grid grid-cols-2 p-3 bg-card text-color rounded-md'>
+          <div className="bg-container shadow-md shadow-color/20 rounded-md p-4">
+          <HijriDateInput
+            labelId=''
+            label=''
+            onChange={()=>{}}
+            value={null}
+          />
+          </div>
+        </div>
         <div className="p-4">
           <DataTable 
             data={data?.sessions}
