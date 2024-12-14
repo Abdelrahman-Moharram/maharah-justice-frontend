@@ -88,7 +88,7 @@ const page = () => {
   return (
     <>
         <CustomerFormOverLay
-            handleOpen={handleOverLay}
+            handleOpen={()=>{handleOverLay();setCustomerId('')}}
             open={showOverLay}
             customerId={customerId}
         />

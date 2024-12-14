@@ -22,7 +22,6 @@ const CustomerForm = ({action, open, customerId}:{action:()=>void, open:boolean,
         dropdowns,
         onChange,
         setErrors,
-        setCustomer,
         selectChange,
         changeCheckBox,
         getCustomerAsFormData

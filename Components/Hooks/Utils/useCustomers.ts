@@ -5,10 +5,7 @@ import { ValidationsType } from "@/Components/Types/Others";
 import { useGetCustomerDropDownsQuery, useGetCustomerFormDataMutation } from "@/redux/api/utilsApi";
 
 export const useCustomers = ({customerId}:{customerId?:string}) =>{
-    const [errors, setErrors] = useState<any>([])
-    const {data:dropdowns} = useGetCustomerDropDownsQuery(undefined)
-    const [getCustomerFormData] = useGetCustomerFormDataMutation()
-    const [customer, setCustomer] = useState<CustomerFormType>({
+    const emptyCustomer = {
         id:customerId,
         name:'',
         customer_type:'',
@@ -16,7 +13,11 @@ export const useCustomers = ({customerId}:{customerId?:string}) =>{
         identity_number:'',
         is_company:false,
         number:''
-    })
+    }
+    const [errors, setErrors] = useState<any>([])
+    const {data:dropdowns} = useGetCustomerDropDownsQuery(undefined)
+    const [getCustomerFormData] = useGetCustomerFormDataMutation()
+    const [customer, setCustomer] = useState<CustomerFormType>(emptyCustomer)
     useEffect(()=>{
         if(customerId){
             getCustomerFormData({customer_id:customerId})
@@ -26,6 +27,8 @@ export const useCustomers = ({customerId}:{customerId?:string}) =>{
                 }).catch(err=>{
                     console.log(err);
                 })
+        }else{
+            setCustomer(emptyCustomer)
         }
     }
     ,[customerId])
