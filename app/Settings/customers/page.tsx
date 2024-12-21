@@ -57,7 +57,7 @@ const page = () => {
         router.push(pathname + '?' + createQueryString('page', "1"))
     }
     
-    const {data, isLoading} = useGetCustomerListQuery({page:page-1, size})
+    const {data, isLoading} = useGetCustomerListQuery({page, size})
     const [switchCustomerStatus] = useSwitchCustomerStatusMutation()
 
     const handleCustomerStatus = (customer_id:string) =>{
@@ -117,14 +117,9 @@ const page = () => {
               options={options}
             />
             <div className='flex justify-center my-10 font-extrabold'>
-            {
-                data?.total_pages?
-                <Paginition
-                    page={page}
-                    totalPages={data?.total_pages}
-                />                
-                :null
-            }
+              <Paginition
+                totalPages={data?.total_pages}
+              />
             </div>
         </div> 
     </>

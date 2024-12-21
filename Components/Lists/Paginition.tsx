@@ -1,13 +1,16 @@
 import React, { useCallback } from 'react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { to_int_or_default } from '../utils/helper';
 
 interface props{
-    page:number;
-    totalPages: number
+    totalPages: number|null;
 }
-const Paginition = ({page, totalPages}:props) => {
+const Paginition = ({totalPages}:props) => {
     const searchParams = useSearchParams()
+    let size = to_int_or_default(searchParams.get("size")) 
+    let page = to_int_or_default(searchParams.get("page")) 
     const router = useRouter()
+    
     const pathname = usePathname()
     const createQueryString = useCallback(
         (name: string, value: string) => {
@@ -19,10 +22,20 @@ const Paginition = ({page, totalPages}:props) => {
         [searchParams]
       )
 
+      if(!size){
+        size = 10
+        
+        router.push(pathname + '?' + createQueryString('size', '10'))
+      }
+      if(!page){
+        page = 1
+        router.push(pathname + '?' + createQueryString('page', "1"))
+      }
+
   return (
     <div className="inline-flex items-center justify-center gap-3 ">
         {
-            page < totalPages?
+            totalPages && page < totalPages?
                 <button
                     onClick={()=>{
                         router.push(pathname + '?' + createQueryString('page', (page+1).toString()))
@@ -45,7 +58,7 @@ const Paginition = ({page, totalPages}:props) => {
         <p className="text-xs text-gray-900">
             {page}
             <span className="mx-0.25">/</span>
-            {totalPages}
+            {totalPages || 0}
         </p>
         {
             page >= 2?

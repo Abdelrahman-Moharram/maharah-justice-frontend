@@ -1,6 +1,7 @@
 import { apiSlice } from "../services/apiSlice";
 
 const base_url = 'users/'
+const lawyers_url = base_url + 'lawyers/'
 const casesApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder)=>({
         getUsersList: builder.query({
@@ -38,6 +39,26 @@ const casesApiSlice = apiSlice.injectEndpoints({
             }),
             // invalidatesTags:['users']
         }),
+        searchUserByNameOrUserName: builder.mutation({
+            query:({query, exclude}:{query:string, exclude:string})=>({
+                url:base_url+'search/',
+                params:{
+                    query,
+                    exclude
+                }
+            }),
+            // invalidatesTags:['users']
+        }),
+        // ------------------------------------------------ //
+
+
+        getLawyersList: builder.query({
+            query:({page, size}:{page:number, size:number})=>({
+                url:lawyers_url+'list/',
+                params:{page, size}
+            }),
+            providesTags:['users']
+        }),
     }) 
 })
 
@@ -47,7 +68,10 @@ export const {
     useGetAddUserDropDownsQuery,
     useAddUserMutation,
     useUserDetailsMutation,
-    useEditUserMutation
+    useEditUserMutation,
+
+    useGetLawyersListQuery,
+    useSearchUserByNameOrUserNameMutation
 
 
 } = casesApiSlice

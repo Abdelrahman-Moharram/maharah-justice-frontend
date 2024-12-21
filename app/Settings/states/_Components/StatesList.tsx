@@ -17,7 +17,7 @@ const StatesList = ({page, size}:Props) => {
     const [currState, setCurrState] = useState<stateType|null>(null)
     const [deleteModal, setDeleteModal] = useState(false)
     const [editModal, setEditModal] = useState(false)
-    const {data, isLoading} = useGetStateListQuery({page:page-1, size})
+    const {data, isLoading} = useGetStateListQuery({page, size})
 
     const handleDeleteModal = () =>{
         setDeleteModal(!deleteModal)

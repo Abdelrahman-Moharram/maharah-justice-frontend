@@ -13,55 +13,33 @@ import CaseDetailsOverLay from '../cases/_Components/CaseDetailsOverLay'
 import DeleteModal from '@/Components/Modals/DeleteModal'
 import { toast } from 'react-toastify'
 import { HijriDateInput, Input } from '@/Components/Forms'
+import { to_int_or_default } from '@/Components/utils/helper'
 
 
-const to_int_or_default = (val:string|null)=>{
-    try{
-        if(val)
-            return parseInt(val)
-    }
-    catch{
-    }
-    return null
-}
-  
+ 
 const page = () => {
+    const searchParams  = useSearchParams()
+    const filter        = searchParams.get('filter')
+    let size            = to_int_or_default(searchParams.get("size"))
+    let page            = to_int_or_default(searchParams.get("page"))
+
+
     const [showSessionDetails, setShowSessionDetails] = useState<Boolean>(false)
     const [detailsSessionNumber, setDetailsSessionNumber] = useState<string>('')
-    const searchParams = useSearchParams()
-    const  filter  = searchParams.get('filter')
-    let size       = to_int_or_default(searchParams.get("size"))
-    let page       = to_int_or_default(searchParams.get("page"))
     const [deleteModal, setDeleteModal] = useState(false)
     const [deletedSession, setDeleteSession] = useState<string>('')
     const [deleteSession, {isLoading:deleteSessionLoading}] = useDeleteSessionMutation()
 
 
-    const createQueryString = useCallback(
-        (name: string, value: string) => {
-          const params = new URLSearchParams(searchParams.toString())
-          params.set(name, value)
-    
-          return params.toString()
-        },
-        [searchParams]
-    )
-    const router = useRouter()
-    const pathname = usePathname()
     const search = searchParams.get('search') || ''
-    if(!size){
-        router.push(pathname + '?' + createQueryString('size', "10"))
-    }
-    if(!page){
-        page = 1
-        router.push(pathname + '?' + createQueryString('page', "1"))
-    }
+    
     const handleDeleteModal = () =>{
       setDeleteModal(!deleteModal)
     }
 
-    const {data, isLoading} = useGetSessionsListQuery({page:page-1, size:size??10, search:search, filter}, {skipPollingIfUnfocused:true})  
+    const {data, isLoading} = useGetSessionsListQuery({page, size:size||10, search:search, filter}, {skipPollingIfUnfocused:true})  
     const [ExportSessions] = useGetSessionsExcelMutation() 
+
     const options = (row:any)=>(
         <div className='flex gap-4 items-start'>
           <button onClick={()=>{
@@ -123,7 +101,6 @@ const page = () => {
         id={deletedSession}
         isLoading={deleteSessionLoading}
         title='حذف جلسة'
-
       >
         هل أنت متأكد من حذف هذه الجلسة ؟ 
       </DeleteModal>
@@ -137,16 +114,7 @@ const page = () => {
           excel={()=>exportData('excel')}
           pdf={()=>exportData('pdf')}
         />
-        <div className='grid grid-cols-2 p-3 bg-card text-color rounded-md'>
-          <div className="bg-container shadow-md shadow-color/20 rounded-md p-4">
-          <HijriDateInput
-            labelId=''
-            label=''
-            onChange={()=>{}}
-            value={null}
-          />
-          </div>
-        </div>
+        
         <div className="p-4">
           <DataTable 
             data={data?.sessions}
@@ -161,11 +129,9 @@ const page = () => {
           />
         </div>
         <div className='flex justify-center my-10 font-extrabold'>
-            {
-              data?.sessions?.length?
-                <Paginition page={page} totalPages={data?.total_pages} />
-              :null
-            }
+          <Paginition
+            totalPages={data?.total_pages}
+          /> 
         </div>
       </div>
     </div>

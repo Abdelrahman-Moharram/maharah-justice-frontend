@@ -2,14 +2,7 @@ import { ChangeEvent, useEffect, useState } from "react"
 import { ValidationsType } from "@/Components/Types/Others";
 import { DefaultInputValidate } from "../Common/useValidations";
 import { useGetAddUserDropDownsQuery, useUserDetailsMutation } from "@/redux/api/accountsApi";
-interface UserType{
-    id?: string,
-    full_name: string,
-    username: string,
-    role: string,
-    user_type: string,
-    password:string
-}
+
 
 const emptyUser = {
     id: '',
@@ -25,20 +18,20 @@ export const useUsersForm = ({userId, toggler}:{userId?:string, toggler?:boolean
     const [formErrors, setFormErrors] = useState<any>(null)
     const {data:dropDowns} = useGetAddUserDropDownsQuery(undefined)
     const [userDetails] = useUserDetailsMutation()
-    const [user, setUser] = useState<UserType>(emptyUser)
+    const [user, setLawyer] = useState<UserType>(emptyUser)
 
     useEffect(()=>{
         if(userId){
             userDetails({id:userId})
             .unwrap()
             .then(res=>{
-                setUser(res?.user)
+                setLawyer(res?.user)
             })
             .catch(err=>{
                 console.log(err);
             })
         }else{
-            setUser(emptyUser)
+            setLawyer(emptyUser)
         }
     }, [userId, toggler])
 
@@ -49,7 +42,7 @@ export const useUsersForm = ({userId, toggler}:{userId?:string, toggler?:boolean
         else{
             setFormErrors({...formErrors, [name]:undefined})   
         }
-        setUser({ ...user, [name]: value });
+        setLawyer({ ...user, [name]: value });
     };
     
     const selectChange = (e: ChangeEvent<HTMLSelectElement>,  validationSchema?:ValidationsType)=>{
@@ -59,7 +52,7 @@ export const useUsersForm = ({userId, toggler}:{userId?:string, toggler?:boolean
         else{
             setFormErrors({...formErrors, [name]:undefined})
         }
-        setUser({ ...user, [name]: value });
+        setLawyer({ ...user, [name]: value });
     }
 
 
@@ -88,4 +81,72 @@ export const useUsersForm = ({userId, toggler}:{userId?:string, toggler?:boolean
         getUserAsFormData,
     }
 
+}
+
+const emptyLawyer = {
+    user:'',
+    email:'',
+    phone_number:'',
+    username:''
+}
+export const useLawyersForm = ({lawyerId, toggler}:{lawyerId?:string, toggler?:boolean}) =>{
+      
+    const [formErrors, setFormErrors] = useState<any>(null)
+    const {data:dropDowns} = useGetAddUserDropDownsQuery(undefined)
+    const [lawyerDetails] = useUserDetailsMutation()
+    const [lawyer, setLawyer] = useState<LawyerType>(emptyLawyer)
+
+    useEffect(()=>{
+        if(lawyerId){
+            lawyerDetails({id:lawyerId})
+                .unwrap()
+                .then(res=>{
+                    setLawyer(res?.lawyer)
+                })
+                .catch(err=>{
+                    console.log(err);
+                })
+        }else{
+            setLawyer(emptyLawyer)
+        }
+    }, [lawyerId, toggler])
+
+    const onChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>, validationSchema?:ValidationsType ) => {
+        const { name, value } = event.target;
+        if(validationSchema)
+            setFormErrors({...formErrors, [name]:DefaultInputValidate({name, value, validationSchema})})
+        else{
+            setFormErrors({...formErrors, [name]:undefined})   
+        }
+        setLawyer({ ...lawyer, [name]: value });
+    };
+    
+    const changeUser = (val:string, name:string, validationSchema?:ValidationsType)=>{
+        if(validationSchema)
+            setFormErrors({...formErrors, customer:DefaultInputValidate({name:'customer', value:val, validationSchema})})
+        setLawyer({ ...lawyer, [name]: val })
+    }
+
+
+    const getLawyerAsFormData = () =>{
+        
+        const formData = new FormData()
+        if(lawyer?.id)
+            formData.append('id', lawyer.id)
+
+        formData.append('email', lawyer.email)
+        formData.append('phone_number', lawyer.phone_number)
+        formData.append('user', lawyer.user)
+        return formData
+    }
+
+    return {
+        lawyer,
+        formErrors,
+        dropDowns,
+        setFormErrors,
+        onChange,
+        changeUser,
+        getLawyerAsFormData,
+    }
 }

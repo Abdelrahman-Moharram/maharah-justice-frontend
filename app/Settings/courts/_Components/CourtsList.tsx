@@ -16,7 +16,7 @@ const CourtsList = ({page, size}:Props) => {
     const [currCourt, setCurrCourt] = useState<courtType|null>(null)
     const [deleteModal, setDeleteModal] = useState(false)
     const [editModal, setEditModal] = useState(false)
-    const {data, isLoading} = useGetCourtsListQuery({page:page-1, size})
+    const {data, isLoading} = useGetCourtsListQuery({page, size})
 
     const handleDeleteModal = () =>{
         setDeleteModal(!deleteModal)

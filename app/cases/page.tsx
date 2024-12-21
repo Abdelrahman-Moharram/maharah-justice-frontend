@@ -27,27 +27,10 @@ const page = () => {
     let page = to_int_or_default(searchParams.get("page"))
 
 
-    const createQueryString = useCallback(
-        (name: string, value: string) => {
-          const params = new URLSearchParams(searchParams.toString())
-          params.set(name, value)
     
-          return params.toString()
-        },
-        [searchParams]
-    )
-    const router = useRouter()
-    const pathname = usePathname()
-    if(!size){
-      router.push(pathname + '?' + createQueryString('size', "10"))
-    }
-    if(!page){
-      page = 1
-      router.push(pathname + '?' + createQueryString('page', "1"))
-    }
     const filter = searchParams.get('filter')
 
-    const {data, isLoading} = useGetCasesListQuery({page:page-1, size:size??10, filter:filter}, {skipPollingIfUnfocused:true})  
+    const {data, isLoading} = useGetCasesListQuery({page, size:size??10, filter:filter}, {skipPollingIfUnfocused:true})  
     const [ExportCases] = useExportCasesFileMutation() 
     
     const exportData = (type:string) => {
@@ -134,12 +117,10 @@ const page = () => {
             />
           </div>
           <div className='flex justify-center my-10 font-extrabold'>
-              {
-                data?.cases.length?
-                  <Paginition page={page} totalPages={data?.total_pages} />
-                :null
-              }
-          </div>
+            <Paginition
+              totalPages={data?.total_pages}
+            /> 
+        </div>
         </div>
       </>
     )

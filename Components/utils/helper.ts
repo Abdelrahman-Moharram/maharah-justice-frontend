@@ -29,7 +29,7 @@ export const to_int_or_default = (val:string|null)=>{
     }
     catch{
     }
-    return null
+    return 0
 }
 
 

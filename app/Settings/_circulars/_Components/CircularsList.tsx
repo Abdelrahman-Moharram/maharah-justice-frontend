@@ -16,7 +16,7 @@ const CircularsList = ({page, size}:Props) => {
     const [currCircular, setCurrCircular] = useState<circularType|null>(null)
     const [deleteModal, setDeleteModal] = useState(false)
     const [editModal, setEditModal] = useState(false)
-    const {data, isLoading} = useGetCircularsListQuery({page:page-1, size})
+    const {data, isLoading} = useGetCircularsListQuery({page, size})
 
     const handleDeleteModal = () =>{
         setDeleteModal(!deleteModal)

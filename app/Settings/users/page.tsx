@@ -30,35 +30,19 @@ const page = () => {
   const [showOverLay, setShowOverLay] = useState(false)
   const [userId, setUserId] = useState('')
   const searchParams = useSearchParams()
-  const router = useRouter()
-  const pathname = usePathname()
+
   
   let size = to_int_or_default(searchParams.get("size")) 
   let page = to_int_or_default(searchParams.get("page")) 
   
-  const createQueryString = useCallback(
-    (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams.toString())
-      params.set(name, value)
-      return params.toString()
-    },
-    [searchParams]
-  )
-  if(!size){
-    size = 10
-    router.push(pathname + '?' + createQueryString('size', '10'))
-  }
-  if(!page){
-    page = 1
-    router.push(pathname + '?' + createQueryString('page', "1"))
-  }
+  
 
   const handleOverLay = () =>{
     if(userId)
       setUserId('')
     setShowOverLay(!showOverLay)
   }
-  const {data, isLoading} = useGetUsersListQuery({page:page-1, size})
+  const {data, isLoading} = useGetUsersListQuery({page, size})
 
   const options = (row:any)=>(
     <div className='flex gap-4 items-start'>
@@ -99,15 +83,10 @@ const page = () => {
           options={options}
         />
         <div className='flex justify-center my-10 font-extrabold'>
-          {
-            data?.total_pages?
-              <Paginition
-                page={page}
+            <Paginition
                 totalPages={data?.total_pages}
-              />                
-            :null
-          }
-          </div>
+            /> 
+        </div>
       </div>
     </>
   )

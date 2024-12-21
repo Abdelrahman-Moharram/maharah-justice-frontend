@@ -92,14 +92,9 @@ const CardsListWithPagination = ({data, deleteAction, editAction, isLoading, pag
         }
     
         <div className='flex justify-center my-10 font-extrabold'>
-            {
-            total_pages && data?.length?
-                <Paginition
-                    page={page}
-                    totalPages={total_pages}
-                />                
-            :null
-            }
+            <Paginition
+                totalPages={total_pages}
+            />                
         </div>
     </div>
   )

@@ -44,6 +44,7 @@ export default function SideNav() {
             {title:'المستخدمين', link:'/settings/users'},
             {title:'الأدوار', link:'/settings/roles'}, 
             {title:'العملاء', link:'/settings/customers'},
+            {title:'المحامين', link:'/settings/lawyers'},
         ]
         
     

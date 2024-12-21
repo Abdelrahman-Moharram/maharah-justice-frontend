@@ -8,7 +8,7 @@ export const amountPattern          = '^[0-9.]+$'
 
 export const usernamePattern        = '^[a-zA-Z][a-zA-Z0-9_. -]{2,}$'
 export const fullNamePattern        = '^[ء-ي][ء-ي ]{5,}$'
-
+export const emailPattern           = '^[a-z][a-z0-9-_\.]+@[a-z.]+\.[a-z]{2,3}$'
 
 
 export const caseNumberRegex        = {value:caseNumberPattern, message:'رقم القضية يجب أن يحتوي على أرقام فقط ولا يقل عن ثلاثة أرقام ولا يزيد عن 20 رقما'}
@@ -19,3 +19,4 @@ export const judgementNumberRegex   = {value:numberPattern, message:'رقم ال
 export const amountRegex            = {value:amountPattern, message:'يجب أن يحتوي الملبغ على أرقام فقط'}
 export const customerRegex          = {value:numberPattern, message:'يجب أن يحتوي رقم العميل على أرقام فقط وألا يقل عن 3 أرقام ولا يبدأ بالرقم "0"'}
 export const identityNumberRegex    = {value:identityNumberPattern, message:'يجب أن يحتوي رقم الهوية على أرقام فقط ويتكون من 10 أرقام ولا يبدأ بالرقم "0"'}
+export const emailAddressRegex      = {value:emailPattern, message:'البريد الإلكتروني غير صالح "example@domain.com" '}
