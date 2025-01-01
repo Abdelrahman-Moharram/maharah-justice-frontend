@@ -137,7 +137,7 @@ export default function SideNav() {
                     <li>
                         <SideNavDropDownItem 
                             title="الإستشارات القانونية"
-                            innerLinks={settingsInnerLinks()}
+                            innerLinks={[]}
                             icon={
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M8.00007 22H16.0001C20.0201 22 20.7401 20.39 20.9501 18.43L21.7001 10.43C21.9701 7.99 21.2701 6 17.0001 6H7.00007C2.73007 6 2.03007 7.99 2.30007 10.43L3.05007 18.43C3.26007 20.39 3.98007 22 8.00007 22Z" stroke="currentColor" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
@@ -149,7 +149,7 @@ export default function SideNav() {
 
 
                             }
-                            baseKey='الإستشارات'
+                            baseKey='consulations'
                         />
                     </li>
                     <li>

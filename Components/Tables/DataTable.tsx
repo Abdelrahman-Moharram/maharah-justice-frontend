@@ -15,11 +15,12 @@ interface Props{
     fnKeys:string[]
     optionsHeader?:string
     startOptionsHeader?:string,
-    amounts?:string[]
+    amounts?:string[],
+    showCounter?:boolean
 }
 
 
-const DataTable = ({options, startOptions, data, isLoading, emptyLinkHref, amounts, emptyText, fnKeys, isOptions=false, optionsHeader,  startOptionsHeader}:Props) => {
+const DataTable = ({options, startOptions, data, isLoading, emptyLinkHref, amounts, emptyText, fnKeys, isOptions=false, optionsHeader,  startOptionsHeader, showCounter}:Props) => {
     const getHeaders = () =>{
         const cols = []
         if(startOptions?.length){
@@ -60,6 +61,11 @@ const DataTable = ({options, startOptions, data, isLoading, emptyLinkHref, amoun
                         <thead className="ltr:text-left rtl:text-right">
                             <tr>
                                 {
+                                    showCounter?
+                                        <td className='mx-2'>مسلسل</td>
+                                    :null
+                                }
+                                {
                                     getHeaders()?.map((col, idx)=>(
                                         <th key={idx} className="whitespace-nowrap px-4 py-2 font-bold ">{col}</th>
                                     ))
@@ -79,12 +85,13 @@ const DataTable = ({options, startOptions, data, isLoading, emptyLinkHref, amoun
                                                 :null
                                             }
                                             {
+                                                showCounter?
+                                                    <td className='mx-2'>{index+1}</td>
+                                                :null
+                                            }
+                                            {
                                                 renderRow({row})
                                             }
-                                            {/* <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">John Doe</td>
-                                            <td className="whitespace-nowrap px-4 py-2 text-gray-700">24/05/1995</td>
-                                            <td className="whitespace-nowrap px-4 py-2 text-gray-700">Web Developer</td>
-                                            <td className="whitespace-nowrap px-4 py-2 text-gray-700">$120,000</td> */}
                                             {
                                                 isOptions && options?
                                                     <td className="whitespace-nowrap px-4 py-2">

@@ -6,7 +6,7 @@ export const hijriDateRegex         = '^([٠-٢]?[٠-٩])-([٠-١]?[٠-٩])-(١[
 export const numberPattern          = '[1-9][0-9]{2,}$'
 export const amountPattern          = '^[0-9.]+$'
 
-export const usernamePattern        = '^[a-zA-Z][a-zA-Z0-9_. -]{2,}$'
+export const usernamePattern        = '^[a-zA-Z][a-zA-Z0-9_.-]{2,}$'
 export const fullNamePattern        = '^[ء-ي][ء-ي ]{5,}$'
 export const emailPattern           = '^[a-z][a-z0-9-_\.]+@[a-z.]+\.[a-z]{2,3}$'
 

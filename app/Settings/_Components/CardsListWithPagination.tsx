@@ -33,11 +33,13 @@ interface Props{
 const CardsListWithPagination = ({data, deleteAction, editAction, isLoading, page, total_pages, emptyMessage}:Props) => {
     const options = (item:baseObjType) =>{
         return (
-            <EditDeleteButtons
-                editAction={editAction}
-                deleteAction={deleteAction}
-                item={item}
-            />
+            <div className="flex justify-start">
+                <EditDeleteButtons
+                    editAction={editAction}
+                    deleteAction={deleteAction}
+                    item={item}
+                />
+            </div>
         )
     }
   return (
@@ -47,38 +49,39 @@ const CardsListWithPagination = ({data, deleteAction, editAction, isLoading, pag
                 data?.length?
                     // Cards
 
-                    <div className="grid lg:grid-cols-4 md:lg:grid-cols-3 sm:lg:grid-cols-2 xs:lg:grid-cols-1 gap-3">
-                        {
-                            data.map((item:{id:string, name:string})=>(
-                                <FnBasicCard
-                                    key={item?.id}
-                                    keyName={item?.name}
-                                >
-                                    <EditDeleteButtons
-                                        editAction={editAction}
-                                        deleteAction={deleteAction}
-                                        item={item}
-                                    />
-                                </FnBasicCard>
-                            ))
-                        }
+                    // <div className="grid lg:grid-cols-4 md:lg:grid-cols-3 sm:lg:grid-cols-2 xs:lg:grid-cols-1 gap-3">
+                    //     {
+                    //         data.map((item:{id:string, name:string})=>(
+                    //             <FnBasicCard
+                    //                 key={item?.id}
+                    //                 keyName={item?.name}
+                    //             >
+                    //                 <EditDeleteButtons
+                    //                     editAction={editAction}
+                    //                     deleteAction={deleteAction}
+                    //                     item={item}
+                    //                 />
+                    //             </FnBasicCard>
+                    //         ))
+                    //     }
                         
-                    </div>
+                    // </div>
 
                     // Table
 
-                    // <div className="w-[100%] mx-auto">
-                    //     <DataTable
-                    //         data={data}
-                    //         emptyLinkHref=''
-                    //         emptyText=''
-                    //         fnKeys={['id']}
-                    //         isLoading={isLoading}
-                    //         isOptions
-                    //         options={options}
-                    //         optionsHeader='الإجراءات'
-                    //     />
-                    // </div>
+                    <div className="w-[100%] mx-auto">
+                        <DataTable
+                            data={data}
+                            emptyLinkHref=''
+                            emptyText=''
+                            fnKeys={['id']}
+                            isLoading={isLoading}
+                            isOptions
+                            options={options}
+                            optionsHeader='الإجراءات'
+                            showCounter
+                        />
+                    </div>
 
                 :
                     <EmptyData

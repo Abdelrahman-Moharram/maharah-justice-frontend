@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react"
 import { ValidationsType } from "@/Components/Types/Others";
 import { DefaultInputValidate } from "../Common/useValidations";
-import { useGetAddUserDropDownsQuery, useUserDetailsMutation } from "@/redux/api/accountsApi";
+import { useGetAddUserDropDownsQuery, useGetLawyerDetailsMutation, useUserDetailsMutation } from "@/redux/api/accountsApi";
 
 
 const emptyUser = {
@@ -87,31 +87,32 @@ const emptyLawyer = {
     user:'',
     email:'',
     phone_number:'',
-    username:''
+    username:'',
+    is_consultant:false
 }
 export const useLawyersForm = ({lawyerId, toggler}:{lawyerId?:string, toggler?:boolean}) =>{
-      
     const [formErrors, setFormErrors] = useState<any>(null)
-    const {data:dropDowns} = useGetAddUserDropDownsQuery(undefined)
-    const [lawyerDetails] = useUserDetailsMutation()
+    const [lawyerDetails] = useGetLawyerDetailsMutation()
     const [lawyer, setLawyer] = useState<LawyerType>(emptyLawyer)
-
+    
     useEffect(()=>{
         if(lawyerId){
             lawyerDetails({id:lawyerId})
                 .unwrap()
                 .then(res=>{
                     setLawyer(res?.lawyer)
+                    
                 })
                 .catch(err=>{
                     console.log(err);
+                    setLawyer(emptyLawyer)
                 })
         }else{
             setLawyer(emptyLawyer)
         }
     }, [lawyerId, toggler])
 
-    const onChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>, validationSchema?:ValidationsType ) => {
+    const onChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>, validationSchema?: ValidationsType) => {
         const { name, value } = event.target;
         if(validationSchema)
             setFormErrors({...formErrors, [name]:DefaultInputValidate({name, value, validationSchema})})
@@ -123,9 +124,19 @@ export const useLawyersForm = ({lawyerId, toggler}:{lawyerId?:string, toggler?:b
     
     const changeUser = (val:string, name:string, validationSchema?:ValidationsType)=>{
         if(validationSchema)
-            setFormErrors({...formErrors, customer:DefaultInputValidate({name:'customer', value:val, validationSchema})})
+            setFormErrors({...formErrors, user:DefaultInputValidate({name:'user', value:val, validationSchema})})
         setLawyer({ ...lawyer, [name]: val })
     }
+
+    const changeCheckBox = (event: ChangeEvent<HTMLInputElement>, validationSchema?:ValidationsType )  =>{
+        const { name, checked } = event.target;   
+        if(validationSchema)
+            setFormErrors({...formErrors, [name]:DefaultInputValidate({name, value:checked, validationSchema})})
+          setLawyer({ ...lawyer, [name]: checked })
+    }
+    useEffect(()=>{
+        setFormErrors({...formErrors, user:''})
+    }, [lawyer?.user])
 
 
     const getLawyerAsFormData = () =>{
@@ -137,16 +148,17 @@ export const useLawyersForm = ({lawyerId, toggler}:{lawyerId?:string, toggler?:b
         formData.append('email', lawyer.email)
         formData.append('phone_number', lawyer.phone_number)
         formData.append('user', lawyer.user)
+        formData.append('is_consultant', JSON.stringify(lawyer.is_consultant))
         return formData
     }
 
     return {
         lawyer,
         formErrors,
-        dropDowns,
         setFormErrors,
         onChange,
         changeUser,
+        changeCheckBox,
         getLawyerAsFormData,
     }
 }

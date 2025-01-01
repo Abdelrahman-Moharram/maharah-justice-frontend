@@ -54,10 +54,39 @@ const casesApiSlice = apiSlice.injectEndpoints({
 
         getLawyersList: builder.query({
             query:({page, size}:{page:number, size:number})=>({
-                url:lawyers_url+'list/',
+                url:lawyers_url+"list/",
                 params:{page, size}
             }),
-            providesTags:['users']
+            providesTags:['lawyers']
+        }),
+        getLawyersDropdownList: builder.query({
+            query:()=>({
+                url:lawyers_url+"dropdown/",
+            }),
+            providesTags:['lawyers']
+        }),
+
+        getLawyerDetails: builder.mutation({
+            query:({id}:{id:string})=>({
+                url:lawyers_url+id+'/',
+                method:'GET',
+            }),
+        }),
+        addLawyer: builder.mutation({
+            query:({form}:{form:FormData})=>({
+                url:lawyers_url+'add/',
+                method:'POST',
+                body:form,
+            }),
+            invalidatesTags:['lawyers']
+        }),
+        editLawyer: builder.mutation({
+            query:({id, form}:{form:FormData, id:string})=>({
+                url:lawyers_url+id+'/edit/',
+                method:'PUT',
+                body:form,
+            }),
+            invalidatesTags:['lawyers']
         }),
     }) 
 })
@@ -71,7 +100,12 @@ export const {
     useEditUserMutation,
 
     useGetLawyersListQuery,
-    useSearchUserByNameOrUserNameMutation
+    useSearchUserByNameOrUserNameMutation,
+    useAddLawyerMutation,
+    useGetLawyerDetailsMutation,
+    
+    useEditLawyerMutation,
+
 
 
 } = casesApiSlice

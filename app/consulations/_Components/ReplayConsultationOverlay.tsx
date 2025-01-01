@@ -1,6 +1,6 @@
 import React from 'react'
 
-const SessionTable = () => {
+const ReplayConsultation = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const SessionTable = () => {
   )
 }
 
-export default SessionTable
+export default ReplayConsultation

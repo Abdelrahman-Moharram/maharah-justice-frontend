@@ -35,6 +35,7 @@ const page = () => {
     
   
     const handleOverLay = () =>{
+      
       if(lawyerId)
         setLawyerId('')
       setShowOverLay(!showOverLay)
@@ -42,7 +43,7 @@ const page = () => {
     const {data, isLoading} = useGetLawyersListQuery({page:page, size})
   
     const options = (row:any)=>(
-      <div className='flex gap-4 items-start'>
+      <div key={row?.id} className='flex gap-4 items-start'>
         <button onClick={()=>{handleOverLay();setLawyerId(row?.id)}} className=' text-blue-600 text-lg transition-all rounded-full' ><BiEdit />
         </button>
       </div>

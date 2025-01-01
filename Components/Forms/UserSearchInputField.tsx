@@ -7,7 +7,7 @@ import { useSearchUserByNameOrUserNameMutation } from '@/redux/api/accountsApi';
 
 interface userType{
     id: string;
-    full_name: string;
+    username: string;
 }
 interface Props{
     label       :string
@@ -47,7 +47,7 @@ const UserSearchInputField = ({
       setMenu(true)
     }
     
-    const handleValues = ({name, id}:{name:string, id: string}) =>{
+    const handleValues = ({name, id}:{name:string, id:string}) =>{
       setNameValue(name)
       onChange(id, labelId)
       setMenu(false)      
@@ -73,9 +73,9 @@ const UserSearchInputField = ({
                 <div 
                   key={user?.id}
                   className="bg-container hover:bg-card transition-all w-full p-2 rounded-md cursor-pointer"
-                  onClick={()=>handleValues({name: user.full_name, id: user.id})}
+                  onClick={()=>handleValues({name: user.username, id: user.id})}
                 >
-                  {user.full_name}
+                  {user.username}
                 </div>
             ))
         }

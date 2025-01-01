@@ -12,4 +12,5 @@ interface LawyerType{
     email:string,
     phone_number:string,
     username:string
+    is_consultant:boolean
 }

@@ -2,7 +2,7 @@
 import React, { useCallback, useState } from 'react'
 import TableSettings from '@/Components/Tables/TableSettings'
 import DataTable from '@/Components/Tables/DataTable'
-import { usePathname, useSearchParams, useRouter } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { useDeleteSessionMutation, useGetSessionsExcelMutation, useGetSessionsListQuery } from '@/redux/api/sessionsApi'
 import { BiEdit } from 'react-icons/bi'
 import Link from 'next/link'
@@ -12,7 +12,6 @@ import Paginition from '@/Components/Lists/Paginition'
 import CaseDetailsOverLay from '../cases/_Components/CaseDetailsOverLay'
 import DeleteModal from '@/Components/Modals/DeleteModal'
 import { toast } from 'react-toastify'
-import { HijriDateInput, Input } from '@/Components/Forms'
 import { to_int_or_default } from '@/Components/utils/helper'
 
 

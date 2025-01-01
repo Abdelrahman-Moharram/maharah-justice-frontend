@@ -1,8 +1,9 @@
 import { apiSlice } from "../services/apiSlice";
 
 
-const base_url = 'sessions/'
-const sessionsApiSlice = apiSlice.injectEndpoints({
+const base_url          = 'sessions/'
+const consultations_url = base_url + 'consultations/'
+const sessionsApiSlice  = apiSlice.injectEndpoints({
     endpoints: (builder)=>({
         
         // sessions list
@@ -169,7 +170,28 @@ const sessionsApiSlice = apiSlice.injectEndpoints({
             }),
             invalidatesTags:['sessions']
 
-        })
+        }),
+
+
+        // ------------------------------------------ //
+
+
+        getConsultationsList: builder.query({
+            query:({page, size, search, filter}:{page:number, size:number, search?:string|null, filter:string|null})=>({
+                url:`${consultations_url}${filter?filter+'/':''}`,
+                params:{page, size, search}
+            }),
+            providesTags:['consultations']
+        }),
+        
+        exportConsultationsList: builder.mutation({
+            query:({search, filter, type}:{search?:string|null, filter:string|null, type:string})=>({
+                url:`${consultations_url}${filter?filter+'/':''}`,
+                params:{search, [type]:true},
+                responseHandler: (response) => response.blob(), 
+
+            }),
+        }),
 
     }) 
 })
@@ -191,5 +213,15 @@ export const {
     useAddSessionMutation,
     useGetSessionCaseInfoQuery,
     useEditSessionFormMutation,
-    useEditSessionMutation
+    useEditSessionMutation,
+
+
+    // Consultations
+
+    useGetConsultationsListQuery,
+    useExportConsultationsListMutation,
+
+
+
+
 } = sessionsApiSlice    
