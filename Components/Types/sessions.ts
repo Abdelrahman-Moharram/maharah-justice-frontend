@@ -20,3 +20,21 @@ export interface SessionFormType{
     alterlawyer_name: string,
     attachments: File[] | null
 }
+
+export interface cosultationType{
+    session:string,
+    case_number:string,
+    date_ar:string,
+    state:string,
+    
+    sender_name:string,
+    receiver_name:string,
+
+    message:string,
+    replay:string,
+    replied_at:string,
+
+    can_replay:boolean,
+    is_sender:boolean,
+    
+}

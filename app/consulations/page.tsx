@@ -8,10 +8,13 @@ import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import React, { useState } from 'react'
 import { TbMessageReply } from "react-icons/tb";
+import ReplayConsultationOverlay from './_Components/ReplayConsultationOverlay'
+import { BsEye } from 'react-icons/bs'
 
 const page = () => {
+  const [open, setOpen]           = useState(false)
+  const [consultId, setConsultId] = useState('')
   const searchParams      = useSearchParams()
-
   let size                = to_int_or_default(searchParams.get("size"))
   let page                = to_int_or_default(searchParams.get("page"))
   const filter            = searchParams.get('filter')
@@ -21,6 +24,10 @@ const page = () => {
 
   const [ExportConsultations] = useExportConsultationsListMutation() 
   
+
+  const handleOpen = () =>{
+    setOpen(!open)
+  }
 
   const exportData = (type:string) => {
     let ext = ''
@@ -42,20 +49,35 @@ const page = () => {
   };
 
   const options = (row:any) =>(
-    <div className='flex gap-4 items-start'>
-          {/* <button onClick={()=>{
-              setDetailsSessionNumber(row?.id)
-              handleDetailsModel()
-            }} className=' text-blue-600 text-lg transition-all rounded-full' ><TbMessageReply />
-          </button> */}
-          <Link className=' text-green-600 text-lg transition-all rounded-full' href={`/consulations/${row?.id}/edit`}><TbMessageReply /></Link>
-          
+    <div className='flex gap-4 items-start'> 
+      <button onClick={()=>{
+          setConsultId(row?.id)
+          handleOpen()
+        }} className=' text-green-600 text-lg transition-all rounded-full' 
+      > 
+        {
+          row?.can_replay?
+            <TbMessageReply />
+          :
+            <BsEye />
+        }  
+      </button>
+      {/* <Link className=' text-green-600 text-lg transition-all rounded-full' href={`/consulations/${row?.id}/edit`}><TbMessageReply /></Link> */}
     </div>
   )
   
   
   return (
-    <div>
+    <>
+      {
+        consultId?
+          <ReplayConsultationOverlay 
+            handleOpen={handleOpen}
+            open={open}
+            consult_id={consultId}
+          />
+        :null
+      }
       <div className='min-h-[300px] p-5 space-y-4'>
         <TableSettings 
           excel={()=>exportData('excel')}
@@ -78,7 +100,7 @@ const page = () => {
           /> 
         </div>
       </div>
-    </div>
+    </>
   )
 }
 

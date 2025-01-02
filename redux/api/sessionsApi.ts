@@ -184,6 +184,7 @@ const sessionsApiSlice  = apiSlice.injectEndpoints({
             providesTags:['consultations']
         }),
         
+        
         exportConsultationsList: builder.mutation({
             query:({search, filter, type}:{search?:string|null, filter:string|null, type:string})=>({
                 url:`${consultations_url}${filter?filter+'/':''}`,
@@ -191,6 +192,22 @@ const sessionsApiSlice  = apiSlice.injectEndpoints({
                 responseHandler: (response) => response.blob(), 
 
             }),
+        }),
+
+        getConsultationDetails: builder.query({
+            query:({consult_id}:{consult_id:string})=>({
+                url: consultations_url+consult_id,
+            }),
+            providesTags:['consultations']
+        }),
+
+        replayConsultation: builder.mutation({
+            query:({consult_id, form}:{consult_id:string, form:FormData})=>({
+                url: consultations_url+consult_id+"/replay/",
+                body:form,
+                method:'POST'
+            }),
+            invalidatesTags:['consultations']
         }),
 
     }) 
@@ -220,6 +237,8 @@ export const {
 
     useGetConsultationsListQuery,
     useExportConsultationsListMutation,
+    useGetConsultationDetailsQuery,
+    useReplayConsultationMutation
 
 
 
