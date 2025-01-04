@@ -13,7 +13,7 @@ const casesApiSlice = apiSlice.injectEndpoints({
         }),
         getAddUserDropDowns: builder.query({
             query:()=>({
-                url:base_url+'add/drop-downs/',
+                url:base_url+'add/dropdowns/',
             }),
         }),
         addUser: builder.mutation({

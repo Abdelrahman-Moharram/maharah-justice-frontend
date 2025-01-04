@@ -56,7 +56,8 @@ const LawyerForm = ({action, open, lawyerId}:{action:()=>void, open:boolean, law
                 })
                 .catch(err=>{
                     setFormErrors(err?.data?.errors)
-                    toast.error('حدث خطأ ما أثناء إضافة المستخدم')
+                    if(err?.status !== 403)
+                        toast.error(err?.data?.message || 'حدث خطأ ما أثناء إضافة المستخدم')
                 })
         }
     }
