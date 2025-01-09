@@ -5,17 +5,13 @@ import NotificationDropdownItem from './NotificationDropdownItem';
 import { useGetNotificationsMutation, useReadNotificationsMutation } from '@/redux/api/coreApiSlice';
 import RandomSkeleton from '../Common/RandomSkeleton'
 interface notificationType{
-  id: string;
-  message: string;
-  is_read: boolean;
-  date: Date;
-  receiver: string;
-  sender: {
-    id:string,
-    username: string;
-    image: string
-  };
-  post: string
+  sender: string,
+  receiver: string,
+  message: string,
+  date: string,
+  module: string,
+  instance: string,
+  is_read: boolean
 }
 
 const Notifications = () => {
@@ -90,7 +86,7 @@ const Notifications = () => {
             :
                 data && data?.notifications?.length?
                     data.notifications.map((notification:notificationType)=>(
-                        <NotificationDropdownItem notification={notification} key={notification.id} />
+                        <NotificationDropdownItem notification={notification} key={notification.date} />
                     ))
                 :
                 <div className='py-3 px-20'>
