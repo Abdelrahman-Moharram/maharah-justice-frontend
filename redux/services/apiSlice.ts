@@ -18,7 +18,7 @@ const baseQueryWithReauth: BaseQueryFn<
 	FetchBaseQueryError
 > = async (args, api, extraOptions) => {
 	await mutex.waitForUnlock();
-	let result = await baseQuery(args, api, extraOptions);
+	let result:any = await baseQuery(args, api, extraOptions);
 
 	if (result.error && result.error.status === 401) {
 		if (!mutex.isLocked()) {
@@ -49,7 +49,7 @@ const baseQueryWithReauth: BaseQueryFn<
 		}
 	}
 	else if(result.error && result.error.status === 403){
-		toast.error('ليس لديك صلاحية تنفيذ هذا الطلب')
+		toast.error(result.error?.data?.detail || 'ليس لديك صلاحية تنفيذ هذا الطلب')
 	}
 	return result;
 };

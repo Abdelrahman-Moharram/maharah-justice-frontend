@@ -5,7 +5,7 @@ import React from 'react';
 interface Props{
     children: React.ReactNode;
     handleToggler:()=>void;
-    open: Boolean;
+    open: boolean;
 }
 export default function FullHModal({children, open, handleToggler}:Props) {
 

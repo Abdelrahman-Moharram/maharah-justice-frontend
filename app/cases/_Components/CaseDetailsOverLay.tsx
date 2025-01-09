@@ -5,7 +5,7 @@ import FullHModal from '@/Components/Modals/FullHModal'
 
 interface Props{
     handleToggler:()=>void
-    open:Boolean,
+    open:boolean,
     case_number:string
 }
 const CaseDetailsOverLay = ({open, handleToggler, case_number}:Props) => {

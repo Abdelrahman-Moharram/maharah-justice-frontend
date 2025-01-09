@@ -51,7 +51,7 @@ const ReplayForm = ({consult_id, open, handleOpen}:{consult_id:string, handleOpe
         
     }
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className='mx-2'>
       <TextArea 
         label='الرد'
         labelId='replay'

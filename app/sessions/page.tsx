@@ -12,7 +12,9 @@ import Paginition from '@/Components/Lists/Paginition'
 import CaseDetailsOverLay from '../cases/_Components/CaseDetailsOverLay'
 import DeleteModal from '@/Components/Modals/DeleteModal'
 import { toast } from 'react-toastify'
-import { to_int_or_default } from '@/Components/utils/helper'
+import { exportData, to_int_or_default } from '@/Components/utils/helper'
+import { TbMessageReply } from 'react-icons/tb'
+import AddConsultationModal from '../consulations/_Components/AddConsultationModal'
 
 
  
@@ -23,10 +25,10 @@ const page = () => {
     let page            = to_int_or_default(searchParams.get("page"))
 
 
-    const [showSessionDetails, setShowSessionDetails] = useState<Boolean>(false)
-    const [detailsSessionNumber, setDetailsSessionNumber] = useState<string>('')
+    const [selectedSessionNumber, setSelectedSessionNumber] = useState<string>('')
+    const [showSessionDetails, setShowSessionDetails] = useState<boolean>(false)
+    const [showAddConsultation, setShowAddConsultation] = useState<boolean>(false)
     const [deleteModal, setDeleteModal] = useState(false)
-    const [deletedSession, setDeleteSession] = useState<string>('')
     const [deleteSession, {isLoading:deleteSessionLoading}] = useDeleteSessionMutation()
 
 
@@ -35,20 +37,33 @@ const page = () => {
     const handleDeleteModal = () =>{
       setDeleteModal(!deleteModal)
     }
+    const handleAddConsultation = () =>{
+      setShowAddConsultation(!showAddConsultation)
+    }
 
     const {data, isLoading} = useGetSessionsListQuery({page, size:size||10, search:search, filter}, {skipPollingIfUnfocused:true})  
     const [ExportSessions] = useGetSessionsExcelMutation() 
 
     const options = (row:any)=>(
         <div className='flex gap-4 items-start'>
+          <button 
+            onClick={()=>{
+              setSelectedSessionNumber(row?.id)
+              handleAddConsultation()
+            }} 
+            className=' text-green-600 text-lg transition-all rounded-full' 
+          >
+            <TbMessageReply />
+          </button>
           <button onClick={()=>{
-              setDetailsSessionNumber(row?.case_number)
+              setSelectedSessionNumber(row?.case_number)
               handleDetailsModel()
-            }} className=' text-blue-600 text-lg transition-all rounded-full' ><BsEye /></button>
+            }} className=' text-blue-600 text-lg transition-all rounded-full' ><BsEye />
+          </button>
           <Link className=' text-green-600 text-lg transition-all rounded-full' href={`/cases/${row?.case_number}/sessions/${row?.id}/edit`}><BiEdit /></Link>
           <button 
             onClick={()=>{
-              setDeleteSession(row?.id)
+              setSelectedSessionNumber(row?.id)
               handleDeleteModal()
             }}
             className=' text-lg text-red-500 rounded-full'
@@ -58,24 +73,7 @@ const page = () => {
         </div>
       )
     
-    const exportData = (type:string) => {
-      let ext = ''
-      if (type==='pdf')
-        ext = 'pdf'
-      else if (type==='excel')
-        ext = 'xlsx' 
-      ExportSessions({type, filter})
-      .unwrap()
-      .then(res=>{        
-        const url = window.URL.createObjectURL(res);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `الجلسات.${ext}`;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-      })
-    };
+    
     const handleDetailsModel = () =>{
       setShowSessionDetails(!showSessionDetails)
     }
@@ -92,26 +90,33 @@ const page = () => {
     }
     
   return (
-    <div>
+    <>
       <DeleteModal 
         open={deleteModal}
         deleteAction={handleDeleteSession}
         handleClose={handleDeleteModal}
-        id={deletedSession}
+        id={selectedSessionNumber}
         isLoading={deleteSessionLoading}
         title='حذف جلسة'
       >
         هل أنت متأكد من حذف هذه الجلسة ؟ 
       </DeleteModal>
+
       <CaseDetailsOverLay 
-        case_number={detailsSessionNumber}
+        case_number={selectedSessionNumber}
         handleToggler={handleDetailsModel}
         open={showSessionDetails}
       />
+      <AddConsultationModal
+        session_id={selectedSessionNumber}
+        handleToggler={handleAddConsultation}
+        open={showAddConsultation}
+      />
+
       <div className='min-h-[300px] p-5 space-y-4'>
         <TableSettings 
-          excel={()=>exportData('excel')}
-          pdf={()=>exportData('pdf')}
+          excel={()=>exportData({ExportSessions, fileName:'الجلسات', params:filter, type:'excel'})}
+          pdf={()=>exportData({ExportSessions, fileName:'الجلسات', params:filter, type:'pdf'})}
         />
         
         <div className="p-4">
@@ -133,7 +138,7 @@ const page = () => {
           /> 
         </div>
       </div>
-    </div>
+    </>
   )
 }
 

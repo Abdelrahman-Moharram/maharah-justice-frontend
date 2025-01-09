@@ -4,7 +4,6 @@ import DataTable from '@/Components/Tables/DataTable'
 import TableSettings from '@/Components/Tables/TableSettings'
 import { to_int_or_default } from '@/Components/utils/helper'
 import { useExportConsultationsListMutation, useGetConsultationsListQuery } from '@/redux/api/sessionsApi'
-import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import React, { useState } from 'react'
 import { TbMessageReply } from "react-icons/tb";
@@ -50,10 +49,13 @@ const page = () => {
 
   const options = (row:any) =>(
     <div className='flex gap-4 items-start'> 
-      <button onClick={()=>{
+      
+      <button onClick={
+        ()=>{
           setConsultId(row?.id)
           handleOpen()
-        }} className=' text-green-600 text-lg transition-all rounded-full' 
+        }} 
+        className=' text-green-600 text-lg transition-all rounded-full' 
       > 
         {
           row?.can_replay?

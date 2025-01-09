@@ -1,16 +1,26 @@
 import SmallCard from '@/Components/Cards/SmallCard'
 import { cosultationType } from '@/Components/Types/sessions'
-import React from 'react'
+import { Steps } from '@/Components/utils'
+import { useReadConsultationMutation } from '@/redux/api/sessionsApi'
+import React, { useEffect } from 'react'
 
 
-const ConsultationDetails = ({cosultation, isLoading}:{cosultation:cosultationType, isLoading:boolean}) => {
+const ConsultationDetails = ({cosultation, isLoading, consult_id, can_replay}:{cosultation:cosultationType, isLoading:boolean, consult_id:string, can_replay:boolean}) => {
+  const [readConsultation] = useReadConsultationMutation()
 
+  useEffect(()=>{    
+    if (consult_id && !isLoading && !can_replay){
+      readConsultation({consult_id})
+    }
+  }, [cosultation?.session])
   return (
     <div>
-        
-        <div className='flex justify-between items-center p-4 rounded-md mb-4'>
-          <div className="font-bold text-2xl">{cosultation?.case_number}</div>
+        <div className="w-[90%] mx-auto mb-24 mt-12">
+          <Steps
+            steps={cosultation?.stages}
+          />
         </div>
+        
 
         <div className="grid grid-cols-3 items-center gap-3 p-4 rounded-md mb-4">
           <SmallCard 

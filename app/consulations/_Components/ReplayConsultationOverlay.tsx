@@ -15,10 +15,12 @@ const ReplayConsultationOverlay = ({consult_id, open, handleOpen}:{consult_id:st
       <ConsultationDetails 
         cosultation={data?.cosultation}
         isLoading={isLoading}
+        consult_id={consult_id}
+        can_replay={data?.cosultation?.can_replay}
       />
 
       {
-        data?.cosultation && !data?.cosultation?.replied_at?
+        data?.cosultation?.can_replay?
           <div className="p-4">
             <ReplayForm
               consult_id={consult_id}

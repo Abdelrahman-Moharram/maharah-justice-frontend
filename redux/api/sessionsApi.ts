@@ -209,6 +209,21 @@ const sessionsApiSlice  = apiSlice.injectEndpoints({
             }),
             invalidatesTags:['consultations']
         }),
+        addConsultation: builder.mutation({
+            query:({session_id, form}:{session_id:string, form:FormData})=>({
+                url: base_url+session_id+"/consultations/add/",
+                body:form,
+                method:'POST'
+            }),
+            invalidatesTags:['consultations']
+        }),
+        readConsultation: builder.mutation({
+            query:({consult_id}:{consult_id:string})=>({
+                url: consultations_url+consult_id+"/read/",
+                method:'GET'
+            }),
+            invalidatesTags:['consultations']
+        }),
 
     }) 
 })
@@ -234,11 +249,14 @@ export const {
 
 
     // Consultations
+    useAddConsultationMutation,
 
+    
     useGetConsultationsListQuery,
     useExportConsultationsListMutation,
     useGetConsultationDetailsQuery,
-    useReplayConsultationMutation
+    useReplayConsultationMutation,
+    useReadConsultationMutation
 
 
 

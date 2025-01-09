@@ -21,6 +21,14 @@ export interface SessionFormType{
     attachments: File[] | null
 }
 
+
+export interface addCosultationType{
+    // session     :string,
+    message          :string,
+    receiver         :string
+    receiver_name    :string
+}
+
 export interface cosultationType{
     session:string,
     case_number:string,
@@ -36,5 +44,7 @@ export interface cosultationType{
 
     can_replay:boolean,
     is_sender:boolean,
+
+    stages:Step[]
     
 }

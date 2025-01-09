@@ -1,8 +1,9 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 
-import { useSearchLawyerByNameMutation } from '@/redux/api/utilsApi'
 import { Input } from '@/Components/Forms';
 import { ValidationsType } from '@/Components/Types/Others';
+import { useSearchLawyerByNameMutation } from '@/redux/api/accountsApi';
+import { MdPersonSearch } from 'react-icons/md';
 
 
 interface lawyerType{
@@ -17,6 +18,7 @@ interface Props{
     exclude?: string,
     oldNameValue:string,
     required?:boolean,
+    is_consultant?:boolean,
     errors?:any[]
 
 }
@@ -28,6 +30,7 @@ const LawyerSearchInput = ({
     onChange,
     oldNameValue,
     required=true,
+    is_consultant=false,
     errors
 }:Props) => {
     const [nameValue, setNameValue] = useState<string>(oldNameValue)
@@ -42,7 +45,7 @@ const LawyerSearchInput = ({
       if(nameValue || oldNameValue){    
         console.log(nameValue, oldNameValue);
            
-        searchLawyer({query:nameValue || oldNameValue, exclude:exclude||''})
+        searchLawyer({query:nameValue || oldNameValue, exclude:exclude||'', is_consultant})
       }
     },[nameValue, oldNameValue])
 
@@ -69,6 +72,11 @@ const LawyerSearchInput = ({
         required={required}
         errors={errors}
       />
+      <div 
+        className='absolute end-2.5 rounded-full text-lg top-10 p-1.5 transition-all'
+      >
+        <MdPersonSearch />
+      </div>
       {
         data?.lawyers?.length && (nameValue || oldNameValue) && menu  ?
         <div className='w-full absolute z-[100] max-h-[500px] overflow-y-auto bg-gray-100 p-1 space-y-2 rounded-md'>

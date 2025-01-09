@@ -17,7 +17,7 @@ import { to_int_or_default } from '@/Components/utils/helper'
 
 
 const page = () => {
-    const [showCaseDetails, setShowCaseDetails] = useState<Boolean>(false)
+    const [showCaseDetails, setShowCaseDetails] = useState<boolean>(false)
     const [detailsCaseNumber, setDetailsCaseNumber] = useState<string>('')
     const [deleteModal, setDeleteModal] = useState(false)
     const [deletedCase, setDeleteCase] = useState<{case_number:string}>({case_number:''})

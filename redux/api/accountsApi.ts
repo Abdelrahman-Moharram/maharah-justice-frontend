@@ -88,6 +88,17 @@ const casesApiSlice = apiSlice.injectEndpoints({
             }),
             invalidatesTags:['lawyers']
         }),
+
+        searchLawyerByName: builder.mutation({
+            query:({query, exclude, is_consultant}:{query:string, exclude:string, is_consultant:boolean})=>({
+                url:base_url+'lawyers/search/',
+                params:{
+                    query,
+                    exclude,
+                    is_consultant
+                }
+            }),
+        }),
     }) 
 })
 
@@ -105,6 +116,7 @@ export const {
     useGetLawyerDetailsMutation,
     
     useEditLawyerMutation,
+    useSearchLawyerByNameMutation,
 
 
 

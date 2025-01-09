@@ -19,7 +19,6 @@ const CustomLayout = ({ children }: Props) => {
     
     const pathName = usePathname()
     const router = useRouter()
-    const { isAuthenticated, isLoading } = useAppSelector(state => state.auth)
 
     useEffect(() => {
         // Set authentication state when data is retrieved        

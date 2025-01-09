@@ -23,15 +23,7 @@ const casesApiSlice = apiSlice.injectEndpoints({
                     }
                 }),
             }),
-            searchLawyerByName: builder.mutation({
-                query:({query, exclude}:{query:string, exclude:string})=>({
-                    url:base_url+'lawyers/search/',
-                    params:{
-                        query,
-                        exclude
-                    }
-                }),
-            }),
+            
 
 
             
@@ -289,7 +281,6 @@ const casesApiSlice = apiSlice.injectEndpoints({
 export const {
     useGetCaseFormDropDownsQuery,
     useSearchCustomerByNameMutation,
-    useSearchLawyerByNameMutation,
     useGetSessionFormDropDownsQuery,
     useGetCourtCircularListQuery,
     useGetCustomer_typeListQuery,

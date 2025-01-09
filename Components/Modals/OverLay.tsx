@@ -1,7 +1,7 @@
 import { IoClose } from "react-icons/io5";
 
 
-const OverLay = ({open, title, handleOpen, children}:{open:Boolean, title?:string, handleOpen:()=>void, children:React.ReactNode}) => {
+const OverLay = ({open, title, handleOpen, children}:{open:boolean, title?:string, handleOpen:()=>void, children:React.ReactNode}) => {
 
   return (
     <div className={'OverLayDetailsContainer z-[20]' + " "  + (open ? 'showOverLayDetails':'hideOverLayDetails' )} >

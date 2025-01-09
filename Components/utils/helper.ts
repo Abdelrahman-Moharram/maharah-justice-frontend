@@ -46,3 +46,23 @@ export const numberToMoney = (value:number|string|null) =>{
 
     return decimalPart !== undefined ? `${formattedInteger}.${decimalPart}` : formattedInteger;
 }
+
+
+export const exportData = ({type, params, ExportSessions, fileName}:{type:string, params:any, ExportSessions:any, fileName:string}) => {
+    let ext = ''
+    if (type === 'pdf')
+      ext = 'pdf'
+    else if (type === 'excel' || type === 'xlsx')
+      ext = 'xlsx' 
+    ExportSessions({type, ...params})
+    .unwrap()
+    .then((res:any)=>{        
+      const url = window.URL.createObjectURL(res);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${fileName}.${ext}`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    })
+  };

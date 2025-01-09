@@ -1,11 +1,10 @@
 'use client'
 import arabic_en from "react-date-object/locales/arabic_en"
 import { useGetSessionFormDropDownsQuery } from "@/redux/api/utilsApi"
-import { useParams } from "next/navigation"
 import { ChangeEvent, useEffect, useState } from "react"
 import { DateObject } from "react-multi-date-picker"
 import { useEditSessionFormMutation } from "@/redux/api/sessionsApi"
-import { SessionFormType } from "@/Components/Types/sessions"
+import { addCosultationType, SessionFormType } from "@/Components/Types/sessions"
 import arabic_ar from "react-date-object/locales/arabic_ar"
 
 import arabic from "react-date-object/calendars/arabic"
@@ -121,4 +120,52 @@ export default function useSessionForm({case_number, id}:{case_number:string, id
         getSessionAsFormData
     }
     
+}
+
+
+export function useAddConsultationsForm({session_id}:{session_id:string}){
+    const [formErrors, setFormErrors] = useState<any>(null)
+    const [form, setForm] = useState<addCosultationType>({
+        message :'',
+        receiver:'',
+        receiver_name:'',
+    })
+
+    const onChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>, validationSchema?:ValidationsType ) => {
+        const { name, value } = event.target;
+        if(validationSchema)
+            setFormErrors({...formErrors, [name]:DefaultInputValidate({name, value, validationSchema})})
+        setForm({ ...form, [name]: value });
+    };
+    const changeLawyer = (val:string, name:string,  validationSchema?:ValidationsType)=>{
+        if(validationSchema)
+            setFormErrors({...formErrors, lawyer:DefaultInputValidate({name, value:val, validationSchema})})
+        setForm({ ...form, [name]: val })
+    }
+    const selectChange = (e: ChangeEvent<HTMLSelectElement>,  validationSchema?:ValidationsType)=>{
+        const { name, value } = e.target;        
+        if(validationSchema)
+            setFormErrors({...formErrors, [name]:DefaultInputValidate({name, value, validationSchema})})
+        setForm({ ...form, [name]: value });
+    }
+
+    const getAsFormData = () =>{
+        
+        const formData = new FormData()
+        formData.append('receiver', form.receiver)
+        formData.append('message', form.message)
+        
+
+        return formData
+    }
+
+    return {
+        form,
+        formErrors,
+        onChange,
+        selectChange,
+        setFormErrors,
+        getAsFormData,
+        changeLawyer
+    }
 }
