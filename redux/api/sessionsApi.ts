@@ -201,9 +201,9 @@ const sessionsApiSlice  = apiSlice.injectEndpoints({
             providesTags:['consultations']
         }),
 
-        replayConsultation: builder.mutation({
+        replyConsultation: builder.mutation({
             query:({consult_id, form}:{consult_id:string, form:FormData})=>({
-                url: consultations_url+consult_id+"/replay/",
+                url: consultations_url+consult_id+"/reply/",
                 body:form,
                 method:'POST'
             }),
@@ -255,7 +255,7 @@ export const {
     useGetConsultationsListQuery,
     useExportConsultationsListMutation,
     useGetConsultationDetailsQuery,
-    useReplayConsultationMutation,
+    useReplyConsultationMutation,
     useReadConsultationMutation
 
 

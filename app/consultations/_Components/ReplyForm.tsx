@@ -1,42 +1,40 @@
-import Button from '@/Components/Common/Button';
 import { TextArea } from '@/Components/Forms'
 import { DefaultInputValidate } from '@/Components/Hooks/Common/useValidations';
-import OverLayFuncArea from '@/Components/Modals/OverLayFuncArea';
 import { ValidationsType } from '@/Components/Types/Others';
-import { useReplayConsultationMutation } from '@/redux/api/sessionsApi';
+import { useReplyConsultationMutation } from '@/redux/api/sessionsApi';
 import React, { ChangeEvent, FormEvent, useState } from 'react'
+import { FaArrowAltCircleUp } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 
-const ReplayForm = ({consult_id, open, handleOpen}:{consult_id:string, handleOpen:()=>void, open:boolean}) => {
-    const [replayConsultation] = useReplayConsultationMutation()
+const ReplyForm = ({consult_id, open, action}:{consult_id:string, action:()=>void, open?:boolean}) => {
+    const [replyConsultation] = useReplyConsultationMutation()
     const [errors, setErrors] = useState<any>(null)
-    const [replay, setReplay] = useState({
-        replay:'',
+    const [reply, setReply] = useState({
+        reply:'',
     })
     const onChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>, validationSchema?:ValidationsType ) => {
         const { name, value } = event.target;
         if(validationSchema)
             setErrors({...errors, [name]:DefaultInputValidate({name, value, validationSchema})})
-        setReplay({ ...replay, [name]: value });
+        setReply({ ...reply, [name]: value });
     }; 
     const handleSubmit = (e:FormEvent) =>{
         e.preventDefault()
         const form = new FormData()
-        form.append('replay', replay?.replay)
+        form.append('reply', reply?.reply)
+        setReply({...reply, reply:''})
 
-        replayConsultation({consult_id, form})
+        replyConsultation({consult_id, form})
             .then((res:any)=>{
-                console.log("res>> ",res);
                 if (res?.error){
                     if(res?.error?.data && res?.error?.data?.error)
                         toast.error(res?.error?.data?.error)
-    
                     if (res?.error?.data?.errors){
                         setErrors(res?.error?.data?.errors)
                     }
                 }else{
                     toast.success(res?.data?.message || 'تم الرد بنجاح')
-                    handleOpen()
+                    action()
                 }
             }).catch(err=>{
                 console.log(err);
@@ -48,31 +46,33 @@ const ReplayForm = ({consult_id, open, handleOpen}:{consult_id:string, handleOpe
                     setErrors(err?.data?.errors)
                 }
             })
-        
     }
   return (
-    <form onSubmit={handleSubmit} className='mx-2'>
-      <TextArea 
-        label='الرد'
-        labelId='replay'
-        onChange={onChange}
-        value={replay?.replay}
-        // required
-        errors={errors?.replay}
-      />
-        <OverLayFuncArea
-            open={open}
-        >
-            <Button submit className='bg-primary hover:bg-transparent border-primary' title={'حفظ'} isLoading={false} />
-            <Button 
-                onClick={handleOpen}
-                className='w-full py-2 rounded-lg border border-secondary text-center hover:bg-secondary hover:text-white transition-all'
-                title={'إلغاء'} 
-                isLoading={false}
-            />
-        </OverLayFuncArea>
+    <form onSubmit={handleSubmit} className='mx-2 '>
+        <div className="flex gap-2 relative">
+            <button
+                className="absolute bottom-1 outline-none inline-block rounded-full bg-gray-100 h-fit transition px-3 py-3 text-primary hover:bg-primary hover:text-white focus:outline-none focus:ring active:bg-primary/90"
+            >
+                <span className="sr-only"> Add </span>
+
+                <FaArrowAltCircleUp className='text-xl' />
+            </button>
+            <div className="w-[calc(100%-60px)] rtl:mr-[60px] ltr:ml-[60px] float-start">
+                <TextArea 
+                    label=''
+                    labelId='reply'
+                    onChange={onChange}
+                    value={reply?.reply}
+                    required
+                    rows={1}
+                    errors={errors?.reply}
+                />
+            </div>
+
+            
+        </div>
     </form>
   )
 }
 
-export default ReplayForm
+export default ReplyForm

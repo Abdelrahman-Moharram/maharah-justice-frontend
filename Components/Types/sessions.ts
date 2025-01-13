@@ -39,10 +39,10 @@ export interface cosultationType{
     receiver_name:string,
 
     message:string,
-    replay:string,
+    reply:string,
     replied_at:string,
 
-    can_replay:boolean,
+    can_reply:boolean,
     is_sender:boolean,
 
     stages:Step[]

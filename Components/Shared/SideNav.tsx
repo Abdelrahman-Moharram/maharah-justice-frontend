@@ -149,7 +149,7 @@ export default function SideNav() {
 
 
                             }
-                            baseKey='consulations'
+                            baseKey='consultations'
                         />
                     </li>
                     <li>

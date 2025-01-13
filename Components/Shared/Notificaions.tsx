@@ -36,11 +36,13 @@ const Notifications = () => {
   const handleReadNotification = () =>{
     setNotificationToggler(!notificationToggler)
     setNotifications(0)
-    if(notificationToggler){
-        getNotificaions({size:'10'})
-        readNotifications({})
-    }
+    getNotificaions({size:'10'})
+    readNotifications({})
+    // if(notificationToggler){
+    // }
   }
+  console.log(data);
+  
   return (
     <>
       <button 
@@ -84,7 +86,7 @@ const Notifications = () => {
                     shadow
                 />
             :
-                data && data?.notifications?.length?
+                data?.notifications?.length?
                     data.notifications.map((notification:notificationType)=>(
                         <NotificationDropdownItem notification={notification} key={notification.date} />
                     ))

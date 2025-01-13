@@ -6,7 +6,8 @@ interface props {
 	value: string;
 	label: string
 	required?: boolean;
-    errors?: []
+    errors?: [];
+    rows?:number
 }
 
 const TextArea = ({labelId,
@@ -14,7 +15,8 @@ const TextArea = ({labelId,
 	value,
 	label,
 	required = false,
-    errors
+    errors,
+    rows=4
 }: props) => {
   return (
     <div className=' p-0'>
@@ -26,7 +28,7 @@ const TextArea = ({labelId,
         </label>
         <textarea
             name={labelId}
-            rows={4}
+            rows={rows}
             id={labelId}
             required={required}
             className={"mt-1 resize-none w-full py-2 px-4 bg-card border border-[#E3E5E5] rounded-xl outline-none "+ (errors?.length?"border-red-500":" ")}

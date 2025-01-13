@@ -66,3 +66,8 @@ export const exportData = ({type, params, ExportSessions, fileName}:{type:string
       a.remove();
     })
   };
+
+export const beautify_date = (date:string) => {
+    const newDate = new Date(date)
+    return newDate.toUTCString()
+}

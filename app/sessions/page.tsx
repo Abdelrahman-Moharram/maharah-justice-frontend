@@ -14,7 +14,7 @@ import DeleteModal from '@/Components/Modals/DeleteModal'
 import { toast } from 'react-toastify'
 import { exportData, to_int_or_default } from '@/Components/utils/helper'
 import { TbMessageReply } from 'react-icons/tb'
-import AddConsultationModal from '../consulations/_Components/AddConsultationModal'
+import AddConsultationModal from '../consultations/_Components/AddConsultationModal'
 
 
  

@@ -7,7 +7,7 @@ import { useExportConsultationsListMutation, useGetConsultationsListQuery } from
 import { useSearchParams } from 'next/navigation'
 import React, { useState } from 'react'
 import { TbMessageReply } from "react-icons/tb";
-import ReplayConsultationOverlay from './_Components/ReplayConsultationOverlay'
+import ReplyConsultationOverlay from './_Components/ReplyConsultationOverlay'
 import { BsEye } from 'react-icons/bs'
 
 const page = () => {
@@ -58,7 +58,7 @@ const page = () => {
         className=' text-green-600 text-lg transition-all rounded-full' 
       > 
         {
-          row?.can_replay?
+          row?.can_reply?
             <TbMessageReply />
           :
             <BsEye />
@@ -73,7 +73,7 @@ const page = () => {
     <>
       {
         consultId?
-          <ReplayConsultationOverlay 
+          <ReplyConsultationOverlay 
             handleOpen={handleOpen}
             open={open}
             consult_id={consultId}
@@ -93,7 +93,7 @@ const page = () => {
             isOptions={true}
             emptyLinkHref='/cosultations'
             emptyText='صفحة جميع الإستشارات'
-            fnKeys={['id', 'can_replay', 'is_sender']}
+            fnKeys={['id', 'can_reply', 'is_sender']}
           />
         </div>
         <div className='flex justify-center my-10 font-extrabold'>
