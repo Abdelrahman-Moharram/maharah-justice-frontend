@@ -35,7 +35,13 @@ const ConsultationDetails = ({consult_id, handleOpen, open}:Props) => {
     <>
       <div >
         
-        <ApproveReject />
+        {
+          data?.cosultation?.can_approve?
+            <ApproveReject 
+              consult_id={consult_id}
+            />
+          :null
+        }
 
         <div className="grid grid-cols-4 mt-5 items-center gap-3 px-4 rounded-md">
           <SmallCard 
@@ -84,11 +90,15 @@ const ConsultationDetails = ({consult_id, handleOpen, open}:Props) => {
         </div>
       </div>
       <div className={`transition-all delay-300 mb-2 ${open !== false?'bottom-20':'-bottom-20'} mx-4 px-0 bg-container drop-shadow-lg rounded-xl`}>
-        <ReplyForm
-          consult_id={consult_id}
-          open={open}
-          action={action}
-        />
+        {
+          data?.consultation?.can_reply?
+            <ReplyForm
+              consult_id={consult_id}
+              open={open}
+              action={action}
+            />
+          :null
+        }
       </div>
     </>
   )
