@@ -9,9 +9,7 @@ import { toast } from 'react-toastify'
 
 interface baseType{
     id:string,
-    name:string,
-    
-    
+    name:string,    
 }
 const CustomerForm = ({action, open, customerId}:{action:()=>void, open:boolean, customerId?:string}) => {
     const [addCustomer] = useAddCustomerMutation()

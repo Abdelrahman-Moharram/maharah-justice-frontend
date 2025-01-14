@@ -6,12 +6,13 @@ import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { FaArrowAltCircleUp } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 
+const baseReply = {
+    reply:'',
+}
 const ReplyForm = ({consult_id, open, action}:{consult_id:string, action:()=>void, open?:boolean}) => {
     const [replyConsultation] = useReplyConsultationMutation()
     const [errors, setErrors] = useState<any>(null)
-    const [reply, setReply] = useState({
-        reply:'',
-    })
+    const [reply, setReply] = useState(baseReply)
     const onChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>, validationSchema?:ValidationsType ) => {
         const { name, value } = event.target;
         if(validationSchema)
@@ -22,7 +23,7 @@ const ReplyForm = ({consult_id, open, action}:{consult_id:string, action:()=>voi
         e.preventDefault()
         const form = new FormData()
         form.append('reply', reply?.reply)
-        setReply({...reply, reply:''})
+        setReply(baseReply)
 
         replyConsultation({consult_id, form})
             .then((res:any)=>{

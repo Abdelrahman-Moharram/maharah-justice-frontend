@@ -12,7 +12,7 @@ const Chat = ({messages}:{messages:MessageType[]}) => {
             <div className="block max-w-[90%] min-w-[25%]">
               <Message 
                 message={message}
-                key={idx}
+                key={message?.message + idx}
               />
             </div>
           </div>

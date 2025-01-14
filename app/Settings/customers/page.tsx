@@ -67,24 +67,24 @@ const page = () => {
           toast.success(res?.message || 'تم تغيير حالة العميل')
         }).catch(err=>{
           console.log(err);
-          
           toast.error(err?.message || 'حدث خطأ ما أثناء تغيير حالة العميل')
         })
     }
 
+    
 
 
     const options = (row:any)=>(
-        <div className='flex items-center'>
-          <div className="scale-[60%] h-fit w-fit">
-            <SwitchInputField 
-              checked={row?.is_active}
-              handleCheck={()=>handleCustomerStatus(row.id)}
-            />
-          </div>
-          <button onClick={()=>{handleOverLay();setCustomerId(row?.id)}} className=' text-blue-600 text-xl transition-all rounded-full' ><BiEdit /></button>
+      <div className='flex items-center'>
+        <div className="scale-[60%] h-fit w-fit">
+          <SwitchInputField 
+            checked={row?.is_active}
+            handleCheck={()=>handleCustomerStatus(row.id)}
+          />
         </div>
-      )
+        <button onClick={()=>{handleOverLay();setCustomerId(row?.id)}} className=' text-blue-600 text-xl transition-all rounded-full' ><BiEdit /></button>
+      </div>
+    )
   return (
     <>
         <CustomerFormOverLay
@@ -93,11 +93,10 @@ const page = () => {
             customerId={customerId}
         />
         <div className='px-4'>
-            
             <div className="my-8 flex justify-between items-center">
-            <Breadcrumb
+              <Breadcrumb
                 items={BreadcrumbData}
-            />
+              />
             <button 
                 onClick={handleOverLay}
                 className="px-8 bg-primary hover:bg-primary/90 transition-all h-fit p-2 rounded-md text-negitaive-color flex items-center gap-3"

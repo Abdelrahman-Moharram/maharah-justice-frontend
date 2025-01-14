@@ -93,7 +93,7 @@ const page = () => {
             isOptions={true}
             emptyLinkHref='/cosultations'
             emptyText='صفحة جميع الإستشارات'
-            fnKeys={['id', 'can_reply', 'is_sender']}
+            fnKeys={['id', 'can_reply', 'is_sender', 'can_approve']}
           />
         </div>
         <div className='flex justify-center my-10 font-extrabold'>

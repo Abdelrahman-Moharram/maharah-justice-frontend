@@ -5,6 +5,7 @@ import React, { useEffect } from 'react'
 import ReplyForm from './ReplyForm'
 import { useRouter } from 'next/navigation'
 import Chat from '@/Components/Cards/Chat/Chat'
+import ApproveReject from './ApproveReject'
 
 interface Props{
   handleOpen?:()=>void,
@@ -32,8 +33,11 @@ const ConsultationDetails = ({consult_id, handleOpen, open}:Props) => {
   
   return (
     <>
-      <div className={`overflow-y-auto max-h-[82%]`}>
-        <div className="grid grid-cols-4 items-center gap-3 px-4 rounded-md">
+      <div >
+        
+        <ApproveReject />
+
+        <div className="grid grid-cols-4 mt-5 items-center gap-3 px-4 rounded-md">
           <SmallCard 
             keyName={'رقم القضية'}
             value={data?.cosultation?.case_number}
@@ -79,7 +83,7 @@ const ConsultationDetails = ({consult_id, handleOpen, open}:Props) => {
           }
         </div>
       </div>
-      <div className="absolute bottom-10 left-5 right-5">
+      <div className={`transition-all delay-300 mb-2 ${open !== false?'bottom-20':'-bottom-20'} mx-4 px-0 bg-container drop-shadow-lg rounded-xl`}>
         <ReplyForm
           consult_id={consult_id}
           open={open}

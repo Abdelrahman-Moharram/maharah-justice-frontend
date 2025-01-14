@@ -1,6 +1,4 @@
 import React from 'react'
-import { PiSunFill } from 'react-icons/pi'
-import { RiMoonClearFill } from 'react-icons/ri'
 
 interface Props{
     checked: boolean,
