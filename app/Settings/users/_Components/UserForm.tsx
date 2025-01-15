@@ -40,13 +40,13 @@ const UserForm = ({action, open, userId}:{action:()=>void, open:boolean, userId?
             editUser({id:userId, form:getUserAsFormData()})
             .unwrap()
             .then(res=>{
-                toast.success(res?.data?.message || 'تم تعديل المستخدم بنجاح')
+                toast.success(res?.message || 'تم تعديل المستخدم بنجاح')
                 action()
             })
             .catch(err=>{
                 setFormErrors(err?.data?.errors)
                 if(err?.status !== 403)
-                    toast.error(err?.data?.message || 'حدث خطأ ما أثناء إضافة المستخدم')
+                    toast.error(err?.data.message || 'حدث خطأ ما أثناء إضافة المستخدم')
             })
         }else{
             addUser({form:getUserAsFormData()})

@@ -57,6 +57,14 @@ const ConsultationDetails = ({consult_id, handleOpen, open}:Props) => {
             value={data?.cosultation?.state}
           />
 
+          {/* <BasicCard 
+            title={'حالة الجلسة'}
+            cardBg='bg-container'
+            textcolor={handleCaseBadgeColor(data?.cosultation?.state)}
+            value={data?.cosultation?.state}
+            shadow
+          /> */}
+
           <div className="col-span-1">
             <SmallCard
               keyName={'المرسل'}
@@ -65,7 +73,7 @@ const ConsultationDetails = ({consult_id, handleOpen, open}:Props) => {
           </div>
         </div>
         
-        <div className="mb-5 mt-3 bg-container drop-shadow-lg rounded-xl overflow-hidden mx-5">
+        <div className="mb-5 mt-3 bg-container drop-shadow-lg rounded-xl overflow-hidden mx-4 px-3">
           <Steps
             steps={data?.cosultation?.stages}
           />
@@ -75,7 +83,7 @@ const ConsultationDetails = ({consult_id, handleOpen, open}:Props) => {
           
         <div className="p-4">
           <SmallCard
-            keyName={'الإستشارة'}
+            keyName={'موضوع الإستشارة'}
             value={data?.cosultation?.message}
           />
           {

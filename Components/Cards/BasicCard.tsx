@@ -6,12 +6,13 @@ interface Props{
     value: string;
     textcolor: string,
     cardBg:string,
-    textSize?: string
+    textSize?: string,
+    shadow?:boolean
 }
 
-const BasicCard = ({title, value, textcolor, cardBg, textSize='24px'}:Props) => {       
+const BasicCard = ({title, value, textcolor, cardBg, shadow, textSize='24px'}:Props) => {       
   return (
-    <div className={cardBg+" py-5 rounded-md text-center"}>
+    <div className={`${cardBg} py-5 rounded-md text-center ${shadow?'shadow-lg':''}`}>
         {
             title && (value !== null || value!== undefined) ?
             <>

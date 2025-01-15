@@ -34,10 +34,11 @@ const baseQueryWithReauth: BaseQueryFn<
 				);
 				if (refreshResult.data) {
 					
-    				// api.dispatch(setAuth());
+    				// api.dispatch(setAuth(refreshResult.data?.access));
 					result = await baseQuery(args, api, extraOptions);
 				} else {					
 					// Cookies.remove('access_token')
+					
 					api.dispatch(setLogout());
 				}
 			} finally {
