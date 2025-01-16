@@ -67,6 +67,8 @@ export const apiSlice = createApi({
 		'states', 
 		'customers', 
 		'users', 
+		'roles',
+		'roles-permissions', 
 		'litigtion_types', 
 		'judgements',
 		'appeals',

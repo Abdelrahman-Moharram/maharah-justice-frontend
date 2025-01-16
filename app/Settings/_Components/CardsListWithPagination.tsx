@@ -24,14 +24,17 @@ interface baseObjType{
 interface Props{
     isLoading: boolean,
     data: any[],
-    editAction:(row:any)=>void,
-    deleteAction:(row:any)=>void,
+    editAction?:(row:any)=>void,
+    deleteAction?:(row:any)=>void,
     total_pages:number,
     page:number,
     emptyMessage?:string
+    customOptions?:(item:baseObjType)=>React.ReactNode
 }
-const CardsListWithPagination = ({data, deleteAction, editAction, isLoading, page, total_pages, emptyMessage}:Props) => {
+const CardsListWithPagination = ({data, deleteAction, editAction, isLoading, page, total_pages, emptyMessage, customOptions}:Props) => {
     const options = (item:baseObjType) =>{
+        if (!editAction || !deleteAction)
+            return <></>
         return (
             <div className="flex justify-start">
                 <EditDeleteButtons
@@ -77,7 +80,7 @@ const CardsListWithPagination = ({data, deleteAction, editAction, isLoading, pag
                             fnKeys={['id']}
                             isLoading={isLoading}
                             isOptions
-                            options={options}
+                            options={customOptions?customOptions:options}
                             optionsHeader='الإجراءات'
                             showCounter
                         />
