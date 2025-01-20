@@ -1,7 +1,7 @@
 import { apiSlice } from "../services/apiSlice";
 
 const base_url = 'users/'
-const lawyers_url = base_url + 'lawyers/'
+const lawyers_url = 'lawyers/'
 const casesApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder)=>({
         getUsersList: builder.query({
@@ -91,7 +91,7 @@ const casesApiSlice = apiSlice.injectEndpoints({
 
         searchLawyerByName: builder.mutation({
             query:({query, exclude, is_consultant}:{query:string, exclude:string, is_consultant:boolean})=>({
-                url:base_url+'lawyers/search/',
+                url:lawyers_url+'search/',
                 params:{
                     query,
                     exclude,

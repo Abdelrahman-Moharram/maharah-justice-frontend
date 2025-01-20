@@ -7,7 +7,7 @@ import React, { FormEvent } from 'react'
 import { toast } from 'react-toastify'
 
 const AddConsultationsForm = ({session_id, cancelAction}:{session_id:string, cancelAction:()=>void}) => {
-    const [AddConsultation] = useAddConsultationMutation()
+    const [AddConsultation, {isLoading}] = useAddConsultationMutation()
     const {
         form,
         formErrors,
@@ -19,19 +19,20 @@ const AddConsultationsForm = ({session_id, cancelAction}:{session_id:string, can
 
     const handleSubmit = (e:FormEvent) =>{
         e.preventDefault()
-        AddConsultation({session_id, form:getAsFormData()})
-            .unwrap()
-            .then(data=>{
-                toast.success(data?.message)
-                cancelAction()
-              })
-              .catch((err:any)=>{     
-                console.log(err);
-                if(err.data.errors)
-                  setFormErrors(err.data.errors)
-                if(err.data.message)
-                  toast.error(err.data.message)
-              })
+        if(!isLoading)
+            AddConsultation({session_id, form:getAsFormData()})
+                .unwrap()
+                .then(data=>{
+                    toast.success(data?.message)
+                    cancelAction()
+                })
+                .catch((err:any)=>{     
+                    console.log(err);
+                    if(err.data.errors)
+                    setFormErrors(err.data.errors)
+                    if(err.data.message)
+                    toast.error(err.data.message)
+                })
     }
   return (
     <div className="">
@@ -64,6 +65,7 @@ const AddConsultationsForm = ({session_id, cancelAction}:{session_id:string, can
             <SaveCancelButtonGroup
                 saveSubmit
                 cancelAction={cancelAction}
+                saveLoading={isLoading}
             />
         </form>
     </div>
