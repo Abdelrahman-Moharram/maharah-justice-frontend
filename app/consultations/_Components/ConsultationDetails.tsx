@@ -29,8 +29,7 @@ const ConsultationDetails = ({consult_id, handleOpen, open}:Props) => {
       return handleOpen()
     else
       router.push('/consultations')
-  }
-  
+  }  
   return (
     <>
       <div >
@@ -99,7 +98,7 @@ const ConsultationDetails = ({consult_id, handleOpen, open}:Props) => {
       </div>
       <div className={`transition-all delay-300 mb-2 ${open !== false?'bottom-20':'-bottom-20'} mx-4 px-0 bg-container drop-shadow-lg rounded-xl`}>
         {
-          data?.consultation?.can_reply?
+          data?.cosultation?.can_reply?
             <ReplyForm
               consult_id={consult_id}
               open={open}

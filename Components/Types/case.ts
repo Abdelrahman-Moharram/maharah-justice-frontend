@@ -12,42 +12,29 @@ export interface caseHomeCardType{
 }
 
 export interface CaseFormType{
-    case_number:  string;
-    agreement_number: string;
-    amount: string;
-    notes:  string;
-    is_aganist_company: boolean;
-    court:  string;
-    circular: string;
-    city: string;
-    // state:  string;
-    litigation_type:  string;
-    company_representative: string;
-    customer: string;
-    cust_phone_number:  string;
-    commercial_number:  string;
-    date_ar:  DateObject|null;
-    attachments?: File[] | null,
-    customer_name:''
-  }
+  case_number:  string;
+  agreement_number: string;
+  amount: string;
+  notes:  string;
+  is_aganist_company: boolean;
+  court:  string;
+  circular: string;
+  city: string;
+  // state:  string;
+  litigation_type:  string;
+  company_representative: string;
+  customer: string;
+  cust_phone_number:  string;
+  commercial_number:  string;
+  date_ar:  DateObject|null;
+  attachments?: File[] | null,
+  customer_name:''
+}
+
+export interface caseFilterType{
+  search      : '',
+  start_date  : DateObject|null;
+  end_date    : DateObject|null;
+}
 
 
-//   interface CaseFormType{
-//     case_number:  string;
-//     agreement_number: string;
-//     amount: string;
-//     notes:  string;
-//     is_aganist_company: boolean;
-//     court:  string;
-//     circular: string;
-//     city: string;
-//     // state:  string;
-//     litigation_type:  string;
-//     company_representative: string;
-//     customer: string;
-//     cust_phone_number:  string;
-//     commercial_number:  string;
-//     date_ar:  DateObject|null;
-//     attachments?: File[] | null
-//     customer_name:string
-// }

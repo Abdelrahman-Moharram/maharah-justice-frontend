@@ -12,7 +12,7 @@ import { FaTrash } from "react-icons/fa";
 import { toast } from 'react-toastify'
 import CaseDetailsOverLay from './_Components/CaseDetailsOverLay'
 import DeleteCaseModal from './_Components/DeleteCaseModal'
-import { to_int_or_default } from '@/Components/utils/helper'
+import { exportData, to_int_or_default } from '@/Components/utils/helper'
 
 
 
@@ -33,24 +33,7 @@ const page = () => {
     const {data, isLoading} = useGetCasesListQuery({page, size:size??10, filter:filter}, {skipPollingIfUnfocused:true})  
     const [ExportCases] = useExportCasesFileMutation() 
     
-    const exportData = (type:string) => {
-      let ext = ''
-      if (type==='pdf')
-        ext = 'pdf'
-      else if (type==='excel')
-        ext = 'xlsx' 
-      ExportCases({type})
-      .unwrap()
-      .then(res=>{        
-        const url = window.URL.createObjectURL(res);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `القضايا.${ext}`;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-      })
-    };
+    
     const handleDetailsModel = () =>{
       setShowCaseDetails(!showCaseDetails)
     }
@@ -101,8 +84,8 @@ const page = () => {
         />
         <div className='min-h-[300px] space-y-4'>
           <TableSettings 
-            excel={()=>exportData('excel')}
-            pdf={()=>exportData('pdf')}
+            excel={()=>exportData({ExportFun:ExportCases, fileName:'الجلسات', params:filter, type:'excel'})}
+            pdf={()=>exportData({ExportFun:ExportCases, fileName:'الجلسات', params:filter, type:'excel'})}
           />
           <div className="p-4">
             <DataTable 

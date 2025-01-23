@@ -1,3 +1,6 @@
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime"
+import { usePathname, useSearchParams } from "next/navigation"
+import { useRouter } from "next/router"
 
 export const handleCaseBadgeColor = (state:string) =>{
     
@@ -48,13 +51,13 @@ export const numberToMoney = (value:number|string|null) =>{
 }
 
 
-export const exportData = ({type, params, ExportSessions, fileName}:{type:string, params:any, ExportSessions:any, fileName:string}) => {
+export const exportData = ({type, params, ExportFun, fileName}:{type:string, params:any, ExportFun:any, fileName:string}) => {
     let ext = ''
     if (type === 'pdf')
       ext = 'pdf'
     else if (type === 'excel' || type === 'xlsx')
       ext = 'xlsx' 
-    ExportSessions({type, ...params})
+    ExportFun({type, ...params})
     .unwrap()
     .then((res:any)=>{        
       const url = window.URL.createObjectURL(res);
@@ -71,3 +74,17 @@ export const beautify_date = (date:string) => {
     const newDate = new Date(date)
     return newDate.toUTCString()
 }
+
+export function updateSearchQuery (updatedQuery:any, pathname:string, router:AppRouterInstance, params:URLSearchParams ){
+    Object.keys(updatedQuery).forEach((key) => {
+      if (updatedQuery[key]) {
+        params.set(key, updatedQuery[key]);
+      } else {
+        params.delete(key);
+      }
+    });
+    params.set('page', '1');
+    const queryString = params.toString();
+    const updatedPath = queryString ? `${pathname}?${queryString}` : pathname;
+    router.push(updatedPath);
+};

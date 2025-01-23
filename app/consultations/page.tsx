@@ -16,7 +16,7 @@ const page = () => {
   const searchParams      = useSearchParams()
   let size                = to_int_or_default(searchParams.get("size"))
   let page                = to_int_or_default(searchParams.get("page"))
-  const filter            = searchParams.get('filter')
+  const filter            = searchParams.get('filter') || ''
   const search            = searchParams.get('search') || ''
 
   const {data, isLoading} = useGetConsultationsListQuery({page, size:size||10, search:search, filter}, {skipPollingIfUnfocused:true})  
@@ -30,9 +30,9 @@ const page = () => {
 
   const exportData = (type:string) => {
     let ext = ''
-    if (type==='pdf')
+    if (type === 'pdf')
       ext = 'pdf'
-    else if (type==='excel')
+    else if (type === 'excel')
       ext = 'xlsx' 
     ExportConsultations({type, filter, search})
     .unwrap()

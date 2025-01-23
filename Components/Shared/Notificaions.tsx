@@ -16,26 +16,36 @@ interface notificationType{
 }
 
 const Notifications = () => {
-  const {id} = useAppSelector(state=>state.auth.user)
-  if (!id){
-    return null
-  }
-  const WS_URL = `ws://127.0.0.1:8000/ws/notify/${id}/`
-  
   const [webSocket, setWebSocket] = useState<WebSocket | null>(null);
-
   const [notificationToggler, setNotificationToggler] = useState(false)
   const [notification_count, setNotifications] = useState<number>(0)
+
   const [getNotificaions, {data, isLoading}] = useGetNotificationsMutation()
-  // const notificationsSocket = new WebSocket(`${process.env.NEXT_PUBLIC_HOST_WS}/ws/notify/${id}/`)
   const [readNotifications] = useReadNotificationsMutation()
 
+  const {id} = useAppSelector(state=>state.auth.user)
+  
+  
+
+  useEffect(() => {
+    connectWebSocket();
+
+    return () => {
+      if (webSocket) {
+        webSocket.close();
+      }
+    };
+  }, []);
+  
   
   const connectWebSocket = () => {
+    if (!id)
+      return 
+
+    const WS_URL = `ws://127.0.0.1:8000/ws/notify/${id}/`
     const ws = new WebSocket(WS_URL);
     ws.onmessage = (event) => {
       const message = JSON.parse(event.data);
-      console.log('Message received:', message);
       setNotifications(notification_count +  (isNaN(message?.message)?  1 : message?.message))
 
     };
@@ -50,15 +60,8 @@ const Notifications = () => {
 
     setWebSocket(ws);
   };
-  useEffect(() => {
-    connectWebSocket();
-
-    return () => {
-      if (webSocket) {
-        webSocket.close();
-      }
-    };
-  }, []); 
+  
+   
   const handleReadNotification = () =>{
     setNotificationToggler(!notificationToggler)
     setNotifications(0)

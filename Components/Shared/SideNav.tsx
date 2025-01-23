@@ -25,6 +25,7 @@ export default function SideNav() {
             {title:'الجلسات الأسبوعية', link:'/sessions?filter=weekly'},
             {title:'الجلسات القائمة', link:'/sessions?filter=active'},
             {title:'الجلسات المنتهية', link:'/sessions?filter=finished'},
+            {title:'الجلسات الخاصة بي', link:'/sessions?filter=mine'},
             {title:'جميع الجلسات', link:'/sessions'}, 
         ]
         if(role && role.toLocaleLowerCase() === 'lawyer')

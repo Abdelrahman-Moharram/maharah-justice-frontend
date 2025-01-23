@@ -44,8 +44,15 @@ const DataTable = ({options, startOptions, data, isLoading, emptyLinkHref, amoun
         const rendered_row = []
         for(let cell in row){
             if(typeof row === 'object' && Object.keys(row).includes(cell) && (!fnKeys || !fnKeys.includes(cell))){
-                rendered_row.push(<td className="whitespace-nowrap px-4 py-2 ">{amounts?.includes(cell)?numberToMoney(row[cell]):row[cell]||<span className='text-center block'>-</span>}</td>)
-            }
+                rendered_row.push(<td className="whitespace-nowrap px-4 py-2 ">
+                    {
+                        amounts?.includes(cell)?
+                            numberToMoney(row[cell])
+                        :
+                            row[cell] || <span className='text-center block'>-</span>
+                    }
+                </td>
+            )}
         }
         return rendered_row
     }

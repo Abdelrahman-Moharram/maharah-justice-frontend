@@ -9,6 +9,7 @@ const TableSkeleton = () => {
                 width='100%'
                 shadow
                 margin='20px 0px'
+                key={'first-0'}
             />
         ]
 
@@ -20,6 +21,7 @@ const TableSkeleton = () => {
                     shadow={false}
                     margin='10px 0px'
                     rounded='10px'
+                    key={i}
                 />
             )
         return rows

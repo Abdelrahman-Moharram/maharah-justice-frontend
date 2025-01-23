@@ -115,8 +115,8 @@ const page = () => {
 
       <div className='min-h-[300px] p-5 space-y-4'>
         <TableSettings 
-          excel={()=>exportData({ExportSessions, fileName:'الجلسات', params:filter, type:'excel'})}
-          pdf={()=>exportData({ExportSessions, fileName:'الجلسات', params:filter, type:'pdf'})}
+          excel={()=>exportData({ExportFun:ExportSessions, fileName:'الجلسات', params:filter, type:'excel'})}
+          pdf={()=>exportData({ExportFun:ExportSessions, fileName:'الجلسات', params:filter, type:'pdf'})}
         />
         
         <div className="p-4">

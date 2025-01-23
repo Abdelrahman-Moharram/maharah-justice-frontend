@@ -8,7 +8,7 @@ const Chat = ({messages}:{messages:MessageType[]}) => {
     <div className=''>
       {
         messages?.map((message, idx)=>(
-          <div className={`w-full flex ${message.is_by_me?'justify-start':'justify-end'}`}>
+          <div key={message?.message + idx} className={`w-full flex ${message.is_by_me?'justify-start':'justify-end'}`}>
             <div className="block max-w-[90%] min-w-[25%]">
               <Message 
                 message={message}

@@ -31,7 +31,7 @@ const NavBar = () => {
                             <div className="sm:flex sm:gap-4">
                                 <div className="sm:flex sm:gap-4">
                                 {
-                                    isAuthenticated || isLoading?
+                                    Cookies.get('access_token')?
                                         authLinks()
                                     :
                                         null

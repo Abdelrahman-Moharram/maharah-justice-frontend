@@ -9,14 +9,14 @@ const sessionsApiSlice  = apiSlice.injectEndpoints({
         // sessions list
         getSessionsList: builder.query({
             query:({page, size, search, filter}:{page:number, size:number, search?:string|null, filter:string|null})=>{                
-                if (filter){
-                    filter += "/"
-                }else{
-                    filter = ''
-                }
+                // if (filter){
+                //     filter += "/"
+                // }else{
+                //     filter = ''
+                // }
                 return {
-                    url:base_url+filter,
-                    params:{page, size, search},
+                    url:base_url,
+                    params:{page, size, search, filter},
                 }
             },
             providesTags:['sessions']
