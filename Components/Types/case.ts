@@ -32,7 +32,7 @@ export interface CaseFormType{
 }
 
 export interface caseFilterType{
-  search      : '',
+  search      : string,
   start_date  : DateObject|null;
   end_date    : DateObject|null;
 }

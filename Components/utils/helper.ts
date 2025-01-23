@@ -76,6 +76,7 @@ export const beautify_date = (date:string) => {
 }
 
 export function updateSearchQuery (updatedQuery:any, pathname:string, router:AppRouterInstance, params:URLSearchParams ){
+    
     Object.keys(updatedQuery).forEach((key) => {
       if (updatedQuery[key]) {
         params.set(key, updatedQuery[key]);

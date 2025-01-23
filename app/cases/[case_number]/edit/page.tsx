@@ -3,35 +3,13 @@
 import Breadcrumb from '@/Components/Common/Breadcrumb';
 import CaseForm from '@/app/cases/_Components/CaseForm'
 import { useEditCaseMutation } from '@/redux/api/casesApi';
-import { useGetCaseFormDropDownsQuery } from '@/redux/api/utilsApi';
-import { useParams, useRouter } from 'next/navigation';
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation';
+import React, { FormEvent } from 'react'
 import { HiBuildingLibrary } from 'react-icons/hi2';
-import { DateObject } from 'react-multi-date-picker';
 import { toast } from 'react-toastify';
-import arabic_en from "react-date-object/locales/arabic_en"
-import useCasesForm from '@/Components/Hooks/Cases/useCasesForm';
 import { isErrorsList } from '@/Components/Hooks/Common/useValidations';
+import useCasesForm from '@/Components/Hooks/Cases/useCases';
 
-interface CaseType{
-  case_number:  string;
-  agreement_number: string;
-  amount: string;
-  notes:  string;
-  is_aganist_company: boolean;
-  court:  string;
-  circular: string;
-  city: string;
-  state:  string;
-  litigation_type:  string;
-  company_representative: string;
-  customer: string;
-  cust_phone_number:  string;
-  commercial_number:  string;
-  date_ar:  DateObject|null;
-  case_attachment?: File[] | null,
-  customer_name:string
-}
 
 
 const page = () => {

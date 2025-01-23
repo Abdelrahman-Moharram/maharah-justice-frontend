@@ -4,8 +4,8 @@ import DataTable from '@/Components/Tables/DataTable'
 import TableSettings from '@/Components/Tables/TableSettings'
 import { useGetCasesListQuery, useDeleteCaseMutation, useExportCasesFileMutation } from '@/redux/api/casesApi'
 import Link from 'next/link'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import React, { useCallback, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
+import React, { useState } from 'react'
 import { BiEdit } from 'react-icons/bi'
 import { BsEye } from 'react-icons/bs'
 import { FaTrash } from "react-icons/fa";
@@ -21,16 +21,19 @@ const page = () => {
     const [detailsCaseNumber, setDetailsCaseNumber] = useState<string>('')
     const [deleteModal, setDeleteModal] = useState(false)
     const [deletedCase, setDeleteCase] = useState<{case_number:string}>({case_number:''})
-    const [deleteCase, {isLoading:deleteCaseLoading}] = useDeleteCaseMutation()
-    const searchParams = useSearchParams()
-    let size = to_int_or_default(searchParams.get("size"))
-    let page = to_int_or_default(searchParams.get("page"))
+
+    const searchParams  = useSearchParams()
+    let size            = to_int_or_default(searchParams.get("size"))
+    let page            = to_int_or_default(searchParams.get("page"))
+    let search          = searchParams.get("search") || ''
+    let start_date      = searchParams.get("start_date") || ''
+    let end_date        = searchParams.get("end_date") || ''
 
 
     
     const filter = searchParams.get('filter')
 
-    const {data, isLoading} = useGetCasesListQuery({page, size:size??10, filter:filter}, {skipPollingIfUnfocused:true})  
+    const {data, isLoading} = useGetCasesListQuery({page, size:size??10, filter:filter, search, start_date, end_date}, {skipPollingIfUnfocused:true})  
     const [ExportCases] = useExportCasesFileMutation() 
     
     
@@ -41,16 +44,7 @@ const page = () => {
       setDeleteModal(!deleteModal)
     }
     
-    const formData = ({case_number}:{case_number:string}) =>{
-      deleteCase({case_number})
-        .unwrap()
-        .then(()=>{
-          toast.success(data?.message || "تم حذف القضية بنجاح")
-          handleDeleteModal()
-        }).catch((err:any)=>{
-          toast.error(err?.data.message || " حدث خطأ ما وتعذر الإتصال بالخادم برجاء المحاولة لاحقا")
-        })
-    }
+    
      
     const options = (row:any)=>(
       <div className='flex gap-4 items-start'>
@@ -67,14 +61,13 @@ const page = () => {
           className=' text-lg text-red-500 rounded-full'><FaTrash /></button>
       </div>
     )
+    
     return (
       <>
         <DeleteCaseModal 
           open={deleteModal}
           handleModal={handleDeleteModal}
           Case={deletedCase}
-          formData={formData}
-          isLoading={deleteCaseLoading}
         />
         
         <CaseDetailsOverLay 
@@ -84,8 +77,8 @@ const page = () => {
         />
         <div className='min-h-[300px] space-y-4'>
           <TableSettings 
-            excel={()=>exportData({ExportFun:ExportCases, fileName:'الجلسات', params:filter, type:'excel'})}
-            pdf={()=>exportData({ExportFun:ExportCases, fileName:'الجلسات', params:filter, type:'excel'})}
+            excel={()=>exportData({ExportFun:ExportCases, fileName:'القضايا', params:filter, type:'excel'})}
+            pdf={()=>exportData({ExportFun:ExportCases, fileName:'القضايا', params:filter, type:'pdf'})}
           />
           <div className="p-4">
             <DataTable 

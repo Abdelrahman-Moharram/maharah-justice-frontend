@@ -153,22 +153,26 @@ export function useCaseFilters(){
   })
 
   useEffect(()=>{
-    console.log(params.forEach(item=>{console.log(item)}));
-    
-  }, [filters.start_date, filters.end_date, filters.search])
+    setFilters({
+      ...filters,
+      search      :  params.get('search') || '',
+      start_date  :  params.get('start_date') ? new DateObject({ date: params.get('start_date') || '', format:'DD-MM-YYYY', calendar:arabic, locale:arabic_ar }) : null,
+      end_date    :  params.get('end_date') ? new DateObject({ date: params.get('end_date') || '', format:'DD-MM-YYYY', calendar:arabic, locale:arabic_ar }) : null
+    })    
+  }, [])
   
   const onChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>, validationSchema?:ValidationsType ) => {
     const { name, value } = event.target;
     if(validationSchema)
       setFiltersErrors({...filtersErrors, [name]:DefaultInputValidate({name, value, validationSchema})})
     setFilters({ ...filters, [name]: value });
-    updateSearchQuery(filters, pathname, router, params);
+    updateSearchQuery({ ...filters, [name]: value }, pathname, router, params);
   };
   const changeDate = (date:DateObject | null, name: string, validationSchema?:ValidationsType)=>{
     if(validationSchema)
       setFiltersErrors({...filtersErrors, name:DefaultInputValidate({name:name, value:date||"", validationSchema})})
     setFilters({ ...filters, [name]: date });
-    updateSearchQuery(filters, pathname, router, params);
+    updateSearchQuery({ ...filters, [name]: date }, pathname, router, params);
   }
 
   

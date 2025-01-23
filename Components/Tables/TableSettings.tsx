@@ -41,7 +41,7 @@ const TableSettings = ({excel, pdf}:Props) => {
           <button className='flex items-center gap-3 bg-container py-1 px-2 shadow-md shadow-color/20 rounded-md' onClick={excel}>إكسل<RiFileExcel2Line /></button>
         </div>
 
-        <div className={` bg-card text-color rounded-md col-span-2 overflow-hidden transition-all duration-300 ${open?'max-h-fit':'max-h-[0px]'}`}>
+        <div className={` bg-card text-color rounded-md col-span-2 overflow-hidden transition-all duration-700 ease h-fit ${open?'max-h-[500px]':'max-h-[0px]'}`}>
           <div className="py-3">
             
             <div className={`bg-container shadow-md shadow-color/20 rounded-md p-4 flex`}>

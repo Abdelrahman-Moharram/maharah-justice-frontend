@@ -4,6 +4,10 @@ import { FaTrash } from 'react-icons/fa';
 import BaseModal from '@/Components/Modals/BaseModal';
 import Input from '@/Components/Forms/Input';
 import { Spinner } from '@/Components/Common';
+import { useDeleteCaseMutation } from '@/redux/api/casesApi';
+import { toast } from 'react-toastify';
+
+
 interface Props{
     open: boolean;
     handleModal: ()=>void;
@@ -11,11 +15,21 @@ interface Props{
         case_number: string;
         // number: string;
     };
-    formData:({case_number}:{case_number:string})=>void,
-    isLoading:boolean
 }
-const DeleteCaseModal = ({handleModal, open, Case, formData, isLoading}:Props) => {
+
+const DeleteCaseModal = ({handleModal, open, Case}:Props) => {
     const [caseNumber, setCaseNumber] = useState('')
+    const [deleteCase, { isLoading }] = useDeleteCaseMutation()
+    const formData = ({case_number}:{case_number:string}) =>{
+          deleteCase({case_number})
+            .unwrap()
+            .then((res)=>{
+              toast.success(res?.message || "تم حذف القضية بنجاح")
+              handleModal()
+            }).catch((err:any)=>{
+              toast.error(err?.data.message || " حدث خطأ ما وتعذر الإتصال بالخادم برجاء المحاولة لاحقا")
+            })
+        }
     const handlecaseNumber = (e: ChangeEvent<HTMLInputElement>)=>{
         setCaseNumber(e.target.value)
     }

@@ -38,7 +38,22 @@ const DataTable = ({options, startOptions, data, isLoading, emptyLinkHref, amoun
         return cols
     }
     
-
+    const showCellWithOverLay = (cellContent:string) =>{
+        const modifiedValue = cellContent.slice(0, 33) + " ..."
+        
+        return(
+            <div className="cursor-default large-table-cell">
+                {modifiedValue}
+                <div className="absolute top-0 drop-shadow-lg">
+                    <span className="  text-sm whitespace-normal block bg-container p-4 rounded-lg ">
+                        {
+                            cellContent
+                        }
+                    </span>
+                </div>
+            </div>
+        )
+    }
     
     const renderRow = ({row}:{row: any})=>{
         const rendered_row = []
@@ -49,6 +64,9 @@ const DataTable = ({options, startOptions, data, isLoading, emptyLinkHref, amoun
                         amounts?.includes(cell)?
                             numberToMoney(row[cell])
                         :
+                            row[cell]?.length > 25 ?
+                                showCellWithOverLay(row[cell])
+                            :
                             row[cell] || <span className='text-center block'>-</span>
                     }
                 </td>
@@ -58,13 +76,13 @@ const DataTable = ({options, startOptions, data, isLoading, emptyLinkHref, amoun
     }
     
   return (
-    <div className="overflow-x-auto overflow-y-hidden">
+    <div className="overflow-x-auto overflow-y-hidden min-h-max">
         {
             isLoading?
                 <TableSkeleton />
             :
                 data?.length?
-                    <table className="min-w-full divide-y-2 divide-gray-200 bg-container text-color text-sm">
+                    <table className="min-w-full divide-y-2 divide-gray-200 bg-container text-color text-sm relative">
                         <thead className="ltr:text-left rtl:text-right">
                             <tr>
                                 {

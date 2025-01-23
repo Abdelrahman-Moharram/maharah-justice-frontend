@@ -87,11 +87,11 @@ const page = () => {
         />
         <div className="p-4">
           <DataTable 
-            data={data?.cosultations}
+            data={data?.consultations}
             isLoading={isLoading}        
             options={options}
             isOptions={true}
-            emptyLinkHref='/cosultations'
+            emptyLinkHref='/consultations'
             emptyText='صفحة جميع الإستشارات'
             fnKeys={['id', 'can_reply', 'is_sender', 'can_approve']}
           />

@@ -199,3 +199,24 @@ body::-webkit-scrollbar-thumb {
       transform: scale(1);
   }
 }
+
+
+.large-table-cell div{
+  max-height: 0px;
+  max-width: 0px;
+  transition: all .5s ease-in;
+  overflow: hidden;
+  /* display: none; */
+}
+.large-table-cell:hover div{
+  height: min-content;
+  max-height:200px;
+  overflow-y: auto;
+  max-width:1200px;
+  top:0;
+  /* display: block; */
+}
+.large-table-cell div::-webkit-scrollbar {
+  width: 2px;
+  background-color: #FBB827;
+}

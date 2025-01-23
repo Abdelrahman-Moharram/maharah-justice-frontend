@@ -18,9 +18,9 @@ const casesApiSlice = apiSlice.injectEndpoints({
             }),
             
             getCasesList: builder.query({
-                query:({page, size, filter}:{page:number, size:number, filter?:string|null})=>({
+                query:({page, size, filter, search, start_date, end_date}:{page:number, size:number, filter?:string|null, search:string, start_date:string, end_date:string})=>({
                     url:base_url+"list/",
-                    params:{page, size, filter}
+                    params:{page, size, filter, search, start_date, end_date}
                 }),
                 providesTags:['cases']
             }),
