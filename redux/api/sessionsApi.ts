@@ -148,6 +148,40 @@ const sessionsApiSlice  = apiSlice.injectEndpoints({
             invalidatesTags:['consultations']
         }),
 
+
+
+        // --------------------------- Reports ------------------------ //
+
+
+        getAllSessionsReport: builder.query({
+            query:({page, size, start_date, end_date, search,}:{ page?:number, size?:number, start_date?:string, end_date?:string, search?:string})=>({
+                url:base_url+`reports/all/`,
+                params:{
+                    start_date,
+                    end_date,
+                    page,
+                    size,
+                    search,
+                },
+            }),
+        }),
+        
+        exportAllSessionsReport: builder.mutation({
+            query:({start_date, end_date, search,type}:{start_date?:string, end_date?:string, search?:string, type:string})=>({
+                url:base_url+`reports/all/`,
+                params:{
+                    start_date,
+                    end_date,
+                    search,
+                    export:type
+                },
+                responseHandler: (response) => response.blob(), 
+            }),
+        }),
+
+        // --------------------------- Reports ------------------------ //
+
+
     }) 
 })
     
@@ -170,7 +204,11 @@ export const {
     useGetConsultationDetailsQuery,
     useReplyConsultationMutation,
     useReadConsultationMutation,
-    useAcceptRejectConsultationMutation
+    useAcceptRejectConsultationMutation,
+
+
+    useGetAllSessionsReportQuery,
+    useExportAllSessionsReportMutation
 
 
 
