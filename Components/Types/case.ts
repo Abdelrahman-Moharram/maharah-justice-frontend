@@ -31,10 +31,4 @@ export interface CaseFormType{
   customer_name:''
 }
 
-export interface caseFilterType{
-  search      : string,
-  start_date  : DateObject|null;
-  end_date    : DateObject|null;
-}
-
 

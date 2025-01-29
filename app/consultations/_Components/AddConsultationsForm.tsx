@@ -1,7 +1,8 @@
 import LawyerSearchInput from '@/app/sessions/_Components/Inputs/LawyerSearchInput'
 import { SaveCancelButtonGroup } from '@/Components/Common'
-import { TextArea } from '@/Components/Forms'
+import { SelectInput, TextArea } from '@/Components/Forms'
 import { useAddConsultationsForm } from '@/Components/Hooks/Sessions/useSessionForm'
+import { baseType } from '@/Components/Types/Others'
 import { useAddConsultationMutation } from '@/redux/api/sessionsApi'
 import React, { FormEvent } from 'react'
 import { toast } from 'react-toastify'
@@ -14,9 +15,11 @@ const AddConsultationsForm = ({session_id, cancelAction}:{session_id:string, can
         getAsFormData,
         onChange,
         setFormErrors,
-        changeLawyer
+        changeLawyer,
+        dropDowns,
+        selectChange
     } = useAddConsultationsForm({session_id})
-
+    
     const handleSubmit = (e:FormEvent) =>{
         e.preventDefault()
         if(!isLoading)
@@ -49,6 +52,22 @@ const AddConsultationsForm = ({session_id, cancelAction}:{session_id:string, can
                     is_consultant
                     required
                 />
+            </div>
+            <div className="mb-3">
+                <SelectInput 
+                    labelId='type'
+                    label='نوع الإستشارة'
+                    onChange={selectChange}
+                    errors={formErrors?.type}
+                    required
+                    value={form.type}
+                >
+                    {
+                        dropDowns?.types?.map((type:baseType)=>(
+                            <option key={type.name} value={type?.id}>{type.name}</option>
+                        ))
+                    }
+                </SelectInput>
             </div>
 
             <div className="">

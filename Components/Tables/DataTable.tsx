@@ -1,8 +1,8 @@
 import React from 'react'
-import { ImageSkeleton } from '../Common';
 import EmptyContent from '../Common/EmptyContent';
 import { numberToMoney } from '../utils/helper';
 import TableSkeleton from './TableSkeleton';
+import { Tooltip } from "react-tooltip";
 
 interface Props{
     data:any
@@ -42,16 +42,19 @@ const DataTable = ({options, startOptions, data, isLoading, emptyLinkHref, amoun
         const modifiedValue = cellContent.slice(0, 33) + " ..."
         
         return(
-            <div className="cursor-default large-table-cell">
-                {modifiedValue}
-                <div className="absolute top-0 drop-shadow-lg">
-                    <span className="  text-sm whitespace-normal block bg-container p-4 rounded-lg ">
-                        {
-                            cellContent
-                        }
-                    </span>
+            <>
+                <div data-tooltip-id="tooltip" className="cursor-default large-table-cell">
+                    {modifiedValue}
                 </div>
-            </div>
+                <Tooltip
+                    id="tooltip"
+                    variant='dark'                    
+                >
+                    <div>
+                        {cellContent}
+                    </div>
+                </Tooltip>
+            </>
         )
     }
     

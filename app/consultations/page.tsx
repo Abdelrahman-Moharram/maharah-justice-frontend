@@ -2,24 +2,35 @@
 import Paginition from '@/Components/Lists/Paginition'
 import DataTable from '@/Components/Tables/DataTable'
 import TableSettings from '@/Components/Tables/TableSettings'
-import { to_int_or_default } from '@/Components/utils/helper'
+import { exportData, to_int_or_default } from '@/Components/utils/helper'
 import { useExportConsultationsListMutation, useGetConsultationsListQuery } from '@/redux/api/sessionsApi'
 import { useSearchParams } from 'next/navigation'
 import React, { useState } from 'react'
 import { TbMessageReply } from "react-icons/tb";
 import ReplyConsultationOverlay from './_Components/ReplyConsultationOverlay'
 import { BsEye } from 'react-icons/bs'
+import Tabs from '@/Components/Common/Tabs'
+
+
 
 const page = () => {
   const [open, setOpen]           = useState(false)
   const [consultId, setConsultId] = useState('')
-  const searchParams      = useSearchParams()
-  let size                = to_int_or_default(searchParams.get("size"))
-  let page                = to_int_or_default(searchParams.get("page"))
-  const filter            = searchParams.get('filter') || ''
-  const search            = searchParams.get('search') || ''
+  const searchParams    = useSearchParams()
+  let size              = to_int_or_default(searchParams.get("size"))
+  let page              = to_int_or_default(searchParams.get("page"))
+  const filter          = searchParams.get('filter')
+  const search          = searchParams.get("search") || ''
+  const start_date      = searchParams.get("start_date") || ''
+  const end_date        = searchParams.get("end_date") || ''
+  
 
-  const {data, isLoading} = useGetConsultationsListQuery({page, size:size||10, search:search, filter}, {skipPollingIfUnfocused:true})  
+  const tabs = [
+    {title:'الإستشارات خاصاتي', href:'/consultations', isCurrent:!filter?true:false},
+    {title:'جميع الإستشارات', href:'/consultations?filter=all', isCurrent:filter?true:false},
+  ]
+
+  const {data, isLoading} = useGetConsultationsListQuery({page, size:size||10, search:search, filter, start_date, end_date}, {refetchOnFocus:false, refetchOnReconnect:true, refetchOnMountOrArgChange:true, skipPollingIfUnfocused:true})  
 
   const [ExportConsultations] = useExportConsultationsListMutation() 
   
@@ -28,24 +39,7 @@ const page = () => {
     setOpen(!open)
   }
 
-  const exportData = (type:string) => {
-    let ext = ''
-    if (type === 'pdf')
-      ext = 'pdf'
-    else if (type === 'excel')
-      ext = 'xlsx' 
-    ExportConsultations({type, filter, search})
-    .unwrap()
-    .then(res=>{        
-      const url = window.URL.createObjectURL(res);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `الإستشارات.${ext}`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-    })
-  };
+
 
   const options = (row:any) =>(
     <div className='flex gap-4 items-start'> 
@@ -81,10 +75,18 @@ const page = () => {
         :null
       }
       <div className='min-h-[300px] p-5 space-y-4'>
+        
         <TableSettings 
-          excel={()=>exportData('excel')}
-          pdf={()=>exportData('pdf')}
+          excel={()=>exportData({ExportFun:ExportConsultations, params:{search:search, filter, start_date, end_date}, fileName:'الإستشارات', type:'excel'})}
+          pdf={()=>exportData({ExportFun:ExportConsultations, params:{search:search, filter, start_date, end_date}, fileName:'الإستشارات', type:'pdf'})}
         />
+
+
+        <Tabs 
+          tabs={tabs}
+        />
+
+
         <div className="p-4">
           <DataTable 
             data={data?.consultations}
@@ -96,11 +98,14 @@ const page = () => {
             fnKeys={['id', 'can_reply', 'is_sender', 'can_approve']}
           />
         </div>
+        
         <div className='flex justify-center my-10 font-extrabold'>
           <Paginition
             totalPages={data?.total_pages}
           /> 
         </div>
+      
+      
       </div>
     </>
   )

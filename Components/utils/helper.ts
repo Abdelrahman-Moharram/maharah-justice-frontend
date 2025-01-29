@@ -85,6 +85,7 @@ export function updateSearchQuery (updatedQuery:any, pathname:string, router:App
       }
     });
     params.set('page', '1');
+    params.set('size', '10');
     const queryString = params.toString();
     const updatedPath = queryString ? `${pathname}?${queryString}` : pathname;
     router.push(updatedPath);

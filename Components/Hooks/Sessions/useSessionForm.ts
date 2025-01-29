@@ -3,13 +3,13 @@ import arabic_en from "react-date-object/locales/arabic_en"
 import { useGetSessionFormDropDownsQuery } from "@/redux/api/utilsApi"
 import { ChangeEvent, useEffect, useState } from "react"
 import { DateObject } from "react-multi-date-picker"
-import { useEditSessionFormMutation } from "@/redux/api/sessionsApi"
+import { useEditSessionFormMutation, useGetConsultationsTypesQuery } from "@/redux/api/sessionsApi"
 import { addCosultationType, SessionFormType } from "@/Components/Types/sessions"
 import arabic_ar from "react-date-object/locales/arabic_ar"
-
 import arabic from "react-date-object/calendars/arabic"
 import { ValidationsType } from "@/Components/Types/Others"
 import { DefaultInputValidate } from "../Common/useValidations"
+
 
 
 export default function useSessionForm({case_number, id}:{case_number:string, id?:string}){
@@ -125,10 +125,12 @@ export default function useSessionForm({case_number, id}:{case_number:string, id
 
 export function useAddConsultationsForm({session_id}:{session_id:string}){
     const [formErrors, setFormErrors] = useState<any>(null)
+    const {data:dropDowns} = useGetConsultationsTypesQuery(undefined)
     const [form, setForm] = useState<addCosultationType>({
         message :'',
         receiver:'',
         receiver_name:'',
+        type:''
     })
 
     const onChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>, validationSchema?:ValidationsType ) => {
@@ -150,10 +152,10 @@ export function useAddConsultationsForm({session_id}:{session_id:string}){
     }
 
     const getAsFormData = () =>{
-        
         const formData = new FormData()
         formData.append('receiver', form.receiver)
         formData.append('message', form.message)
+        formData.append('type', form.type)
         
 
         return formData
@@ -162,10 +164,11 @@ export function useAddConsultationsForm({session_id}:{session_id:string}){
     return {
         form,
         formErrors,
+        dropDowns,
         onChange,
         selectChange,
         setFormErrors,
         getAsFormData,
-        changeLawyer
+        changeLawyer,
     }
 }

@@ -1,2 +1,2 @@
 # To Do
-    - add filter functions in frontend  
+    - complete filter by consultation type (all, mine) 

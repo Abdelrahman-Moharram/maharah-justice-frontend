@@ -2,14 +2,13 @@
 import Paginition from '@/Components/Lists/Paginition'
 import DataTable from '@/Components/Tables/DataTable'
 import TableSettings from '@/Components/Tables/TableSettings'
-import { useGetCasesListQuery, useDeleteCaseMutation, useExportCasesFileMutation } from '@/redux/api/casesApi'
+import { useGetCasesListQuery, useExportCasesFileMutation } from '@/redux/api/casesApi'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import React, { useState } from 'react'
 import { BiEdit } from 'react-icons/bi'
 import { BsEye } from 'react-icons/bs'
 import { FaTrash } from "react-icons/fa";
-import { toast } from 'react-toastify'
 import CaseDetailsOverLay from './_Components/CaseDetailsOverLay'
 import DeleteCaseModal from './_Components/DeleteCaseModal'
 import { exportData, to_int_or_default } from '@/Components/utils/helper'
@@ -77,8 +76,8 @@ const page = () => {
         />
         <div className='min-h-[300px] space-y-4'>
           <TableSettings 
-            excel={()=>exportData({ExportFun:ExportCases, fileName:'القضايا', params:filter, type:'excel'})}
-            pdf={()=>exportData({ExportFun:ExportCases, fileName:'القضايا', params:filter, type:'pdf'})}
+            excel={()=>exportData({ExportFun:ExportCases, fileName:'القضايا', params:{search:search, filter, start_date, end_date}, type:'excel'})}
+            pdf={()=>exportData({ExportFun:ExportCases, fileName:'القضايا', params:{search:search, filter, start_date, end_date}, type:'pdf'})}
           />
           <div className="p-4">
             <DataTable 
@@ -96,7 +95,7 @@ const page = () => {
             <Paginition
               totalPages={data?.total_pages}
             /> 
-        </div>
+          </div>
         </div>
       </>
     )

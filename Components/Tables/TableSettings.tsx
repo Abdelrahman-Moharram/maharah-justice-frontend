@@ -2,23 +2,22 @@ import React, { useState } from 'react'
 import { RiFileExcel2Line } from "react-icons/ri";
 import { FiPrinter } from "react-icons/fi";
 import { HijriDateInput } from '../Forms';
-import { useSearchParams } from 'next/navigation';
-import { useCaseFilters } from '../Hooks/Cases/useCases';
-import { caseNumberRegex, hijriDateRegex } from '../Hooks/Common/validationsRegexRepo';
+import { hijriDateRegex } from '../Hooks/Common/validationsRegexRepo';
 import { FaFilter } from 'react-icons/fa';
+import { useFilters } from '../Hooks/Others/filters';
 
 interface Props{
     excel:()=>void
-    pdf:()=>void
+    pdf:()=>void,
+    inputPlaceHolder?:string
 }
-const TableSettings = ({excel, pdf}:Props) => {
+const TableSettings = ({excel, pdf, inputPlaceHolder}:Props) => {
   const [open, setOpen] = useState(false)
-  const searchParams  = useSearchParams()
   const {
     filters,
     changeDate,
     onChange
-  } = useCaseFilters()
+  } = useFilters()
 
   const handleOpen = () =>{
     setOpen(!open)
@@ -28,9 +27,9 @@ const TableSettings = ({excel, pdf}:Props) => {
         <div className="col-span-1">
           <input 
             className='w-full py-2 px-5 bg-container outline-none border-none shadow-md rounded-lg'
-            placeholder='ابحث برقم القضية ...'
+            placeholder={inputPlaceHolder || 'ابحث ...'}
             value={filters.search}
-            onChange={e=>onChange(e, {alter_name:'رقم القضية', regex:caseNumberRegex})}
+            onChange={e=>onChange(e)}
             name='search'
           />
         </div>

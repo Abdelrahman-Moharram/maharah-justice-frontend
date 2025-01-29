@@ -24,9 +24,10 @@ export interface SessionFormType{
 
 export interface addCosultationType{
     // session     :string,
-    message          :string,
-    receiver         :string
-    receiver_name    :string
+    message          :  string,
+    receiver         :  string
+    receiver_name    :  string
+    type             :  string
 }
 
 export interface cosultationType{

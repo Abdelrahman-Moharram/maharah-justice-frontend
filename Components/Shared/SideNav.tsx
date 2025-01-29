@@ -44,8 +44,8 @@ export default function SideNav() {
             // {title:'الدوائر', link:'/settings/circulars'},
             {title:'المستخدمين', link:'/settings/users'},
             {title:'الأدوار', link:'/settings/roles'}, 
-            {title:'العملاء', link:'/settings/customers'},
             {title:'المحامين', link:'/settings/lawyers'},
+            {title:'العملاء', link:'/settings/customers'},
         ]
         
     
@@ -173,7 +173,7 @@ export default function SideNav() {
                     <li>
                         <SideNavDropDownItem 
                             title="التقارير"
-                            innerLinks={settingsInnerLinks()}
+                            innerLinks={[]}
                             icon={
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M17 13.4V16.4C17 20.4 15.4 22 11.4 22H7.6C3.6 22 2 20.4 2 16.4V12.6C2 8.6 3.6 7 7.6 7H10.6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -186,7 +186,7 @@ export default function SideNav() {
 
 
                             }
-                            baseKey='التقارير'
+                            baseKey='reports/cases'
                         />
                     </li>
                     <li>

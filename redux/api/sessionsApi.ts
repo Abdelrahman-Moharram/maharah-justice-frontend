@@ -8,119 +8,27 @@ const sessionsApiSlice  = apiSlice.injectEndpoints({
         
         // sessions list
         getSessionsList: builder.query({
-            query:({page, size, search, filter}:{page:number, size:number, search?:string|null, filter:string|null})=>{                
-                // if (filter){
-                //     filter += "/"
-                // }else{
-                //     filter = ''
-                // }
+            query:({page, size, search, filter, start_date, end_date}:{page:number, size:number, search?:string|null, filter:string|null, start_date:string, end_date:string})=>{                
                 return {
                     url:base_url,
-                    params:{page, size, search, filter},
+                    params:{page, size, search, filter, start_date, end_date},
                 }
             },
             providesTags:['sessions']
         }),
         getSessionsExcel: builder.mutation({
             query:({search, type, filter}:{search?:string|null, type:string, filter:string|null;})=>{
-                if (filter){
-                    filter += "/"
-                }else{
-                    filter = ''
-                }                
+                               
                 return {
-                    url:base_url+filter,
-                    params:{search, [type]:true},
+                    url:base_url,
+                    params:{search, export:type, filter},
                     responseHandler: (response) => response.blob(), 
-
                 }
             }
         }),
-        // --------------
-
-        // Daily sessions
-        getDailySessionsList: builder.query({
-            query:({page, size, search}:{page:number, size:number, search?:string|null})=>({
-                url:base_url+"daily/",
-                params:{page, size, search}
-            }),
-            providesTags:['sessions']
-        }),
-        getDailySessionsExcel: builder.mutation({
-            query:({search}:{search?:string|null})=>({
-                url:base_url+"daily/",
-                params:{ search, excel:true}
-            }),
-        }),
-        // --------------
-
-        // Weekly sessions
         
-        getWeeklySessionsList: builder.query({
-            query:({page, size, search}:{page:number, size:number, search?:string|null})=>({
-                url:base_url+"weekly/",
-                params:{page, size, search}
-            }),
-            providesTags:['sessions']
-        }),
-        getWeeklySessionsExcel: builder.mutation({
-            query:({search}:{search?:string|null})=>({
-                url:base_url+"weekly/",
-                params:{search, excel:true}
-            }),
-        }),
+
         
-        // --------------
-
-        // My Sessions
-        getMySessionsList: builder.query({
-            query:({page, size, search}:{page:number, size:number, search?:string|null})=>({
-                url:base_url+"/mine/",
-                params:{page, size, search}
-            }),
-            providesTags:['sessions']
-        }),
-        getMySessionsExcel: builder.mutation({
-            query:({search}:{search?:string|null})=>({
-                url:base_url+"/mine/",
-                params:{search, excel:true}
-            }),
-        }),
-
-        // --------------
-
-        // Active Sessions
-        getActiveSessionsList: builder.query({
-            query:({page, size, search}:{page:number, size:number, search?:string|null})=>({
-                url:base_url+"active/",
-                params:{page, size, search}
-            }),
-            providesTags:['sessions']
-        }),
-        getActiveSessionsExcel: builder.mutation({
-            query:({search}:{search?:string|null})=>({
-                url:base_url+"active/",
-                params:{search, excel:true}
-            }),
-        }),
-        // --------------
-
-        // Active Sessions
-
-        getInActiveSessionsList: builder.query({
-            query:({page, size, search}:{page:number, size:number, search?:string|null})=>({
-                url:base_url+"finished/",
-                params:{page, size, search}
-            }),
-            providesTags:['sessions']
-        }),
-        getInActiveSessionsExcel: builder.mutation({
-            query:({search}:{search?:string|null})=>({
-                url:base_url+"finished/",
-                params:{search, excel:true}
-            }),
-        }),
-
         // -------------- add & update --------------
 
         
@@ -177,18 +85,24 @@ const sessionsApiSlice  = apiSlice.injectEndpoints({
 
 
         getConsultationsList: builder.query({
-            query:({page, size, search, filter}:{page:number, size:number, search?:string|null, filter:string|null})=>({
+            query:({page, size, search, filter, start_date, end_date}:{page:number, size:number, search?:string|null, filter:string|null, start_date:string, end_date:string})=>({
                 url:`${consultations_url}${filter?filter+'/':''}`,
-                params:{page, size, search}
+                params:{page, size, search, start_date, end_date}
             }),
             providesTags:['consultations']
+        }),
+
+        getConsultationsTypes: builder.query({
+            query:()=>({
+                url:consultations_url+'types/',
+            }),
         }),
         
         
         exportConsultationsList: builder.mutation({
-            query:({search, filter, type}:{search?:string|null, filter:string|null, type:string})=>({
+            query:({search, filter, start_date, end_date, type}:{search?:string|null, filter:string|null, start_date:string, end_date:string, type:string})=>({
                 url:`${consultations_url}${filter?filter+'/':''}`,
-                params:{search, [type]:true},
+                params:{search, start_date, end_date, export:type},
                 responseHandler: (response) => response.blob(), 
 
             }),
@@ -239,17 +153,7 @@ const sessionsApiSlice  = apiSlice.injectEndpoints({
     
 export const {
     useGetSessionsListQuery,
-    useGetSessionsExcelMutation,
-    useGetActiveSessionsListQuery,
-    useGetActiveSessionsExcelMutation,
-    useGetDailySessionsListQuery,
-    useGetDailySessionsExcelMutation,
-    useGetInActiveSessionsListQuery,
-    useGetInActiveSessionsExcelMutation,
-    useGetMySessionsListQuery,
-    useGetMySessionsExcelMutation,
-    useGetWeeklySessionsListQuery,   
-    useGetWeeklySessionsExcelMutation,   
+    useGetSessionsExcelMutation,  
     useDeleteSessionMutation,
     useAddSessionMutation,
     useGetSessionCaseInfoQuery,
@@ -260,7 +164,7 @@ export const {
     // Consultations
     useAddConsultationMutation,
 
-    
+    useGetConsultationsTypesQuery,
     useGetConsultationsListQuery,
     useExportConsultationsListMutation,
     useGetConsultationDetailsQuery,

@@ -1,5 +1,5 @@
 'use client'
-import React, { useCallback, useState } from 'react'
+import React, { useState } from 'react'
 import TableSettings from '@/Components/Tables/TableSettings'
 import DataTable from '@/Components/Tables/DataTable'
 import { useSearchParams } from 'next/navigation'
@@ -19,10 +19,13 @@ import AddConsultationModal from '../consultations/_Components/AddConsultationMo
 
  
 const page = () => {
-    const searchParams  = useSearchParams()
-    const filter        = searchParams.get('filter')
-    let size            = to_int_or_default(searchParams.get("size"))
-    let page            = to_int_or_default(searchParams.get("page"))
+    const searchParams    = useSearchParams()
+    let size              = to_int_or_default(searchParams.get("size"))
+    let page              = to_int_or_default(searchParams.get("page"))
+    const filter          = searchParams.get('filter') || ''
+    const search          = searchParams.get("search") || ''
+    const start_date      = searchParams.get("start_date") || ''
+    const end_date        = searchParams.get("end_date") || ''
 
 
     const [selectedSessionNumber, setSelectedSessionNumber] = useState<string>('')
@@ -32,7 +35,6 @@ const page = () => {
     const [deleteSession, {isLoading:deleteSessionLoading}] = useDeleteSessionMutation()
 
 
-    const search = searchParams.get('search') || ''
     
     const handleDeleteModal = () =>{
       setDeleteModal(!deleteModal)
@@ -41,7 +43,7 @@ const page = () => {
       setShowAddConsultation(!showAddConsultation)
     }
 
-    const {data, isLoading} = useGetSessionsListQuery({page, size:size||10, search:search, filter}, {skipPollingIfUnfocused:true})  
+    const {data, isLoading} = useGetSessionsListQuery({page, size:size||10, search:search, filter, start_date, end_date}, {skipPollingIfUnfocused:true})  
     const [ExportSessions] = useGetSessionsExcelMutation() 
 
     const options = (row:any)=>(
@@ -71,7 +73,7 @@ const page = () => {
             <FaTrash />
           </button>
         </div>
-      )
+    )
     
     
     const handleDetailsModel = () =>{
@@ -115,8 +117,8 @@ const page = () => {
 
       <div className='min-h-[300px] p-5 space-y-4'>
         <TableSettings 
-          excel={()=>exportData({ExportFun:ExportSessions, fileName:'الجلسات', params:filter, type:'excel'})}
-          pdf={()=>exportData({ExportFun:ExportSessions, fileName:'الجلسات', params:filter, type:'pdf'})}
+          excel={()=>exportData({ExportFun:ExportSessions, fileName:'الجلسات', params:{filter, search, start_date, end_date}, type:'excel'})}
+          pdf={()=>exportData({ExportFun:ExportSessions, fileName:'الجلسات', params:{filter, search, start_date, end_date}, type:'pdf'})}
         />
         
         <div className="p-4">
