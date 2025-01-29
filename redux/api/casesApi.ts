@@ -92,7 +92,7 @@ const casesApiSlice = apiSlice.injectEndpoints({
             }),
             
             getAllCasesReport: builder.query({
-                query:({page, size, start_date, end_date, search,}:{ page?:number, size?:number, start_date?:string, end_date?:string, search?:string})=>({
+                query:({page, size, start_date, end_date, search,filter}:{ page?:number, size?:number, start_date?:string, end_date?:string, search?:string, filter?:string})=>({
                     url:base_url+`reports/all/`,
                     params:{
                         start_date,
@@ -100,17 +100,19 @@ const casesApiSlice = apiSlice.injectEndpoints({
                         page,
                         size,
                         search,
+                        filter
                     },
                 }),
             }),
             
             exportAllCasesReport: builder.mutation({
-                query:({start_date, end_date, search,type}:{start_date?:string, end_date?:string, search?:string, type:string})=>({
+                query:({start_date, end_date, search, filter,type}:{start_date?:string, end_date?:string, search?:string, filter?:string, type:string})=>({
                     url:base_url+`reports/all/`,
                     params:{
                         start_date,
                         end_date,
                         search,
+                        filter,
                         export:type
                     },
                     responseHandler: (response) => response.blob(), 

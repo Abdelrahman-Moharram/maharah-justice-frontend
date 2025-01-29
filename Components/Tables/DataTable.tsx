@@ -42,7 +42,7 @@ const DataTable = ({options, startOptions, data, isLoading, emptyLinkHref, amoun
         const modifiedValue = cellContent.slice(0, 33) + " ..."
         
         return(
-            <>
+            <div>
                 <div data-tooltip-id="tooltip" className="cursor-default large-table-cell">
                     {modifiedValue}
                 </div>
@@ -54,7 +54,7 @@ const DataTable = ({options, startOptions, data, isLoading, emptyLinkHref, amoun
                         {cellContent}
                     </div>
                 </Tooltip>
-            </>
+            </div>
         )
     }
     
