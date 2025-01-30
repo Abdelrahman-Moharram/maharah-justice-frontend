@@ -20,7 +20,7 @@ interface Props{
   add:boolean,
   isLoading:boolean,
   formSubmit:(e:FormEvent<HTMLFormElement>) =>void
-  // changeDate: (date:DateObject | null) => void,
+  changeDate: (date:DateObject | null) => void,
   onChange: (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>, validationSchema?:ValidationsType) => void,
   selectChange: (event: ChangeEvent<HTMLSelectElement> ) => void,
   changeCheckBox: (event: ChangeEvent<HTMLInputElement>, validationSchema?:ValidationsType)=>void,
@@ -32,14 +32,14 @@ const JudgementForm = ({
   courts,
   add,
   isLoading,
-  // changeDate,
+  changeDate,
   onChange,
   selectChange,
   imageChange,
   changeCheckBox,
   formSubmit,
 }:Props) => {
- 
+  
   return (
     <form 
       encType='multipart/form-data'
@@ -111,9 +111,10 @@ const JudgementForm = ({
           />
         </div>
 
-        <div className="my-8 col-span-2">
-          {
-            judgement?.is_aganist_company?
+        {
+        judgement?.is_aganist_company?
+          <>
+            <div className={`my-8 ${!judgement?.is_objectionable? 'col-span-2':''}`}>
               <CheckBox 
                 changeCheckBox={changeCheckBox}
                 checked={judgement?.is_objectionable}
@@ -121,16 +122,32 @@ const JudgementForm = ({
                 labelId='is_objectionable'
                 name='is_objectionable'
               />
+            </div>
+            {
+              judgement?.is_objectionable?
+                <HijriDateInput
+                    labelId={'last_date_to_appeal'}
+                    onChange={changeDate}
+                    value={judgement?.last_date_to_appeal}
+                    label={'أخر تاريخ للإعتراض'}
+                    required= {true}
+                    errors={formErrors?.date_ar}
+                />
+              :null
+            }
+          </>
             :
-              <CheckBox 
-                changeCheckBox={changeCheckBox}
-                checked={judgement?.is_executable}
-                label='هل الحكم قابل للتنفيذ ؟ '
-                labelId='is_executable'
-                name='is_executable'
-              />
-          }
-        </div>
+          <div className="my-8 col-span-2">
+            <CheckBox 
+              changeCheckBox={changeCheckBox}
+              checked={judgement?.is_executable}
+              label='هل الحكم قابل للتنفيذ ؟ '
+              labelId='is_executable'
+              name='is_executable'
+            />
+          </div>
+        }
+        
 
 
         <div className="">

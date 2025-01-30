@@ -1,10 +1,15 @@
 import React from 'react'
-import DataSection from './_Components/DataSection'
+import DataSection from '../_Components/DataSection'
 
 const page = () => {
     
   return (
-    <DataSection/>
+    <DataSection
+      exportFileName='قضايا الجلسات'
+      filter=''
+      fnKeys={['id', 'case_number']}
+      base_url='sessions/'
+    />
   )
 }
 

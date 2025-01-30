@@ -2,7 +2,7 @@ export const caseNumberPattern      = '^[1-9][0-9]{2,20}$'
 export const phoneNumberPattern     = '^[0-9]{8}$'
 export const commercialNumberRegex  = '^[1-9][0-9]{9}$'
 export const identityNumberPattern  = '^[1-9][0-9]{9}$'
-export const hijriDateRegex         = '^([٠-٢]?[٠-٩])-([٠-١]?[٠-٩])-(١[٣-٤][٠-٩][٠-٩]|[١٢][٠-٩][٠-٩][٠-٩])$'
+export const hijriDateRegex         = '^([٠-٢]?[٠-٩]|٣٠)-([٠-١]?[٠-٩])-(١[٣-٤][٠-٩][٠-٩]|[١٢][٠-٩][٠-٩][٠-٩])$'
 export const numberPattern          = '[1-9][0-9]{2,}$'
 export const amountPattern          = '^[0-9.]+$'
 

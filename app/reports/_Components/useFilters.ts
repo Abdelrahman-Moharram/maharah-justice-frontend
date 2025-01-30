@@ -9,15 +9,10 @@ import arabic from "react-date-object/calendars/arabic"
 import { ValidationsType } from "@/Components/Types/Others"
 import { updateSearchQuery } from "@/Components/utils/helper"
 import { DefaultInputValidate } from "@/Components/Hooks/Common/useValidations"
-import { useGetReportFiltersDropdownsQuery } from "@/redux/api/casesApi"
+import { filterType } from "@/Components/Hooks/Others/types"
+import { useGetReportFiltersDropdownsQuery } from "@/redux/api/reportsApi"
 
-interface filterType{
-    search?         : string,
-    start_date?     : DateObject|null,
-    end_date?       : DateObject|null,
-    city            : string,
-    customer_type   : string,
-} 
+
 const initialFilter = {
     search        :'',
     start_date    :null,
@@ -35,7 +30,7 @@ export function useFilters(){
   
     const [filtersErrors, setFiltersErrors] = useState<any>({})
     const [filters, setFilters] = useState<filterType>(initialFilter)
-    const {data:dropdowns} = useGetReportFiltersDropdownsQuery(undefined)
+    const {data:dropdowns} = useGetReportFiltersDropdownsQuery({base_url:'cases/'})
     
     useEffect(()=>{
         setFilters(initialFilter)
@@ -63,25 +58,25 @@ export function useFilters(){
         setFiltersErrors({...filtersErrors, [name]:DefaultInputValidate({name, value, validationSchema})})
       setFilters({ ...filters, [name]: value });
 
-      if(filtersErrors && !Object.keys(filtersErrors).includes(name))
+      
         updateSearchQuery({ ...filters, [name]: value }, pathname, router, params);
     };
     const changeDate = (date:DateObject | null, name: string, validationSchema?:ValidationsType)=>{
+      
       if(validationSchema)
-        setFiltersErrors({...filtersErrors, name:DefaultInputValidate({name:name, value:date||"", validationSchema})})
+        setFiltersErrors({...filtersErrors, [name]:DefaultInputValidate({name:name, value:date||"", validationSchema})})
       setFilters({ ...filters, [name]: date });
-      if(filtersErrors && !Object.keys(filtersErrors).includes(name))
-        updateSearchQuery({ ...filters, [name]: date }, pathname, router, params);
+      
+      updateSearchQuery({ ...filters, [name]: date }, pathname, router, params);
     };
 
 
     const selectChange = (e: ChangeEvent<HTMLSelectElement>, validationSchema?:ValidationsType )=>{
-        const { name, value } = e.target;        
-        if(validationSchema)
-          setFiltersErrors({...filtersErrors, [name]:DefaultInputValidate({name, value, validationSchema})})
-        setFilters({ ...filtersErrors, [name]: value });
-        if(filtersErrors && !Object.keys(filtersErrors)?.includes(name))
-          updateSearchQuery({ ...filters, [name]: value }, pathname, router, params);
+      const { name, value } = e.target;        
+      if(validationSchema)
+        setFiltersErrors({...filtersErrors, [name]:DefaultInputValidate({name, value, validationSchema})})
+      setFilters({ ...filters, [name]: value });
+      updateSearchQuery({ ...filters, [name]: value }, pathname, router, params);
 
     }
   

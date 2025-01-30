@@ -1,3 +1,4 @@
+import { DateObject } from "react-multi-date-picker";
 
 export interface JudgementsFormType{
     number: string,
@@ -7,8 +8,9 @@ export interface JudgementsFormType{
     // date_ar: DateObject | null,
     notes: string,
     result: string,
+    last_date_to_appeal:DateObject | null,
     is_aganist_company: boolean,
     is_objectionable: boolean,
     is_executable: boolean,
-    attachments: File[] | null
+    attachments: File[] | null,
 }

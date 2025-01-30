@@ -38,7 +38,7 @@ const page = () => {
     dropDowns,
     onChange,
     selectChange,
-    // changeDate,
+    changeDate,
     imageChange,
     changeCheckBox,
     setFormErrors,
@@ -79,7 +79,7 @@ const page = () => {
       <JudgementForm
         judgement={judgement}
         onChange={onChange}
-        // changeDate={changeDate}
+        changeDate={changeDate}
         courts={dropDowns?.courts}
         formErrors={formErrors}
         formSubmit={formSubmit}

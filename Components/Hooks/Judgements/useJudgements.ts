@@ -7,6 +7,7 @@ import { ValidationsType } from "@/Components/Types/Others"
 import { DefaultInputValidate } from "../Common/useValidations"
 import { JudgementsFormType } from "@/Components/Types/Judgements"
 import { useEditJudgementFormMutation } from "@/redux/api/JudgementsApi"
+import { DateObject } from "react-multi-date-picker"
 
 
 export default function useJudgementsForm({case_number, number}:{case_number:string, number?:string}){
@@ -18,13 +19,13 @@ export default function useJudgementsForm({case_number, number}:{case_number:str
         number:'',
         court:'',
         amount:0,
-        // date_ar:null,
+        last_date_to_appeal:null,
         notes:'',
         result:'',
         is_aganist_company:false, 
         is_executable:false, 
         is_objectionable:false, 
-        attachments:[]
+        attachments:[],
     })
     useEffect(()=>{
         
@@ -65,6 +66,12 @@ export default function useJudgementsForm({case_number, number}:{case_number:str
           setJudgement({ ...judgement, [name]: checked })
     }
 
+    const changeDate = (date:DateObject | null, validationSchema?:ValidationsType)=>{
+        if(validationSchema)
+            setFormErrors({...formErrors, last_date_to_appeal:DefaultInputValidate({name:'last_date_to_appeal', value:date||"", validationSchema})})
+        setJudgement({ ...judgement, last_date_to_appeal: date });
+    }
+
     
 
     const getJudgementAsFormData = () =>{
@@ -74,17 +81,16 @@ export default function useJudgementsForm({case_number, number}:{case_number:str
         formData.append('case_number'           , judgement.case_number)
         formData.append('court'                 , judgement.court)
         formData.append('amount'                , String(judgement.amount))
+        formData.append('last_date_to_appeal'   , judgement.last_date_to_appeal?.setLocale(arabic_en).toString()??'')
         formData.append('notes'                 , judgement.notes)
         formData.append('result'                , judgement.result)
         formData.append('is_aganist_company'    , JSON.stringify(judgement.is_aganist_company))
         if(judgement.is_executable)
-            formData.append('is_executable'         , JSON.stringify(judgement.is_executable))
+            formData.append('is_executable'     , JSON.stringify(judgement.is_executable))
         
         if(judgement.is_objectionable)
-            formData.append('is_objectionable'      , JSON.stringify(judgement.is_objectionable))
+            formData.append('is_objectionable'  , JSON.stringify(judgement.is_objectionable))
 
-        // formData.append('date_ar'        , judgement.date_ar?.setLocale(arabic_en).toString()??'')
-        
 
         if(judgement?.attachments?.length)
             for (let attch of judgement?.attachments){
@@ -99,7 +105,7 @@ export default function useJudgementsForm({case_number, number}:{case_number:str
         formErrors,
         dropDowns,
         onChange,
-        // changeDate,
+        changeDate,
         selectChange,
         imageChange,
         changeCheckBox,

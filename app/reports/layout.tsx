@@ -7,9 +7,10 @@ const layout = ({children}:{children:React.ReactNode}) => {
         {title:'الجلسات', href:'/reports/sessions', },
         {title:'القضايا المغلقة', href:'/reports/closed-cases', },
         {title:'قضايا الأحكام', href:'/reports/judgement-cases', },
+        {title:'الإعتراضات', href:'/reports/appeals', },
     ]
   return (
-    <div className="p-5">
+    <div className="p-5 ">
         <ReportTabs 
             tabs={tabs}
         />

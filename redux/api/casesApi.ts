@@ -85,39 +85,7 @@ const casesApiSlice = apiSlice.injectEndpoints({
 
             // ----------------------------------------------------- //
 
-            getReportFiltersDropdowns: builder.query({
-                query:()=>({
-                    url:base_url+`reports/filters-dropdowns/`,
-                }),
-            }),
-            
-            getAllCasesReport: builder.query({
-                query:({page, size, start_date, end_date, search,filter}:{ page?:number, size?:number, start_date?:string, end_date?:string, search?:string, filter?:string})=>({
-                    url:base_url+`reports/all/`,
-                    params:{
-                        start_date,
-                        end_date,
-                        page,
-                        size,
-                        search,
-                        filter
-                    },
-                }),
-            }),
-            
-            exportAllCasesReport: builder.mutation({
-                query:({start_date, end_date, search, filter,type}:{start_date?:string, end_date?:string, search?:string, filter?:string, type:string})=>({
-                    url:base_url+`reports/all/`,
-                    params:{
-                        start_date,
-                        end_date,
-                        search,
-                        filter,
-                        export:type
-                    },
-                    responseHandler: (response) => response.blob(), 
-                }),
-            }),
+           
             
     }) 
 })
@@ -133,8 +101,5 @@ export const {
     useGetCaseDetailsMutation,
     useEditCaseMutation,
     useGetNavBarSearchQuery,
-    
-    useGetReportFiltersDropdownsQuery,
-    useGetAllCasesReportQuery,
-    useExportAllCasesReportMutation
+
 } = casesApiSlice
