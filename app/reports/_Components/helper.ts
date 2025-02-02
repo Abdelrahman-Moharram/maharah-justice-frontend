@@ -4,7 +4,8 @@ const pageFilters:{[key:string]:string[]} = {
     '/reports/sessions':['date', 'city'], 
     '/reports/closed-cases':['date', 'city'], 
     '/reports/judgement-cases':['date', 'city'],
-    '/reports/appeals':['date', 'city']
+    '/reports/appeals':['date', 'city'],
+    '/reports/customer-type':['date', 'city', 'customer_type'],
 }
 
 export const getPageFilter = (path:string) =>{

@@ -8,6 +8,7 @@ const layout = ({children}:{children:React.ReactNode}) => {
         {title:'القضايا المغلقة', href:'/reports/closed-cases', },
         {title:'قضايا الأحكام', href:'/reports/judgement-cases', },
         {title:'الإعتراضات', href:'/reports/appeals', },
+        {title:'نوع العميل', href:'/reports/customer-type', },
     ]
   return (
     <div className="p-5 ">
