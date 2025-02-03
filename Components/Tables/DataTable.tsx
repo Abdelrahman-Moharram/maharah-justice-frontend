@@ -3,6 +3,7 @@ import EmptyContent from '../Common/EmptyContent';
 import { numberToMoney } from '../utils/helper';
 import TableSkeleton from './TableSkeleton';
 import { Tooltip } from "react-tooltip";
+import EmptyData from '../Common/EmptyData';
 
 interface Props{
     data:any
@@ -135,8 +136,10 @@ const DataTable = ({options, startOptions, data, isLoading, emptyLinkHref, amoun
                     </table>
                 :
                 <div className="flex justify-center">
-                    <EmptyContent 
-                        href={emptyLinkHref}
+                    <EmptyData 
+                        // href={emptyLinkHref}
+                        message={emptyText}
+                        height='100px'
                         // title={emptyText}
                     />
                 </div>

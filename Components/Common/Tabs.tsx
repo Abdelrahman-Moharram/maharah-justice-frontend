@@ -35,7 +35,7 @@ const Tabs = ({tabs, page}:Props) => {
                                 href={tab?.href}
                                 key={tab?.href}
                                 className={tab?.isCurrent || page && tab.href == page?'shrink-0 border-b-2 border-sky-500 px-1 pb-4 text-sm font-medium text-sky-600':"shrink-0 border-b-2 border-transparent px-1 pb-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"}
-                            >
+                            >                                
                                 {tab?.icon} {tab?.title}
                             </Link>
                         ))

@@ -2,7 +2,6 @@ import { apiSlice } from "../services/apiSlice";
 
 
 const base_url      = 'judgements/'
-const apeals_url    = base_url +'appeals/'
 const judgementsApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder)=>({
         
@@ -104,6 +103,28 @@ const judgementsApiSlice = apiSlice.injectEndpoints({
             providesTags:['appeals']
         }),
 
+        // -----------------------------------------------------------//
+
+        getExecutionsList: builder.query({
+            query:({page, size, filter, search, start_date, end_date, exec_type}:{page:number, size:number, filter?:string|null, search:string, start_date:string, end_date:string, exec_type:string})=>({
+                url:base_url+"executions/",
+                params:{page, size, filter, search, start_date, end_date, exec_type}
+            }),
+        }),
+        exportExecutions: builder.mutation({
+            query:({filter, search, start_date, end_date, type, exec_type}:{filter?:string|null, search:string, start_date:string, end_date:string, type:string, exec_type:string})=>({
+                url:base_url+"executions/",
+                params:{filter, search, start_date, end_date, export:type, exec_type},
+                responseHandler: (response) => response.blob(), 
+            }),
+            
+        }),
+        getExecutionsTypesList: builder.query({
+            query:()=>({
+                url:base_url+"executions/types/",
+            }),
+        }),
+
     }) 
 })
     
@@ -119,4 +140,9 @@ export const {
     useAddAppealMutation,
     useEditAppealMutation,
     useGetAppealFormQuery,    
+
+
+    useGetExecutionsListQuery,
+    useExportExecutionsMutation,
+    useGetExecutionsTypesListQuery
 } = judgementsApiSlice    

@@ -10,14 +10,21 @@ const IncludedSessiosJudgements = ({data, case_number, isLoading}:{data:any, cas
       <Link className=' text-green-600 text-lg transition-all rounded-full' href={`/judgements/${row.number}/edit`}><BiEdit /></Link>
     </div>
   )
-  const endOptions = (row:any)=>{
-    
+  const endOptions = (row:any)=>{    
     return (
       <div className='flex gap-4 items-start'>
         {
           row?.is_objectionable ?
             <Link className='bg-primary h-fit p-2 rounded-md text-negitaive-color flex items-center gap-3' href={`/judgements/${row.number}/appeals/add`}>
               إضافة إعتراض
+              <FaPlusCircle />
+            </Link>
+          :null
+        }
+        {
+          row?.is_executable?
+            <Link className='bg-primary h-fit p-2 rounded-md text-negitaive-color flex items-center gap-3' href={`/judgements/${row.number}/execution/add`}>
+              إضافة تنفيذ
               <FaPlusCircle />
             </Link>
           :null

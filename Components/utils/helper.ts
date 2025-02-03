@@ -51,7 +51,7 @@ export const numberToMoney = (value:number|string|null) =>{
 }
 
 
-export const exportData = ({type, params, ExportFun, fileName}:{type:string, params:any, ExportFun:any, fileName:string}) => {
+export const exportData = ({type, params, ExportFun, fileName}:{type:'excel'| 'pdf', params:any, ExportFun:any, fileName:string}) => {
     let ext = ''
     if (type === 'pdf')
       ext = 'pdf'
