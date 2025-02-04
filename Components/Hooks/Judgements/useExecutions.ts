@@ -1,15 +1,17 @@
 'use client'
-import { useGetSessionFormDropDownsQuery } from "@/redux/api/utilsApi"
 import { ChangeEvent, useState } from "react"
 
 import { ValidationsType } from "@/Components/Types/Others"
 import { DefaultInputValidate } from "../Common/useValidations"
 import { ExecutionFormType } from "@/Components/Types/Executions"
+import { useGetExecutionsFormDropdownsQuery } from "@/redux/api/JudgementsApi"
+import { DateObject } from "react-multi-date-picker"
+import arabic_en from "react-date-object/locales/arabic_en"
 
 
-export default function useExecutionsForm({judgement_number}:{judgement_number?:string}){
+export default function useExecutionsForm({judgement_number, exec_number}:{judgement_number?:string, exec_number:string}){
     const [formErrors, setFormErrors] = useState<any>(null)
-    const {data:dropDowns} = useGetSessionFormDropDownsQuery(undefined)
+    const {data:dropDowns} = useGetExecutionsFormDropdownsQuery(undefined)
     // const [editExecutionForm] = useEditExecutionFormMutation()
     const [form, setForm] = useState<ExecutionFormType>({
         number:'',
@@ -18,8 +20,9 @@ export default function useExecutionsForm({judgement_number}:{judgement_number?:
         execution_type:'',
         action:'',
         notes:'',
+        date_ar:null
     })
-    
+
     // useEffect(()=>{
     //     if(number){
     //         editExecutionForm({number})
@@ -51,18 +54,18 @@ export default function useExecutionsForm({judgement_number}:{judgement_number?:
     //         setForm({ ...form, attachments: [file] });
     // }
 
-    const changeCheckBox = (event: ChangeEvent<HTMLInputElement>, validationSchema?:ValidationsType )  =>{
-        const { name, checked } = event.target;   
-        if(validationSchema)
-            setFormErrors({...formErrors, [name]:DefaultInputValidate({name, value:checked, validationSchema})})
-          setForm({ ...form, [name]: checked })
-    }
-
-    // const changeDate = (date:DateObject | null, validationSchema?:ValidationsType)=>{
+    // const changeCheckBox = (event: ChangeEvent<HTMLInputElement>, validationSchema?:ValidationsType )  =>{
+    //     const { name, checked } = event.target;   
     //     if(validationSchema)
-    //         setFormErrors({...formErrors, last_date_to_appeal:DefaultInputValidate({name:'last_date_to_appeal', value:date||"", validationSchema})})
-    //     setForm({ ...form, last_date_to_appeal: date });
+    //         setFormErrors({...formErrors, [name]:DefaultInputValidate({name, value:checked, validationSchema})})
+    //       setForm({ ...form, [name]: checked })
     // }
+
+    const changeDate = (date:DateObject | null, validationSchema?:ValidationsType)=>{
+        if(validationSchema)
+            setFormErrors({...formErrors, last_date_to_appeal:DefaultInputValidate({name:'last_date_to_appeal', value:date||"", validationSchema})})
+        setForm({ ...form, date_ar: date });
+    }
 
     
 
@@ -72,11 +75,11 @@ export default function useExecutionsForm({judgement_number}:{judgement_number?:
         formData.append('number'                , form.number)
         formData.append('city'                  , form.city)
         formData.append('state'                 , form.state)
-        formData.append('execution_type'        , String(form.execution_type))
+        formData.append('execution_type'        , form.execution_type)
+        formData.append('date_ar'               , form.date_ar?.setLocale(arabic_en).toString()??'')
         formData.append('action'                , form.action)
         formData.append('notes'                 , form.notes)
         formData.append('notes'                 , form.notes)
-
 
         // if(form?.attachments?.length)
         //     for (let attch of form?.attachments){
@@ -91,10 +94,10 @@ export default function useExecutionsForm({judgement_number}:{judgement_number?:
         formErrors,
         dropDowns,
         onChange,
-        // changeDate,
+        changeDate,
         selectChange,
         // imageChange,
-        changeCheckBox,
+        // changeCheckBox,
         setFormErrors,
         getExecutionAsFormData
     }

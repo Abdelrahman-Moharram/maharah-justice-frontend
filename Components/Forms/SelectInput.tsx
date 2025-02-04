@@ -31,14 +31,14 @@ const SelectInput = ({
         > 
             {label} 
         </label>
-        <div className="mt-1 px-2 bg-card rounded-xl">
+        <div className="mt-2 px-2 bg-card rounded-xl border border-[#E3E5E5]">
             <select
                     name={labelId}
                     id={labelId}
                     onChange={onChange}
                     value={value}
                     required={required}
-					className={"mt-1 w-full select-wrapper py-1 px-5 pl-0 blur-none border border-[#E3E5E5] bg-transparent outline-none border-none "+ (errors?.length?"border-red-500":"  ")}
+					className={" w-full select-wrapper py-1.5 px-5 pl-0 blur-none bg-transparent outline-none border-none "+ (errors?.length?"border-red-500":"  ")}
                 >
                 {
                     emptyoption?

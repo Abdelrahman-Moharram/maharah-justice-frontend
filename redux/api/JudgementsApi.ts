@@ -124,6 +124,18 @@ const judgementsApiSlice = apiSlice.injectEndpoints({
                 url:base_url+"executions/types/",
             }),
         }),
+        addExecution: builder.mutation({
+            query:({judgement_number, form}:{judgement_number:string, form:FormData})=>({
+                url:base_url+judgement_number+"/executions/add/",
+                method:'post',
+                body:form
+            }),
+        }),
+        getExecutionsFormDropdowns: builder.query({
+            query:()=>({
+                url:base_url+"executions/form-dropdowns/",
+            }),
+        }),
 
     }) 
 })
@@ -144,5 +156,7 @@ export const {
 
     useGetExecutionsListQuery,
     useExportExecutionsMutation,
-    useGetExecutionsTypesListQuery
+    useGetExecutionsTypesListQuery,
+    useGetExecutionsFormDropdownsQuery,
+    useAddExecutionMutation
 } = judgementsApiSlice    
