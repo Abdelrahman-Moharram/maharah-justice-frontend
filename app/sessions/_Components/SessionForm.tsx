@@ -53,12 +53,14 @@ const SessionForm = ({
             imageChange(files[0])
             setFile(null)
         }
-    }
+    }    
+    
   return (
     <form 
         encType='multipart/form-data'
         onSubmit={formSubmit}
         method='post'
+        className='pb-12'
     >
         <div className="grid grid-cols-2 drop-shadow-md p-5 gap-4 ">
             <div className="">
@@ -69,6 +71,7 @@ const SessionForm = ({
                     label={'تاريخ الجلسة'}
                     required= {true}
                     errors={formErrors?.date_ar}
+                    editable={session?.can_edit_all_data}
                 />
             </div>
             <div className="">
@@ -80,6 +83,7 @@ const SessionForm = ({
                     value={session?.time??''}
                     required
                     errors={formErrors?.time}
+                    editable={session?.can_edit_all_data}
                 />
             </div>
             <div className="mb-3">
@@ -173,7 +177,7 @@ const SessionForm = ({
                     labelId='link'
                     label='رابط الجلسة'
                     onChange={e=>onChange(e, {regex:{value:'(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})', message:'برجاء إدخال رابط جلسة صالح'}})}
-                    value={session?.link??''}
+                    value={session?.link || ''}
                     errors={formErrors?.link}
                 />
             </div>
@@ -225,7 +229,7 @@ const SessionForm = ({
                 />
             </div>
         </div>
-        <div className="">
+        <div className="p-5">
             <h3>مستندات الجلسة</h3>
             <DynamicFilesField
                 errors={formErrors?.attachments}
@@ -234,7 +238,7 @@ const SessionForm = ({
             />
         </div>
 
-        <div className="grid grid-cols-2 gap-2 mt-4">
+        <div className="grid grid-cols-2 gap-4 mt-4 px-5">
             <Button submit className='bg-primary hover:bg-transparent border-primary' title={'حفظ'} isLoading={isLoading} />
             <Link 
                 href={'/cases'} 

@@ -29,6 +29,7 @@ const Notifications = () => {
 
   useEffect(() => {
     connectWebSocket();
+    getNotificaions({size:'10'})
 
     return () => {
       if (webSocket) {

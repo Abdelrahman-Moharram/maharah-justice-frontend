@@ -11,7 +11,8 @@ interface props {
 	label: string
 	required?: boolean;
     children?: React.ReactNode | undefined
-    errors?:any[]
+    errors?:any[],
+    editable?:boolean
 }
 const HijriDateInput = ({
     labelId,
@@ -20,7 +21,8 @@ const HijriDateInput = ({
 	label,
 	required = false,
     children,
-    errors
+    errors,
+    editable=true
 }: props) => {
     
   return (
@@ -31,18 +33,26 @@ const HijriDateInput = ({
         >
             {label} 
         </label>
-        <DatePicker
-            format="DD-MM-YYYY"
-            inputClass={"mt-1 w-full py-2 px-4 bg-card border border-[#E3E5E5] rounded-xl outline-none "+ (errors?.length?"border-red-500":"  ")}
-            placeholder={""}
-            value={value}
-            calendar={arabic}
-            containerClassName='z-[100] w-full'
-            calendarPosition='bottom-right'
-            required={required}
-            locale={arabic_ar}
-            onChange={onChange}
-        />
+        {
+            editable?
+                <DatePicker
+                    format="DD-MM-YYYY"
+                    inputClass={"mt-1 w-full py-2 px-4 bg-card border border-[#E3E5E5] rounded-xl outline-none "+ (errors?.length?"border-red-500":"  ")}
+                    placeholder={""}
+                    value={value}
+                    calendar={arabic}
+                    containerClassName='z-[100] w-full'
+                    calendarPosition='bottom-right'
+                    required={required}
+                    locale={arabic_ar}
+                    onChange={onChange}
+                    editable={editable}
+                />
+            :
+                <div className={"mt-2 w-full py-2 px-4 bg-gray-200 border border-[#E3E5E5] rounded-xl outline-none "+ (errors?.length?"border-red-500":"  ")}>
+                    {value?.format('DD-MM-YYYY')||''}
+                </div>
+        }
             
         {children}
         <div className="absolute">

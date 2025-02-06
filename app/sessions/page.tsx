@@ -59,7 +59,7 @@ const page = () => {
           </button>
           <button onClick={()=>{
               setSelectedSessionNumber(row?.case_number)
-              handleDetailsModel()
+              handleDetailsModal()
             }} className=' text-blue-600 text-lg transition-all rounded-full' ><BsEye />
           </button>
           <Link className=' text-green-600 text-lg transition-all rounded-full' href={`/cases/${row?.case_number}/sessions/${row?.id}/edit`}><BiEdit /></Link>
@@ -76,7 +76,7 @@ const page = () => {
     )
     
     
-    const handleDetailsModel = () =>{
+    const handleDetailsModal = () =>{
       setShowSessionDetails(!showSessionDetails)
     }
 
@@ -87,7 +87,7 @@ const page = () => {
           toast.success(data?.message || "تم حذف الجلسة بنجاح")
           handleDeleteModal()
         }).catch((err:any)=>{
-          toast.error(err?.data.message || " حدث خطأ ما وتعذر الإتصال بالخادم برجاء المحاولة لاحقا")
+          toast.error(err?.data.message || "حدث خطأ ما وتعذر الإتصال بالخادم برجاء المحاولة لاحقا")
         })
     }
     
@@ -106,7 +106,7 @@ const page = () => {
 
       <CaseDetailsOverLay 
         case_number={selectedSessionNumber}
-        handleToggler={handleDetailsModel}
+        handleToggler={handleDetailsModal}
         open={showSessionDetails}
       />
       <AddConsultationModal
@@ -131,7 +131,6 @@ const page = () => {
             emptyText='صفحة جميع الجلسات'
             fnKeys={['case_number', 'id']}
             amounts={['المبلغ']}
-
           />
         </div>
         <div className='flex justify-center my-10 font-extrabold'>

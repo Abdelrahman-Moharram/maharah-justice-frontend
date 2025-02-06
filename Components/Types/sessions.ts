@@ -18,6 +18,7 @@ export interface SessionFormType{
     alterlawyer: string,
     lawyer_name: string,
     alterlawyer_name: string,
+    can_edit_all_data?: boolean,
     attachments: File[] | null
 }
 

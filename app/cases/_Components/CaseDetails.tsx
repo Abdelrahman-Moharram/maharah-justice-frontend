@@ -49,6 +49,7 @@ const CaseDetails = ({case_number}:{case_number:string}) => {
     if(case_number)
       caseDetails({case_number})
   }, [case_number])
+  
   return (
     <div className='p-5'>
       {
@@ -184,14 +185,19 @@ const CaseDetails = ({case_number}:{case_number:string}) => {
             <div className="mt-8 bg-card p-4 rounded-md">
               <div className="flex justify-between">
                 <h3 className='font-bold text-lg my-3'>الجلسات</h3>
-                <Link className='bg-primary h-fit p-2 rounded-md text-negitaive-color flex items-center gap-3' href={`/cases/${case_number}/sessions/add`}>
-                  إضافة جلسة
-                  <FaPlusCircle />
-                </Link>
+                {
+                  data?.case?.is_editable?
+                    <Link className='bg-primary h-fit p-2 rounded-md text-negitaive-color flex items-center gap-3' href={`/cases/${case_number}/sessions/add`}>
+                      إضافة جلسة
+                      <FaPlusCircle />
+                    </Link>
+                  :null
+                }
               </div>
               <IncludedSessionsTable 
                 sessions={data?.case?.sessions}
                 case_number={case_number}
+                is_editable={data?.case?.is_editable}
               />
             </div>
             {/* ------------------------------ */}
@@ -200,15 +206,20 @@ const CaseDetails = ({case_number}:{case_number:string}) => {
             <div className="mt-8 bg-card p-4 rounded-md">
               <div className="flex justify-between">
                 <h3 className='font-bold text-lg my-3'>الأحكام</h3>
-                <Link className='bg-primary h-fit p-2 rounded-md text-negitaive-color flex items-center gap-3' href={`/cases/${case_number}/judgements/add`}>
-                  إضافة حكم
-                  <FaPlusCircle />
-                </Link>
+                {
+                  data?.case?.is_editable?
+                    <Link className='bg-primary h-fit p-2 rounded-md text-negitaive-color flex items-center gap-3' href={`/cases/${case_number}/judgements/add`}>
+                      إضافة حكم
+                      <FaPlusCircle />
+                    </Link>
+                  :null
+                }
               </div>
               <IncludedSessiosJudgements 
                 data={data?.case?.judgements}
                 case_number={case_number}
                 isLoading={isLoading}
+                is_editable={data?.case?.is_editable}
               />
             </div>
             {/* ------------------------------ */}

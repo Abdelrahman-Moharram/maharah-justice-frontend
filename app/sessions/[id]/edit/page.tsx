@@ -67,18 +67,19 @@ const page = () => {
     else{
       toast.error('برجاء التأكد من إدخال بيانات الجلسة بشكل صحيح أولا')
     }
-    
-    }
+  }
   return (
     <div className='min-h-[300px]  space-y-4'>
-      <Breadcrumb 
-        items={BreadcrumbData}
-      />
-      
-      <CaseInfo
-        data={data?.case}
-        isLoading={caseLoading}
-      />
+      <div className="px-5 space-y-8 mt-8">
+        <Breadcrumb 
+          items={BreadcrumbData}
+        />
+        
+        <CaseInfo
+          data={data?.case}
+          isLoading={caseLoading}
+        />
+      </div>
       
       <>
         <SessionForm 

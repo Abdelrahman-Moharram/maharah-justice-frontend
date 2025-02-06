@@ -15,13 +15,15 @@ interface sessionsType{
     'طلبات الجلسة القادمة' :string,
     'الملاحظات'              :string,
     'أضيف بواسطة'           :string
+    
 
 }
-const IncludedSessionsTable = ({sessions, case_number}:{sessions:sessionsType, case_number:string}) => {
+const IncludedSessionsTable = ({sessions, case_number, is_editable}:{sessions:sessionsType, case_number:string, is_editable:boolean}) => {
   const options = (row:sessionsType)=>(
     <div className='flex gap-4 items-start'>
       <Link className=' text-green-600 text-lg transition-all rounded-full' href={`/sessions/${row?.id}/edit`}><BiEdit /></Link>
     </div>
+
   )
   return (
     <div className='rounded-md'>
@@ -30,8 +32,8 @@ const IncludedSessionsTable = ({sessions, case_number}:{sessions:sessionsType, c
         emptyLinkHref='#'
         emptyText='لا توجد جلسات لهذه القضية'
         isLoading={false}
-        isOptions
-        startOptions={options}
+        isOptions={is_editable}
+        startOptions={is_editable?options:undefined}
         fnKeys={['id']}
       />
     </div>

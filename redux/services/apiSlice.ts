@@ -49,8 +49,8 @@ const baseQueryWithReauth: BaseQueryFn<
 			result = await baseQuery(args, api, extraOptions);
 		}
 	}
-	else if(result.error && result.error.status === 403){
-		toast.error(result.error?.data?.detail || 'ليس لديك صلاحية تنفيذ هذا الطلب')
+	else if(result.error && result.error.status === 403){		
+		toast.error(result.error?.data?.message || 'ليس لديك صلاحية تنفيذ هذا الطلب')
 	}
 	return result;
 };

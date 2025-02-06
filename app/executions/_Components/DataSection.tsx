@@ -37,12 +37,12 @@ const DataSection = () => {
         excel={()=>{exportData({ExportFun:exportFunc, fileName:'التنفيذات', params, type:'excel'})}}
         pdf={()=>{exportData({ExportFun:exportFunc, fileName:'التنفيذات', params, type:'pdf'})}}
       />
-      <div className="p-4 mt-2">
+      <div className="py-4 mt-2">
         <DataTable
           data={data?.executions}
           isLoading={isLoading}        
           emptyLinkHref={pathName}
-          emptyText=''
+          emptyText='لا وجود لأي تنفيذ'
           fnKeys={[]}
           amounts={['المبلغ']}
         />

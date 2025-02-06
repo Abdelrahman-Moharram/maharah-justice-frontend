@@ -34,6 +34,7 @@ export default function useSessionForm({case_number, id}:{case_number:string, id
         alterlawyer:'',
         lawyer_name:'',
         alterlawyer_name:'',
+        can_edit_all_data:true,
         attachments:[]
     })
     useEffect(()=>{

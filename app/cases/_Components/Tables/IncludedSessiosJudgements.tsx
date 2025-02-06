@@ -4,7 +4,7 @@ import React from 'react'
 import { BiEdit } from 'react-icons/bi'
 import { FaPlusCircle } from 'react-icons/fa'
 
-const IncludedSessiosJudgements = ({data, case_number, isLoading}:{data:any, case_number:string, isLoading:boolean}) => {
+const IncludedSessiosJudgements = ({data, case_number, isLoading, is_editable}:{data:any, case_number:string, isLoading:boolean, is_editable:boolean}) => {
   const startOptions = (row:any)=>(
     <div className='flex gap-4 items-start'>
       <Link className=' text-green-600 text-lg transition-all rounded-full' href={`/judgements/${row.number}/edit`}><BiEdit /></Link>
@@ -40,9 +40,9 @@ const IncludedSessiosJudgements = ({data, case_number, isLoading}:{data:any, cas
         emptyLinkHref='#'
         emptyText='لا توجد جلسات لهذه القضية'
         isLoading={isLoading}
-        isOptions
-        startOptions={startOptions}
-        options={endOptions}
+        isOptions={is_editable}
+        startOptions={is_editable?startOptions:undefined}
+        options={is_editable?endOptions:undefined}
         fnKeys={['id', 'session_id', 'is_aganist_company', 'is_objectionable', 'is_executable', 'number']}
         optionsHeader={'الإعتراضات'}
         amounts={['المبلغ']}

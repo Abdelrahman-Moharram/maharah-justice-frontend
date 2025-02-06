@@ -47,19 +47,7 @@ export default function useExecutionsForm({judgement_number, exec_number}:{judge
         setForm({ ...form, [name]: value });
     }
 
-    // const imageChange = (file:File)=>{
-    //     if(form.attachments?.length)
-    //         ({ ...form, attachments: [...form.attachments, file] });
-    //     else
-    //         setForm({ ...form, attachments: [file] });
-    // }
-
-    // const changeCheckBox = (event: ChangeEvent<HTMLInputElement>, validationSchema?:ValidationsType )  =>{
-    //     const { name, checked } = event.target;   
-    //     if(validationSchema)
-    //         setFormErrors({...formErrors, [name]:DefaultInputValidate({name, value:checked, validationSchema})})
-    //       setForm({ ...form, [name]: checked })
-    // }
+    
 
     const changeDate = (date:DateObject | null, validationSchema?:ValidationsType)=>{
         if(validationSchema)

@@ -42,9 +42,7 @@ const LawyerSearchInput = ({
     },[oldNameValue])
     
     useEffect(()=>{
-      if(nameValue || oldNameValue){    
-        console.log(nameValue, oldNameValue);
-           
+      if(nameValue || oldNameValue){               
         searchLawyer({query:nameValue || oldNameValue, exclude:exclude||'', is_consultant})
       }
     },[nameValue, oldNameValue])

@@ -13,7 +13,8 @@ interface props {
     children?: React.ReactNode | undefined
     errors?:any[]
     defaultValue?:string|number,
-	placeholder?: string
+	placeholder?: string,
+	editable?:boolean
 }
 
 const Input = ({
@@ -27,6 +28,7 @@ const Input = ({
     children,
     defaultValue,
     errors,
+	editable=true
 }: props) => {
     const [inputType, setType] = useState(type)	
 	return (
@@ -47,6 +49,7 @@ const Input = ({
 					defaultValue={defaultValue}
 					required={required}
 					placeholder={placeholder}
+					readOnly={!editable}
 					className={"mt-1 w-full py-2 px-4 bg-card blur-none border border-[#E3E5E5] rounded-xl outline-none "+ (errors?.length?"border-red-500":"  ")}
 				/>
 				{

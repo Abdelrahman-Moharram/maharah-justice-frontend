@@ -126,12 +126,12 @@ const JudgementForm = ({
             {
               judgement?.is_objectionable?
                 <HijriDateInput
-                    labelId={'last_date_to_appeal'}
-                    onChange={changeDate}
-                    value={judgement?.last_date_to_appeal}
-                    label={'أخر تاريخ للإعتراض'}
-                    required= {true}
-                    errors={formErrors?.date_ar}
+                  labelId={'last_date_to_appeal'}
+                  onChange={changeDate}
+                  value={judgement?.last_date_to_appeal}
+                  label={'أخر تاريخ للإعتراض'}
+                  required= {true}
+                  errors={formErrors?.date_ar}
                 />
               :null
             }
@@ -174,7 +174,7 @@ const JudgementForm = ({
 
       </div>
 
-      <div className="grid grid-cols-2 gap-2 mt-4">
+      <div className="grid grid-cols-2 gap-4 mt-12 px-5">
         <Button submit className='bg-primary hover:bg-transparent border-primary' title={'حفظ'} isLoading={isLoading} />
         <Link 
           href={'/cases'} 
