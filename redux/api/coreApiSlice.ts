@@ -3,6 +3,14 @@ import { apiSlice } from "../services/apiSlice";
 const base_url = 'core/'
 const coreApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder)=>({
+        getUnReadNotificationsCount: builder.mutation({
+            query:()=>{                
+                return ({
+                    url:base_url+`notifications/unread-count/`,
+                    method:'GET',
+                })
+            }
+        }),
         getNotifications: builder.mutation({
             query:({size}:{size?:string|undefined})=>{                
                 return ({
@@ -27,6 +35,7 @@ const coreApiSlice = apiSlice.injectEndpoints({
 
 export const {
     useGetNotificationsMutation,
-    useReadNotificationsMutation
+    useReadNotificationsMutation,
+    useGetUnReadNotificationsCountMutation
 } = coreApiSlice
 

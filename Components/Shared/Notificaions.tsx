@@ -3,7 +3,7 @@ import { useAppSelector } from '@/redux/hooks';
 import React, { useEffect, useState } from 'react'
 import { ImFileEmpty } from 'react-icons/im';
 import NotificationDropdownItem from './NotificationDropdownItem';
-import { useGetNotificationsMutation, useReadNotificationsMutation } from '@/redux/api/coreApiSlice';
+import { useGetNotificationsMutation, useGetUnReadNotificationsCountMutation, useReadNotificationsMutation } from '@/redux/api/coreApiSlice';
 import RandomSkeleton from '../Common/RandomSkeleton'
 interface notificationType{
   sender: string,
@@ -22,6 +22,7 @@ const Notifications = () => {
 
   const [getNotificaions, {data, isLoading}] = useGetNotificationsMutation()
   const [readNotifications] = useReadNotificationsMutation()
+  const [unReadNotificationsCount] = useGetUnReadNotificationsCountMutation()
 
   const {id} = useAppSelector(state=>state.auth.user)
   
@@ -29,8 +30,11 @@ const Notifications = () => {
 
   useEffect(() => {
     connectWebSocket();
-    getNotificaions({size:'10'})
-
+    unReadNotificationsCount(undefined)
+      .unwrap()
+      .then(res=>{
+        setNotifications(res?.count || 0)        
+      })
     return () => {
       if (webSocket) {
         webSocket.close();
