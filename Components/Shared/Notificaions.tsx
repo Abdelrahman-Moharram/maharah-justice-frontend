@@ -29,25 +29,27 @@ const Notifications = () => {
   
 
   useEffect(() => {
-    connectWebSocket();
-    unReadNotificationsCount(undefined)
-      .unwrap()
-      .then(res=>{
-        setNotifications(res?.count || 0)        
-      })
+    if(id){
+      connectWebSocket();
+      unReadNotificationsCount(undefined)
+        .unwrap()
+        .then(res=>{
+          setNotifications(res?.count || 0)        
+        })
+    }
     return () => {
       if (webSocket) {
         webSocket.close();
       }
     };
-  }, []);
+  }, [id]);
   
   
   const connectWebSocket = () => {
     if (!id)
       return 
 
-    const WS_URL = `ws://127.0.0.1:8000/ws/notify/${id}/`
+    const WS_URL = `${process.env.NEXT_PUBLIC_HOST_WS}/ws/notify/${id}/`
     const ws = new WebSocket(WS_URL);
     ws.onmessage = (event) => {
       const message = JSON.parse(event.data);
