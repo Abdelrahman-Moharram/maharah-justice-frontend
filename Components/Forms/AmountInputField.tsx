@@ -18,12 +18,12 @@ const AmountInputField = ({
     labelId,
 	onChange,
 	value,
-    currency,
 	label,
 	placeholder,
 	required = false,
     defaultValue,
     errors,
+    currency='ر.س',
 }: props) => {
     const [amountValue, setAmountValue] = useState<number|string>('')
     useEffect(()=>{setAmountValue(numberToMoney(value))}, [value])
@@ -48,9 +48,9 @@ const AmountInputField = ({
             
         />
         <span 
-            className='absolute end-2.5 font-bold text-sm top-[35px] p-1.5 transition-all '
+            className='absolute end-2 font-bold text-sm top-[40px] p-1 transition-all bg-container rounded-lg drop-shadow-sm'
         >
-            {currency?currency:'ر.س'}
+            {currency}
         </span>
     </div>
   )
