@@ -44,12 +44,13 @@ const DeleteLitigationTypeModal = ({handleToggler, open, litigationType}:Props) 
             <p className='text-red-500'>هل أنت متأكد من حذف  نوع قضية <span className='font-semibold'>"{litigationType?.name}"</span> ؟</p>
         </div>
         <div className="grid grid-cols-2 gap-2">
-            <Button onClick={handleDeleteLitigationType} className='bg-red-500 hover:bg-transparent hover:text-black border-red-500 text-white' title={'حذف'} icon={<FaTrash />} isLoading={isLoading} />
+            <Button onClick={handleDeleteLitigationType} variant='red' title={'حذف'} icon={<FaTrash />} isLoading={isLoading} />
             <Button 
                 className='w-full py-2 rounded-lg border border-secondary text-center hover:bg-secondary hover:text-white transition-all'
                 onClick={handleToggler}
                 isLoading={false}
                 title='إلغاء'
+                variant='secondary'
             />
       </div>
     </BaseModal>

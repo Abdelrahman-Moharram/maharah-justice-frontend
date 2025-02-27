@@ -146,12 +146,13 @@ const UserForm = ({action, open, userId}:{action:()=>void, open:boolean, userId?
         <OverLayFuncArea
             open={open}
         >
-            <Button onClick={handleUser} className='bg-primary hover:bg-transparent border-primary' title={'حفظ'} isLoading={addLoading||editLoading} />
+            <Button onClick={handleUser} variant='primary' title={'حفظ'} isLoading={addLoading||editLoading} />
             <Button 
                 onClick={action}
                 className='w-full py-2 rounded-lg border border-secondary text-center hover:bg-secondary hover:text-white transition-all'
                 title={'إلغاء'} 
                 isLoading={false}
+                variant='secondary'
             />
         </OverLayFuncArea>
     </div>

@@ -93,12 +93,13 @@ const StateFormModal = ({handleToggler, open, oldState}:Props) => {
                 />
             </div>
             <div className="grid grid-cols-2 gap-2">
-                <Button onClick={handleState} className='bg-primary hover:bg-transparent hover:text-black border-primary text-white' title={'حفظ'} isLoading={isLoading||editLoading} />
+                <Button onClick={handleState} variant='primary' title={'حفظ'} isLoading={isLoading||editLoading} />
                 <Button 
                     className='w-full py-2 rounded-lg border border-secondary text-center hover:bg-secondary hover:text-white transition-all'
                     onClick={handleToggler}
                     isLoading={false}
                     title='إلغاء'
+                    variant='secondary'
                 />
         </div>
         </BaseModal>

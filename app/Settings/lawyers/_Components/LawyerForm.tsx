@@ -110,12 +110,13 @@ const LawyerForm = ({action, open, lawyerId}:{action:()=>void, open:boolean, law
         <OverLayFuncArea
             open={open}
         >
-            <Button onClick={handleLawyer} className='bg-primary hover:bg-transparent border-primary' title={'حفظ'} isLoading={addLoading || editLoading} />
+            <Button onClick={handleLawyer} variant='primary' title={'حفظ'} isLoading={addLoading || editLoading} />
             <Button 
                 onClick={action}
                 className='w-full py-2 rounded-lg border border-secondary text-center hover:bg-secondary hover:text-white transition-all'
                 title={'إلغاء'} 
                 isLoading={false}
+                variant='secondary'
             />
         </OverLayFuncArea>
     </>

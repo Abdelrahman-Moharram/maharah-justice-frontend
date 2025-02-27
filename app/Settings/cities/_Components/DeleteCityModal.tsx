@@ -40,12 +40,20 @@ const DeleteCityModal = ({handleToggler, open, city}:Props) => {
             <p className='text-red-500'>هل أنت متأكد من حذف  مدينة <span className='font-semibold'>"{city?.name}"</span> ؟</p>
         </div>
         <div className="grid grid-cols-2 gap-2">
-            <Button onClick={handleDeleteCity} className='bg-red-500 hover:bg-transparent hover:text-black border-red-500 text-white' title={'حذف'} icon={<FaTrash />} isLoading={isLoading} />
+            <Button 
+                onClick={handleDeleteCity} 
+                title={'حذف'} 
+                icon={<FaTrash />} 
+                isLoading={isLoading} 
+                variant='red'
+            />
+
             <Button 
                 className='w-full py-2 rounded-lg border border-secondary text-center hover:bg-secondary hover:text-white transition-all'
                 onClick={handleToggler}
                 isLoading={false}
                 title='إلغاء'
+                variant='secondary'
             />
       </div>
     </BaseModal>

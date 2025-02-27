@@ -93,12 +93,17 @@ const CityFormModal = ({handleToggler, open, oldCity}:Props) => {
                 />
             </div>
             <div className="grid grid-cols-2 gap-2">
-                <Button onClick={handleCity} className='bg-primary hover:bg-transparent hover:text-black border-primary text-white' title={'حفظ'} isLoading={isLoading||editLoading} />
                 <Button 
-                    className='w-full py-2 rounded-lg border border-secondary text-center hover:bg-secondary hover:text-white transition-all'
+                    onClick={handleCity} 
+                    title={'حفظ'} 
+                    isLoading={isLoading||editLoading} 
+                    variant='primary'
+                />
+                <Button 
                     onClick={handleToggler}
                     isLoading={false}
                     title='إلغاء'
+                    variant='secondary'
                 />
         </div>
         </BaseModal>

@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent } from 'react';
 import { Input } from '@/Components/Forms';
-import { Spinner } from '@/Components/Common';
+import { Button, Spinner } from '@/Components/Common';
 import ErrorAlert from '../alerts/ErrorAlert';
 
 interface Config {
@@ -70,13 +70,14 @@ export default function Form({
 			))}
 
 			<div className='pt-8'>
-				<button
-					type='submit'
-					className='flex w-full justify-center rounded-xl bg-primary px-3 py-1.5 text-sm  leading-6 font-[700] shadow-sm hover:bg-primary-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
-					disabled={isLoading}
-				>
-					{isLoading ? <span className='flex gap-1 items-center'>{btnText} <Spinner sm /> </span> : `${btnText}`}
-				</button>
+				<Button
+					variant='primary'
+					isLoading={isLoading}
+					title={btnText}
+					submit
+					// className='flex w-full justify-center rounded-xl bg-primary px-3 py-1.5 text-sm  leading-6 font-[700] shadow-sm hover:bg-primary-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
+					disabled={config.find(i=>i.value == '') != null}
+				/>
 			</div>
 		</form>
 	);

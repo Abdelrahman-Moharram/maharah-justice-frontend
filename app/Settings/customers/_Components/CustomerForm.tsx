@@ -135,12 +135,13 @@ const CustomerForm = ({action, open, customerId}:{action:()=>void, open:boolean,
         <OverLayFuncArea
             open={open}
         >
-            <Button submit className='bg-primary hover:bg-transparent border-primary' title={'حفظ'} isLoading={false} />
+            <Button submit variant='primary' title={'حفظ'} isLoading={false} />
             <Button 
                 onClick={action}
                 className='w-full py-2 rounded-lg border border-secondary text-center hover:bg-secondary hover:text-white transition-all'
                 title={'إلغاء'} 
                 isLoading={false}
+                variant='secondary'
             />
         </OverLayFuncArea>
     </form>

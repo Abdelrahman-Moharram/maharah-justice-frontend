@@ -130,12 +130,18 @@ const ExecutionForm = () => {
             </div>
         </div>
         <div className="grid grid-cols-2 gap-4 mt-24">
-            <Button submit className='bg-primary hover:bg-transparent border-primary' title={'حفظ'} isLoading={isLoading} />
+            <Button 
+                submit 
+                variant='primary'
+                disabled={false}
+                title={'حفظ'} 
+                isLoading={isLoading} 
+            />
             <Link 
                 href={'/cases'} 
                 className='w-full py-2 rounded-lg border border-secondary text-center hover:bg-secondary hover:text-white transition-all'
             >
-            إلغاء
+                إلغاء
             </Link>
         </div>
     </form>

@@ -135,7 +135,7 @@ const Filter = ({pdf, excel, inputPlaceHolder, handleSearch, isLoading}:Props) =
         title='بحث'
         icon={<FaSearch />}
         submit
-        className={'bg-primary text-white w-max px-12'}
+        variant='primary'
       />
     </div>
         

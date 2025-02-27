@@ -9,7 +9,13 @@ interface Props{
 const DefaultFormButtons = ({cancelHref, isLoading}:Props) => {
   return (
     <div className="grid grid-cols-2 gap-2">
-        <Button submit className='bg-primary hover:bg-transparent border-primary' title={'حفظ'} isLoading={isLoading} />
+        <Button 
+                submit 
+                variant='primary'
+                disabled={false}
+                title={'حفظ'} 
+                isLoading={isLoading} 
+            />
         <Link 
             href={cancelHref} 
             className='w-full py-2 rounded-lg border border-secondary text-center hover:bg-secondary hover:text-white transition-all'

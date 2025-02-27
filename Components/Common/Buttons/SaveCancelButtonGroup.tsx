@@ -28,13 +28,13 @@ const SaveCancelButtonGroup = ({
             submit={saveSubmit} 
             title={saveTitle} 
             isLoading={saveLoading} 
-            className='bg-primary hover:bg-transparent border-primary' 
+            variant='primary'
         />
         <Button 
             onClick={cancelAction}
             title={cancelTitle} 
             isLoading={cancelLoading}
-            className='w-full py-2 rounded-lg border border-secondary text-center hover:bg-secondary hover:text-white transition-all'
+            variant='secondary'
         />
     </div>
   )

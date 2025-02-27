@@ -92,11 +92,18 @@ const CircularFormModal = ({handleToggler, open, oldCircular}:Props) => {
                 />
             </div>
             <div className="grid grid-cols-2 gap-2">
-                <Button onClick={handleCircular} className='bg-primary hover:bg-transparent hover:text-black border-primary text-white' title={'حفظ'} isLoading={isLoading||editLoading} />
                 <Button 
-                    className='w-full py-2 rounded-lg border border-secondary text-center hover:bg-secondary hover:text-white transition-all'
+                    onClick={handleCircular} 
+                    variant='primary' 
+                    isLoading={isLoading||editLoading} 
+                    title={'حفظ'} 
+                    disabled={Object.keys(circular).find(i=>i == '') != null}
+                />
+
+                <Button 
                     onClick={handleToggler}
                     isLoading={false}
+                    variant='secondary'
                     title='إلغاء'
                 />
         </div>

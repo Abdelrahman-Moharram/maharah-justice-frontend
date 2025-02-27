@@ -66,17 +66,17 @@ const CustomerSearchInput = ({
       />
       {
         data?.customers?.length && nameValue && menu  ?
-        <div className='w-full absolute z-[100] max-h-[500px] overflow-y-auto bg-gray-100 p-1 space-y-2  rounded-md mt-1'>
+        <div className='w-full absolute z-50 max-h-[500px] overflow-y-auto bg-gray-100 p-1 space-y-2  rounded-md mt-1'>
         {
-            data?.customers.map((customer:customerType)=>(
-                <div 
-                  key={customer?.id}
-                  className="bg-container hover:bg-card transition-all w-full p-2 rounded-md cursor-pointer"
-                  onClick={()=>handleValues({name: customer.name, id: customer.id})}
-                >
-                    {customer.name}
-                </div>
-            ))
+          data?.customers.map((customer:customerType)=>(
+            <div 
+              key={customer?.id}
+              className="bg-container hover:bg-card transition-all w-full z-50 p-2 rounded-md cursor-pointer"
+              onClick={()=>handleValues({name: customer.name, id: customer.id})}
+            >
+              {customer.name}
+            </div>
+          ))
         }
         </div>
       :null
