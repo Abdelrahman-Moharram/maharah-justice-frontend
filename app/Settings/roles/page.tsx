@@ -8,9 +8,9 @@ import { FaPlusCircle } from 'react-icons/fa'
 import { CardsListWithPagination } from '../_Components'
 import RoleFormModal from './_Components/RoleFormModal'
 import { baseType } from '@/Components/Types/Others'
-import { EditDeleteButtons } from '../_Components/ButtonsGroups'
 import { RoleFunctionButtonGroup } from './_Components/RoleFunctionButtonGroup'
 import RolePermissionsOverlay from './_Components/RolePermissionsOverlay'
+import DataTable from '@/Components/Tables/DataTable'
 
 const BreadcrumbData = [
   {
@@ -110,13 +110,13 @@ const page = () => {
           إضافة دور 
         </button>
       </div>
-      <CardsListWithPagination
+      <DataTable
         data={data?.roles}
         isLoading={isLoading}
-        page={page}
-        total_pages={data?.total_pages}
-        emptyMessage='لا توجد أدوار'
-        customOptions={options}
+        emptyText='لا توجد أدوار'
+        options={options}
+        isOptions
+        fnKeys={['id']}
       />
     </>
   )

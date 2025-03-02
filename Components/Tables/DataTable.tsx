@@ -10,7 +10,7 @@ interface Props{
     options?:(row:any)=>React.ReactNode
     isLoading:boolean
     isOptions?:boolean,
-    emptyLinkHref: string
+    emptyLinkHref?: string
     emptyText: string,
     startOptions?:(row:any)=>React.ReactNode,
     fnKeys:string[]

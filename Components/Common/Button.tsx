@@ -18,7 +18,7 @@ interface props{
     
     const variantClassNames = {
       'primary'             : `${disabled?'bg-primary/80':'bg-primary'} hover:bg-primary-hover focus-visible:outline-primary`,
-      'secondary'           : `${disabled?'bg-secondary/80':'bg-secondary'} hover:bg-secondary-hover focus-visible:outline-secondary`,
+      'secondary'           : `${disabled?'bg-secondary/80':'bg-secondary'} hover:bg-secondary-hover text-white focus-visible:outline-secondary`,
       'primary-outline'     : `${disabled?'bg-transparent/80':'bg-transparent'} hover:bg-primary-hover focus-visible:outline-primary`,
       'secondary-outline'   : `${disabled?'bg-primary/80':'bg-primary'} hover:bg-primary-hover focus-visible:outline-primary`,
       
