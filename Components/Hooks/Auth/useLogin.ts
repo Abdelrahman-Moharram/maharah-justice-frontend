@@ -37,12 +37,12 @@ export default function useLogin() {
 			.then((data) => {
 				Cookies.set('access_token', data?.access, {expires: new Date(new Date().getTime() + 72 * 60 * 60 * 1000)})
 				dispatch(setAuth(jwtDecode(data?.access)));
-				toast.success('تم تسجيل الدخول');
+				// toast.success('تم تسجيل الدخول');
 
 				return router.push(next || '/');
 			})
 			.catch((err) => {
-				toast.error('حدث خطأ اثناء تسجيل الدخول');
+				// toast.error('حدث خطأ اثناء تسجيل الدخول');
 				setErrors(err?.data);
 			});
 	};

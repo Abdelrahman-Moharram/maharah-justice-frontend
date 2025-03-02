@@ -52,7 +52,7 @@ const DataSection = ({fnKeys, filter, base_url, exportFileName, amountKeys=['Ø§Ù
         setData(res)
         handleOpen()
       }).catch(err=>{
-        console.log(err);
+        
       })
   }
   

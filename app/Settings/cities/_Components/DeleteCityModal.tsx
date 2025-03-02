@@ -24,7 +24,7 @@ const DeleteCityModal = ({handleToggler, open, city}:Props) => {
                     handleToggler()
                 })
                 .catch(err=>{
-                    console.log(err);
+                    
                 })
         }
         else{

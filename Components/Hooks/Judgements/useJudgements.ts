@@ -61,9 +61,9 @@ export default function useJudgementsForm({case_number, number}:{case_number:str
 
     const changeCheckBox = (event: ChangeEvent<HTMLInputElement>, validationSchema?:ValidationsType )  =>{
         const { name, checked } = event.target;   
-        if(validationSchema)
-            setFormErrors({...formErrors, [name]:DefaultInputValidate({name, value:checked, validationSchema})})
-          setJudgement({ ...judgement, [name]: checked })
+        // if(validationSchema)
+        setFormErrors({...formErrors, [name]:DefaultInputValidate({name, value:checked, validationSchema})})
+        setJudgement({ ...judgement, [name]: checked })
     }
 
     const changeDate = (date:DateObject | null, validationSchema?:ValidationsType)=>{

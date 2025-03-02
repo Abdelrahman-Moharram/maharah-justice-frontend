@@ -57,7 +57,7 @@ const RoleFormModal = ({handleToggler, open, roleId}:Props) => {
                 setForm({id:'', name:''})                
                 toast.success(res?.message)        
             }).catch(err=>{
-                console.log(err);
+                
                 const error = err?.data?.errors
                 if(!error)
                     toast.error('حدث خطأ ما برجاء المحاولة لاحقا')        
@@ -73,7 +73,7 @@ const RoleFormModal = ({handleToggler, open, roleId}:Props) => {
                 setForm({id:'', name:''})
                 toast.success(res?.message)
             }).catch(err=>{
-                console.log(err);
+                
                 const error = err?.data?.errors
                 if(!error)
                     toast.error('حدث خطأ ما برجاء المحاولة لاحقا')        

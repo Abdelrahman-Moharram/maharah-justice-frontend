@@ -1,10 +1,8 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react'
-import Button from '@/Components/Common/Button';
-import { Input, SelectInput, TextArea, ImageInput, HijriDateInput, CheckBox } from '@/Components/Forms'
+import React, { ChangeEvent, FormEvent } from 'react'
+import { Input, SelectInput, TextArea, HijriDateInput, CheckBox } from '@/Components/Forms'
 import ToggledCard from '../../../Components/Cards/ToggledCard';
 import CustomerSearchInput from './CustomerSearchInput';
 import { DateObject } from 'react-multi-date-picker';
-import Link from 'next/link';
 import { ValidationsType } from '../../../Components/Types/Others';
 import { caseNumberRegex, commercialNumberRegex, hijriDateRegex, phoneNumberRegex } from '../../../Components/Hooks/Common/validationsRegexRepo';
 import AmountInputField from '../../../Components/Forms/AmountInputField';

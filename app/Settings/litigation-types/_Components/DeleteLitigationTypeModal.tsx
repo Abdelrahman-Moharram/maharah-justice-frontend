@@ -25,7 +25,7 @@ const DeleteLitigationTypeModal = ({handleToggler, open, litigationType}:Props) 
                     toast.success(res?.data?.message)
                 })
                 .catch(err=>{
-                    console.log(err);
+                    
                     const error = err?.data?.message
                     toast.error(error||'حدث خطأ ما برجاء المحاولة لاحقا')        
                 

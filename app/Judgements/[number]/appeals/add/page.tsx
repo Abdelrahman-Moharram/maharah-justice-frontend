@@ -43,7 +43,6 @@ const page = () => {
   } = useAppealForm({judgement:number})
   const formSubmit = (e:FormEvent)=>{
     e.preventDefault()
-    // console.log(getAppealAsFormData());
     if(isErrorsList(formErrors)){
       toast.error('برجاء التأكد من إدخال بيانات الجلسة بشكل صحيح أولا')
       return
@@ -55,7 +54,7 @@ const page = () => {
         router.push("/cases")
       })
       .catch((err:any)=>{     
-        console.log(err);
+        
         if(err.data.errors)
           setFormErrors(err.data.errors)
         if(err.data.message)

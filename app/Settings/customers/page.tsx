@@ -66,7 +66,7 @@ const page = () => {
         .then(res=>{
           toast.success(res?.message || 'تم تغيير حالة العميل')
         }).catch(err=>{
-          console.log(err);
+          
           toast.error(err?.message || 'حدث خطأ ما أثناء تغيير حالة العميل')
         })
     }

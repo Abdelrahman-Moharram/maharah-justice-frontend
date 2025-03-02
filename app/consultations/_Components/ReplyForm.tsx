@@ -38,7 +38,7 @@ const ReplyForm = ({consult_id, open, action}:{consult_id:string, action:()=>voi
                     action()
                 }
             }).catch(err=>{
-                console.log(err);
+                
                 
                 if(err.data?.error)
                     toast.error(err.data?.error)

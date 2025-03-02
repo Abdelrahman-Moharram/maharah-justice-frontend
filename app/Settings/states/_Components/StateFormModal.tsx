@@ -50,7 +50,7 @@ const StateFormModal = ({handleToggler, open, oldState}:Props) => {
                 setCaseState({id:'', name:''})                
                 toast.success(res?.message)        
             }).catch(err=>{
-                console.log(err);
+                
                 const error = err?.data?.errors
                 if(!error)
                     toast.error('حدث خطأ ما برجاء المحاولة لاحقا')        
@@ -66,7 +66,7 @@ const StateFormModal = ({handleToggler, open, oldState}:Props) => {
                 setCaseState({id:'', name:''})
                 toast.success(res?.message)
             }).catch(err=>{
-                console.log(err);
+                
                 const error = err?.data?.errors
                 if(!error)
                     toast.error('حدث خطأ ما برجاء المحاولة لاحقا')        

@@ -4,7 +4,7 @@ import { DateObject } from "react-multi-date-picker"
 interface DefaultInputProps{
     name: string,
     value:string|number|boolean|DateObject, 
-    validationSchema:ValidationsType,
+    validationSchema?:ValidationsType,
     alter_name?:string
 }
 const defaultNumberValueError = (name:string, alter_name?:string)=> `برجاء إدخال قيمة رقمية فقط في ${alter_name||name}`
@@ -16,7 +16,7 @@ const defaultMinLengthError = (name:string, minLength:number, alter_name?:string
 export const DefaultInputValidate = ({name, value, validationSchema}:DefaultInputProps) =>{    
     // const errors = []
     
-    if(validationSchema.minValue || validationSchema.maxValue){
+    if(validationSchema?.minValue || validationSchema?.maxValue){
         if(Number.isNaN(Number(value)))
             return [validationSchema?.maxValue?.message || defaultNumberValueError(name, validationSchema.alter_name)]
         

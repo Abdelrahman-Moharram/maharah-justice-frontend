@@ -44,7 +44,6 @@ const page = () => {
   } = useJudgementsForm({case_number})
   const formSubmit = (event: FormEvent<HTMLFormElement>) =>{
     event.preventDefault()
-    console.log(formErrors);
     
     if(isErrorsList(formErrors)){
       toast.error('برجاء التأكد من إدخال بيانات الجلسة بشكل صحيح أولا')
@@ -57,7 +56,6 @@ const page = () => {
         router.push("/sessions")
       })
       .catch((err:any)=>{     
-        console.log(err);
         if(err.data.errors)
           setFormErrors(err.data.errors)
         if(err.data.message)

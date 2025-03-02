@@ -88,7 +88,8 @@ const JudgementForm = ({
             label='هل الحكم ضد الشركة ؟ '
             labelId='is_aganist_company'
             name='is_aganist_company'
-            />
+            errors={formErrors?.is_aganist_company}
+          />
         </div>
         <div className="mb-3">
           {/* <Input
@@ -121,6 +122,7 @@ const JudgementForm = ({
                 label='هل الحكم قابل للإعتراض ؟ '
                 labelId='is_objectionable'
                 name='is_objectionable'
+                errors={formErrors?.is_objectionable}
               />
             </div>
             {
@@ -131,7 +133,7 @@ const JudgementForm = ({
                   value={judgement?.last_date_to_appeal}
                   label={'أخر تاريخ للإعتراض'}
                   required= {true}
-                  errors={formErrors?.date_ar}
+                  errors={formErrors?.last_date_to_appeal}
                 />
               :null
             }
@@ -144,6 +146,7 @@ const JudgementForm = ({
               label='هل الحكم قابل للتنفيذ ؟ '
               labelId='is_executable'
               name='is_executable'
+              errors={formErrors?.is_executable}
             />
           </div>
         }

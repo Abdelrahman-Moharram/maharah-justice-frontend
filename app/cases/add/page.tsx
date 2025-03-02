@@ -51,7 +51,6 @@ const page = () => {
 
   const formSubmit = (event: FormEvent<HTMLFormElement>) =>{
     event.preventDefault()
-    console.log(isErrorsList(formErrors));
     
     if(isErrorsList(formErrors)){
       toast.error('برجاء التأكد من إدخال بيانات القضية بشكل صحيح أولا')

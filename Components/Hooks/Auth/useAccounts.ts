@@ -28,7 +28,7 @@ export const useUsersForm = ({userId, toggler}:{userId?:string, toggler?:boolean
                 setLawyer(res?.user)
             })
             .catch(err=>{
-                console.log(err);
+                
             })
         }else{
             setLawyer(emptyUser)
@@ -104,7 +104,7 @@ export const useLawyersForm = ({lawyerId, toggler}:{lawyerId?:string, toggler?:b
                     
                 })
                 .catch(err=>{
-                    console.log(err);
+                    
                     setLawyer(emptyLawyer)
                 })
         }else{

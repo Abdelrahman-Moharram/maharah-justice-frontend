@@ -38,7 +38,7 @@ const ExecutionForm = () => {
               router.push("/cases")
             })
             .catch((err:any)=>{     
-              console.log(err);
+              
               if(err.data.errors)
                 setFormErrors(err.data.errors)
               if(err.data.message)

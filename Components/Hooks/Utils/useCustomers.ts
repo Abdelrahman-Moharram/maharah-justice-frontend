@@ -25,7 +25,7 @@ export const useCustomers = ({customerId}:{customerId?:string}) =>{
                 .then(res=>{                    
                     setCustomer(res?.customer)
                 }).catch(err=>{
-                    console.log(err);
+                    
                 })
         }else{
             setCustomer(emptyCustomer)

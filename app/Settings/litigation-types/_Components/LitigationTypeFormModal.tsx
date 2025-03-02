@@ -50,7 +50,7 @@ const LitigationTypeFormModal = ({handleToggler, open, oldLitigationType}:Props)
                 setLitigationType({id:'', name:''})                
                 toast.success(res?.message)        
             }).catch(err=>{
-                console.log(err);
+                
                 const error = err?.data?.errors
                 if(!error)
                     toast.error('حدث خطأ ما برجاء المحاولة لاحقا')        
@@ -66,7 +66,7 @@ const LitigationTypeFormModal = ({handleToggler, open, oldLitigationType}:Props)
                 setLitigationType({id:'', name:''})
                 toast.success(res?.message)
             }).catch(err=>{
-                console.log(err);
+                
                 const error = err?.data?.errors
                 if(!error)
                     toast.error('حدث خطأ ما برجاء المحاولة لاحقا')        

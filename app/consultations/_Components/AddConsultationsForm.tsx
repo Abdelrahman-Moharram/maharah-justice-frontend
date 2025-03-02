@@ -30,7 +30,7 @@ const AddConsultationsForm = ({session_id, cancelAction}:{session_id:string, can
                     cancelAction()
                 })
                 .catch((err:any)=>{     
-                    console.log(err);
+                    
                     if(err.data.errors)
                     setFormErrors(err.data.errors)
                     if(err.data.message)

@@ -47,7 +47,7 @@ const ApproveReject = ({consult_id}:{consult_id:string}) => {
                     handleModal()
                 })
                 .catch((err:any)=>{     
-                    console.log(err);
+                    
                     // if(err.data.errors)
                     //     setFormErrors(err.data.errors)
                     if(err.data.message)
