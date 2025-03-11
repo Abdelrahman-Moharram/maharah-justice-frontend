@@ -11,7 +11,7 @@ export const useRoles = () =>{
     const onChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>, validationSchema?:ValidationsType ) => {
         const { name, value } = event.target;
         if(validationSchema)
-            setError(DefaultInputValidate({name, value, validationSchema}))
+            setError({...error, [name]:DefaultInputValidate({name, value, validationSchema})})
         setForm({ ...form, name: value });
     };
 

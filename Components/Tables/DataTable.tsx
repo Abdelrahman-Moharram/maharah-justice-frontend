@@ -68,7 +68,7 @@ const DataTable = ({options, startOptions, data, isLoading, emptyLinkHref, amoun
                         amounts?.includes(cell)?
                             numberToMoney(row[cell])
                         :
-                            row[cell]?.length > 25 ?
+                            row[cell]?.length > 50 ?
                                 showCellWithOverLay(row[cell])
                             :
                             row[cell] || <span className='text-center block'>-</span>

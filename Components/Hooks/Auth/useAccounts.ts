@@ -1,7 +1,8 @@
 import { ChangeEvent, useEffect, useState } from "react"
 import { ValidationsType } from "@/Components/Types/Others";
-import { DefaultInputValidate } from "../Common/useValidations";
-import { useGetAddUserDropDownsQuery, useGetLawyerDetailsMutation, useUserDetailsMutation } from "@/redux/api/accountsApi";
+import { DefaultInputValidate, isErrorsList } from "../Common/useValidations";
+import { useAddLawyerMutation, useEditLawyerMutation, useGetAddUserDropDownsQuery, useGetLawyerDetailsMutation, useUserDetailsMutation } from "@/redux/api/accountsApi";
+import { toast } from "react-toastify";
 
 
 const emptyUser = {
@@ -19,6 +20,7 @@ export const useUsersForm = ({userId, toggler}:{userId?:string, toggler?:boolean
     const {data:dropDowns} = useGetAddUserDropDownsQuery(undefined)
     const [userDetails] = useUserDetailsMutation()
     const [user, setLawyer] = useState<UserType>(emptyUser)
+ 
 
     useEffect(()=>{
         if(userId){
@@ -94,21 +96,21 @@ export const useLawyersForm = ({lawyerId, toggler}:{lawyerId?:string, toggler?:b
     const [formErrors, setFormErrors] = useState<any>(null)
     const [lawyerDetails] = useGetLawyerDetailsMutation()
     const [lawyer, setLawyer] = useState<LawyerType>(emptyLawyer)
+       
+    const [addLawyer, {isLoading:addLoading}] = useAddLawyerMutation()
+    const [editLawyer, {isLoading:editLoading}] = useEditLawyerMutation()
     
     useEffect(()=>{
+        setLawyer(emptyLawyer)
         if(lawyerId){
             lawyerDetails({id:lawyerId})
                 .unwrap()
                 .then(res=>{
                     setLawyer(res?.lawyer)
-                    
                 })
                 .catch(err=>{
-                    
                     setLawyer(emptyLawyer)
                 })
-        }else{
-            setLawyer(emptyLawyer)
         }
     }, [lawyerId, toggler])
 
@@ -152,13 +154,51 @@ export const useLawyersForm = ({lawyerId, toggler}:{lawyerId?:string, toggler?:b
         return formData
     }
 
+    const handleLawyer = (action:()=>void) =>{
+        if(lawyerId){
+            setFormErrors({...formErrors})
+        }
+        if(isErrorsList(formErrors, lawyerId?['password']:[])){
+            toast.error('برجاء التأكد من إدخال بيانات المستخدم بشكل صحيح أولا')
+            return
+        }
+        if(lawyerId)
+        {
+            editLawyer({id:lawyerId, form:getLawyerAsFormData()})
+            .unwrap()
+            .then(res=>{
+                toast.success(res?.data?.message || 'تم تعديل المستخدم بنجاح')
+                action()
+                setLawyer(emptyLawyer)
+            })
+            .catch(err=>{
+                setFormErrors(err?.data?.errors)
+                if(err?.status !== 403)
+                    toast.error(err?.data?.message || 'حدث خطأ ما أثناء إضافة المستخدم')
+            })
+        }else{
+            addLawyer({form:getLawyerAsFormData()})
+                .unwrap()
+                .then(res=>{
+                    toast.success(res?.data?.message || 'تم نعديل المستخدم بنجاح')
+                    action()
+                    setLawyer(emptyLawyer)
+                })
+                .catch(err=>{
+                    setFormErrors(err?.data?.errors)
+                    if(err?.status !== 403)
+                        toast.error(err?.data?.message || 'حدث خطأ ما أثناء إضافة المستخدم')
+                })
+        }
+    }
+
     return {
         lawyer,
         formErrors,
-        setFormErrors,
+        isLoading:addLoading || editLoading,
         onChange,
         changeUser,
         changeCheckBox,
-        getLawyerAsFormData,
+        handleLawyer,
     }
 }

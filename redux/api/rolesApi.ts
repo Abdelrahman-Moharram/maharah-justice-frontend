@@ -49,6 +49,21 @@ const rolesApiSlice = apiSlice.injectEndpoints({
             }),
             invalidatesTags:['roles-permissions']
         }),
+        getRolesAsSelectList: builder.query({
+            query:({exclude}:{exclude:string})=>({
+                url: base_url+'select-list/',
+                method:'GET',
+                params:{exclude}
+            }),
+        }),
+        
+        deleteRole: builder.mutation({
+            query:({roleId, alter_role}:{roleId:string, alter_role:string})=>({
+                url: base_url+roleId+'/delete/',
+                method:'DELETE',
+                body:{alter_role}
+            }),
+        }),
     }),
     
 }) 
@@ -60,5 +75,7 @@ export const {
     useEditRoleMutation,
     useRoleDetailsMutation,
     useRolePermissionsDetailsQuery,
-    useAddPermissionToRoleMutation
+    useAddPermissionToRoleMutation,
+    useGetRolesAsSelectListQuery,
+    useDeleteRoleMutation
 } = rolesApiSlice

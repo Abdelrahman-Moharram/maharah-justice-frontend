@@ -11,6 +11,7 @@ import { baseType } from '@/Components/Types/Others'
 import { RoleFunctionButtonGroup } from './_Components/RoleFunctionButtonGroup'
 import RolePermissionsOverlay from './_Components/RolePermissionsOverlay'
 import DataTable from '@/Components/Tables/DataTable'
+import DeleteRoleModal from './_Components/DeleteRoleModal'
 
 const BreadcrumbData = [
   {
@@ -31,6 +32,7 @@ interface baseObjType{
 const page = () => {
   const [showOverLay, setShowOverlay] = useState(false)
   const [showModal, setShowModal] = useState(false)
+  const [deleteModal, setDeleteModal] = useState(false)
   const [roleId, setRoleId] = useState('')
   const [currRole, setCurrRole] = useState<baseType | null>(null)
   const searchParams = useSearchParams()
@@ -51,15 +53,20 @@ const page = () => {
       setRoleId(role.id||'')
     setShowOverlay(!showOverLay)
   }
-  const handleDeleteModal = (role:baseType) =>{
+  const handleDelete = (role:baseType) =>{
     if(role)
-      setCurrRole(role)
-    setShowModal(!showModal)
+      setRoleId(role.id||'')
+    setDeleteModal(!showModal)
   }
   const handleModal = () =>{
     if(currRole)
       setCurrRole(null)
     setShowModal(!showModal)
+  }
+  const handleDeleteModal = () =>{
+    if(roleId)
+      setRoleId('')
+    setDeleteModal(!deleteModal)
   }
   const handleOverlay = () =>{
     if(currRole)
@@ -73,7 +80,7 @@ const page = () => {
       <div className="flex justify-start">
         <RoleFunctionButtonGroup
           editAction={handleEditModal}
-          deleteAction={handleDeleteModal}
+          deleteAction={handleDelete}
           permissionsAction={handlePermissionsOverLay}
           item={item}
         />
@@ -83,11 +90,12 @@ const page = () => {
   
   return (
     <>
-      {/* <DeleteCityModal
+      
+      <DeleteRoleModal
+        roleId={roleId}
         handleToggler={handleDeleteModal}
         open={deleteModal}
-        city={currCity}
-      /> */}
+      />
       <RolePermissionsOverlay
         roleId={roleId}
         handleOpen={handleOverlay}

@@ -1,6 +1,7 @@
 import Button from '@/Components/Common/Button'
 import { Input } from '@/Components/Forms'
 import { useRoles } from '@/Components/Hooks/Auth/useRoles'
+import { isErrorsList } from '@/Components/Hooks/Common/useValidations'
 import BaseModal from '@/Components/Modals/BaseModal'
 import { useAddRoleMutation, useEditRoleMutation, useRoleDetailsMutation } from '@/redux/api/rolesApi'
 import React, { useEffect } from 'react'
@@ -21,13 +22,13 @@ const RoleFormModal = ({handleToggler, open, roleId}:Props) => {
     const [editRole, {isLoading:editLoading}] = useEditRoleMutation()
     const [getRoleFormData] = useRoleDetailsMutation()
     const {
-        form,
-        error,
-        onChange,
-        setError,
-        setForm,
-        getAsFormData
-    } = useRoles()
+            form,
+            error,
+            onChange,
+            setError,
+            setForm,
+            getAsFormData
+        } = useRoles()
 
     useEffect(()=>{
         if(!open){
@@ -45,41 +46,41 @@ const RoleFormModal = ({handleToggler, open, roleId}:Props) => {
     }, [roleId, open])
     
     const handleRole = () =>{
-        if(error){
+        if(isErrorsList(error)){
             toast.error('برجاء إدخال بيانات المدينة بشكل صحيح')                
             return
         }
         if(form.id){
             editRole({id:form.id, form:getAsFormData()})
-            .unwrap()
-            .then(res=>{
-                handleToggler()
-                setForm({id:'', name:''})                
-                toast.success(res?.message)        
-            }).catch(err=>{
-                
-                const error = err?.data?.errors
-                if(!error)
-                    toast.error('حدث خطأ ما برجاء المحاولة لاحقا')        
-                else        
-                    setError(error)
-            })
+                .unwrap()
+                .then(res=>{
+                    handleToggler()
+                    setForm({id:'', name:''})                
+                    toast.success(res?.message)        
+                }).catch(err=>{
+                    
+                    const error = err?.data?.errors
+                    if(!error)
+                        toast.error('حدث خطأ ما برجاء المحاولة لاحقا')        
+                    else        
+                        setError(error)
+                })
 
         }else{
             addRole({form:getAsFormData()})
-            .unwrap()
-            .then(res=>{
-                handleToggler()
-                setForm({id:'', name:''})
-                toast.success(res?.message)
-            }).catch(err=>{
-                
-                const error = err?.data?.errors
-                if(!error)
-                    toast.error('حدث خطأ ما برجاء المحاولة لاحقا')        
-                else        
-                    setError(error)
-            })
+                .unwrap()
+                .then(res=>{
+                    handleToggler()
+                    setForm({id:'', name:''})
+                    toast.success(res?.message)
+                }).catch(err=>{
+                    
+                    const error = err?.data?.errors
+                    if(!error)
+                        toast.error('حدث خطأ ما برجاء المحاولة لاحقا')        
+                    else        
+                        setError(error)
+                })
         }
     }
     return (
@@ -87,14 +88,14 @@ const RoleFormModal = ({handleToggler, open, roleId}:Props) => {
             handleToggler={handleToggler}
             open={open}
         >
-            <div className="w-[50vw] my-8">
+            <div className="w-full my-8">
                 <Input
                     label='الدور'
                     labelId='name'
                     type='text'
                     value={form.name}
                     onChange={e=>onChange(e, {regex:{value:'^[a-zA-Z]{2,}$', message:"يجب ان يكون كاملا باللغة الإنجليزية و بدون أرقام ولا يقل عن 2 أحرف"}})}
-                    errors={error}
+                    errors={error?.name}
                     placeholder='الدور'
                     required
                 />

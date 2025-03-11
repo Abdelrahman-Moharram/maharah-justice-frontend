@@ -2,17 +2,18 @@ import React from 'react'
 
 interface Props{
     checked: boolean,
-    handleCheck: ()=>void
+    handleCheck: ()=>void,
+    id:string
 }
-const SwitchInputField = ({checked, handleCheck}:Props) => {
+const SwitchInputField = ({checked, handleCheck, id}:Props) => {
   return (
     <label
-        htmlFor="AcceptConditions"
+        htmlFor={id}
         className="relative inline-block h-8 w-14 cursor-pointer rounded-full bg-gray-300 transition [-webkit-tap-highlight-color:_transparent] has-[:checked]:bg-green-500"
     >
         <input
             type="checkbox"
-            id="AcceptConditions"
+            id={id}
             checked={checked}
             onChange={handleCheck}
             className="peer sr-only [&:checked_+_span_svg[data-checked-icon]]:block [&:checked_+_span_svg[data-unchecked-icon]]:hidden"

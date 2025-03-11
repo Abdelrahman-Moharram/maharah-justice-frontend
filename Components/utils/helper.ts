@@ -90,3 +90,7 @@ export function updateSearchQuery (updatedQuery:any, pathname:string, router:App
     const updatedPath = queryString ? `${pathname}?${queryString}` : pathname;
     router.push(updatedPath);
 };
+
+export function capitalizeFirstLetter(val:string) {
+    return String(val).charAt(0).toUpperCase() + String(val).slice(1);
+  }
