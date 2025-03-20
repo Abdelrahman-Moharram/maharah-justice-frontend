@@ -42,7 +42,8 @@ export default function useLogin() {
 				return router.push(next || '/');
 			})
 			.catch((err) => {
-				// toast.error('حدث خطأ اثناء تسجيل الدخول');
+				if(!err?.data)
+					toast.error('حدث خطأ اثناء تسجيل الدخول');
 				setErrors(err?.data);
 			});
 	};

@@ -40,7 +40,7 @@ const DataTable = ({options, startOptions, data, isLoading, emptyLinkHref, amoun
     }
     
     const showCellWithOverLay = (cellContent:string) =>{
-        const modifiedValue = cellContent.slice(0, 33) + " ..."
+        const modifiedValue = cellContent.slice(0, 50) + " ..."
         
         return(
             <div>

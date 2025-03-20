@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import React from 'react'
 import ImageSkeleton from './ImageSkeleton';
-import { IoMdArrowDropright } from 'react-icons/io';
+import { IoMdArrowDropleft, IoMdArrowDropright } from 'react-icons/io';
 import { usePathname } from 'next/navigation';
 import { capitalizeFirstLetter } from '../utils/helper';
 import { ImHome3 } from 'react-icons/im';
@@ -26,7 +26,7 @@ return (
                     {
                         i !== 0?
                           <div className="mx-3">
-                            <IoMdArrowDropright />
+                            <IoMdArrowDropleft />
                           </div>
 
                         :null

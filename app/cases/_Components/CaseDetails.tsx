@@ -7,7 +7,6 @@ import React, { useEffect } from 'react'
 import IncludedSessionsTable from './Tables/IncludedSessionsTable'
 import { handleCaseBadgeColor } from '@/Components/utils/helper'
 import { FaPlusCircle } from 'react-icons/fa'
-import IncludedSessionDependants from './Tables/IncludedSessiosJudgements'
 import IncludedSessiosJudgements from './Tables/IncludedSessiosJudgements'
 import DataTable from '@/Components/Tables/DataTable'
 
@@ -38,9 +37,6 @@ const LoadingCaseSkeleton = () =>(
     </div>
 )
 
-interface CaseType{
-  case_number:string,
-}
 
 const CaseDetails = ({case_number}:{case_number:string}) => {
 
