@@ -25,12 +25,16 @@ const casesApiSlice = apiSlice.injectEndpoints({
                 providesTags:['cases']
             }),
             getCaseDetails: builder.mutation({
-                query:({case_number}:{case_number:string})=>{
+                query:({case_number, type}:{case_number:string, type?:'pdf' | undefined})=>{
+                    
                     return {
                         url:base_url+case_number+"/",
+                        responseHandler: (response) => {
+                            return type? response.blob() : response.json()
+                        }, 
+                        params:{export:type}
                     }
-                },
-                invalidatesTags:['cases']
+                },                
             }),
             getSessionCaseData: builder.query({
                 query:({case_number}:{case_number?:string})=>({

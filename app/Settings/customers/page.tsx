@@ -25,54 +25,54 @@ const BreadcrumbData = [
 ]
 const page = () => {
 
-    const [showOverLay, setShowOverLay] = useState(false)
-    const [customerId, setCustomerId] = useState('')
-    const searchParams = useSearchParams()
-    
-    let size = to_int_or_default(searchParams.get("size")) 
-    let page = to_int_or_default(searchParams.get("page")) 
-    
-    
+  const [showOverLay, setShowOverLay] = useState(false)
+  const [customerId, setCustomerId] = useState('')
+  const searchParams = useSearchParams()
+  
+  let size = to_int_or_default(searchParams.get("size")) 
+  let page = to_int_or_default(searchParams.get("page")) 
+  
+  
 
-    const handleOverLay = (Id:string) =>{        
-      setCustomerId(Id?Id:'')
-      setShowOverLay(!showOverLay)
-    }
-    if(!size){
-        size = 10
-    }
-    if(!page){
-        page = 1
-    }
-    
-    const {data, isLoading} = useGetCustomerListQuery({page, size})
-    const [switchCustomerStatus] = useSwitchCustomerStatusMutation()
+  const handleOverLay = (Id:string) =>{        
+    setCustomerId(Id?Id:'')
+    setShowOverLay(!showOverLay)
+  }
+  if(!size){
+      size = 10
+  }
+  if(!page){
+    page = 1
+  }
+  
+  const {data, isLoading} = useGetCustomerListQuery({page, size})
+  const [switchCustomerStatus] = useSwitchCustomerStatusMutation()
 
-    const handleCustomerStatus = (customer_id:string) =>{      
-      switchCustomerStatus({customer_id})
-        .unwrap()
-        .then(res=>{
-          toast.success(res?.message || 'تم تغيير حالة العميل')
-        }).catch(err=>{
-          toast.error(err?.message || 'حدث خطأ ما أثناء تغيير حالة العميل')
-        })
-    }
+  const handleCustomerStatus = (customer_id:string) =>{      
+    switchCustomerStatus({customer_id})
+      .unwrap()
+      .then(res=>{
+        toast.success(res?.message || 'تم تغيير حالة العميل')
+      }).catch(err=>{
+        toast.error(err?.message || 'حدث خطأ ما أثناء تغيير حالة العميل')
+      })
+  }
 
-    
+  
 
 
-    const options = (row:any)=>(
-      <div key={row?.id} className='flex items-center'>
-        <div className="scale-[60%] h-fit w-fit">
-          <SwitchInputField 
-            checked={row?.is_active}
-            id={row.id}
-            handleCheck={()=>handleCustomerStatus(row.id)}
-          />
-        </div>
-        <button onClick={()=>{handleOverLay(row?.id)}} className=' text-blue-600 text-xl transition-all rounded-full' ><BiEdit /></button>
+  const options = (row:any)=>(
+    <div key={row?.id} className='flex items-center'>
+      <div className="scale-[60%] h-fit w-fit">
+        <SwitchInputField 
+          checked={row?.is_active}
+          id={row.id}
+          handleCheck={()=>handleCustomerStatus(row.id)}
+        />
       </div>
-    )
+      <button onClick={()=>{handleOverLay(row?.id)}} className=' text-blue-600 text-xl transition-all rounded-full' ><BiEdit /></button>
+    </div>
+  )
   return (
     <>
         <CustomerFormOverLay
@@ -81,10 +81,10 @@ const page = () => {
           customerId={customerId}
         />
         <div className='px-4'>
-            <div className="my-8 flex justify-between items-center">
-              <Breadcrumb
-                items={BreadcrumbData}
-              />
+          <div className="my-8 flex justify-between items-center">
+            <Breadcrumb
+              items={BreadcrumbData}
+            />
             <button 
               onClick={()=>handleOverLay('')}
               className="px-8 bg-primary hover:bg-primary/90 transition-all h-fit p-2 rounded-md text-negitaive-color flex items-center gap-3"
@@ -92,22 +92,22 @@ const page = () => {
               <FaPlusCircle /> 
               إضافة عميل 
             </button>
-            </div>
+          </div>
 
-            <DataTable
-              data={data?.customers}
-              isLoading={isLoading}
-              fnKeys={['id', 'is_active']}
-              emptyLinkHref='/settings/customers'
-              emptyText='صفحة إعدادات العملاء'
-              isOptions
-              options={options}
+          <DataTable
+            data={data?.customers}
+            isLoading={isLoading}
+            fnKeys={['id', 'is_active']}
+            emptyLinkHref='/settings/customers'
+            emptyText='صفحة إعدادات العملاء'
+            isOptions
+            options={options}
+          />
+          <div className='flex justify-center my-10 font-extrabold'>
+            <Paginition
+              totalPages={data?.total_pages}
             />
-            <div className='flex justify-center my-10 font-extrabold'>
-              <Paginition
-                totalPages={data?.total_pages}
-              />
-            </div>
+          </div>
         </div> 
     </>
   )

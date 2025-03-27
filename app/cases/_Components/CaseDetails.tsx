@@ -5,10 +5,11 @@ import { useGetCaseDetailsMutation } from '@/redux/api/casesApi'
 import Link from 'next/link'
 import React, { useEffect } from 'react'
 import IncludedSessionsTable from './Tables/IncludedSessionsTable'
-import { handleCaseBadgeColor } from '@/Components/utils/helper'
+import { exportData, handleCaseBadgeColor } from '@/Components/utils/helper'
 import { FaPlusCircle } from 'react-icons/fa'
 import IncludedSessiosJudgements from './Tables/IncludedSessiosJudgements'
 import DataTable from '@/Components/Tables/DataTable'
+import { FiPrinter } from 'react-icons/fi'
 
 const LoadingCaseSkeleton = () =>(
     <div className='p-4'>
@@ -41,10 +42,14 @@ const LoadingCaseSkeleton = () =>(
 const CaseDetails = ({case_number}:{case_number:string}) => {
 
   const [caseDetails, {isLoading, data}] = useGetCaseDetailsMutation()
+  const [exportCaseDetails] = useGetCaseDetailsMutation()
   useEffect(()=>{
     if(case_number)
       caseDetails({case_number})
   }, [case_number])
+
+
+  
   
   return (
     <div className='p-5'>
@@ -56,10 +61,13 @@ const CaseDetails = ({case_number}:{case_number:string}) => {
             <div className='bg-card rounded-md'>
                 <div className='flex justify-between items-center p-4 rounded-md mb-4'>
                     <div className="font-bold text-2xl">{data?.case?.case_number}</div>
+                    <div className="flex gap-4 items-center">
+                    <button className='flex items-center gap-3 bg-container py-1 px-2 shadow-md shadow-color/20 rounded-md' onClick={()=>exportData({type:'pdf', ExportFun:exportCaseDetails, fileName:case_number, params:{type:'pdf', case_number}})}>طباعة<FiPrinter /></button>
                     <DefaultBadge 
-                      title={data?.case?.state}
-                      color={handleCaseBadgeColor(data?.case?.state)}
-                    />
+                        title={data?.case?.state}
+                        color={handleCaseBadgeColor(data?.case?.state)}
+                      />
+                    </div>
                 </div>
                 {/* BASE DATA */}
                 <div className="grid grid-cols-3 items-center gap-3 p-4 rounded-md mb-4">
