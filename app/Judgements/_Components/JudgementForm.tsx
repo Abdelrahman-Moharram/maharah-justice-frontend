@@ -108,7 +108,6 @@ const JudgementForm = ({
             label={'القيمة المالية'}
             required= {true}
             errors={formErrors?.amount}
-            currency='ر.س'
           />
         </div>
 

@@ -21,7 +21,7 @@ interface Props{
 }
 
 
-const DataTable = ({options, startOptions, data, isLoading, emptyLinkHref, amounts, emptyText, fnKeys, isOptions=false, optionsHeader,  startOptionsHeader, showCounter}:Props) => {
+const DataTable = ({options, startOptions, data, isLoading, amounts, emptyText, fnKeys, isOptions=false, optionsHeader,  startOptionsHeader, showCounter}:Props) => {
     const getHeaders = () =>{
         const cols = []
         if(startOptions?.length){
@@ -39,25 +39,22 @@ const DataTable = ({options, startOptions, data, isLoading, emptyLinkHref, amoun
         return cols
     }
     
-    const showCellWithOverLay = (cellContent:string) =>{
-        const modifiedValue = cellContent.slice(0, 50) + " ..."
-        
-        return(
+    const showCellWithOverLay = (cellContent: string, id: string) => {
+        const modifiedValue = cellContent.slice(0, 50) + " ...";
+
+        return (
             <div>
-                <div data-tooltip-id="tooltip" className="cursor-default large-table-cell">
+                <div
+                    data-tooltip-id={id}
+                    data-tooltip-content={cellContent}
+                    className="cursor-default large-table-cell"
+                >
                     {modifiedValue}
                 </div>
-                <Tooltip
-                    id="tooltip"
-                    variant='dark'                    
-                >
-                    <div>
-                        {cellContent}
-                    </div>
-                </Tooltip>
+                <Tooltip id={id} variant="dark" />
             </div>
-        )
-    }
+        );
+    };
     
     const renderRow = ({row}:{row: any})=>{
         const rendered_row = []
@@ -69,7 +66,7 @@ const DataTable = ({options, startOptions, data, isLoading, emptyLinkHref, amoun
                             numberToMoney(row[cell])
                         :
                             row[cell]?.length > 50 ?
-                                showCellWithOverLay(row[cell])
+                                showCellWithOverLay(row[cell], row?.id)
                             :
                             row[cell] || <span className='text-center block'>-</span>
                     }

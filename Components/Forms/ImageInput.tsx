@@ -32,7 +32,7 @@ const ImageInput = ({labelId,
     <div>
         <label
             htmlFor={labelId}
-            className="flex bg-[#FFF8E8] w-[300px] min-h-[200px] overflow-hidden relative justify-center gap-2 items-center hover:bg-primary/30 rounded-md cursor-pointer"
+            className="flex  overflow-hidden relative justify-center gap-2 items-center  hover:bg-card rounded-md cursor-pointer"
         >
             <span
                 className="h-full"

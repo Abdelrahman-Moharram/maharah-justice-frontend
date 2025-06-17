@@ -195,7 +195,6 @@ const CaseForm = ({
                     value={caseForm?.amount}
                     label={'مبلغ القضية'}
                     required= {true}
-                    currency='ر.س'
                     errors={errors?.amount}
                 />
 
