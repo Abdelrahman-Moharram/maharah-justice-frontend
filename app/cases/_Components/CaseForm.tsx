@@ -235,7 +235,6 @@ const CaseForm = ({
                     onChange={e=>onChange(e, {alter_name:"رقم جوال العميل", regex:phoneNumberRegex})}
                     value={caseForm?.cust_phone_number}
                     label={'رقم جوال العميل'}
-                    required= {true}
                     errors={errors?.cust_phone_number}
                 />
 

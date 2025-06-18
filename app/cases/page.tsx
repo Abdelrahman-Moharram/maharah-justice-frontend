@@ -12,6 +12,7 @@ import { FaTrash } from "react-icons/fa";
 import CaseDetailsOverLay from './_Components/CaseDetailsOverLay'
 import DeleteCaseModal from './_Components/DeleteCaseModal'
 import { exportData, to_int_or_default } from '@/Components/utils/helper'
+import { IsAllowedPermissionOrNull } from '@/Components/Guards/IsAllowedPermission'
 
 
 
@@ -47,17 +48,33 @@ const page = () => {
      
     const options = (row:any)=>(
       <div className='flex gap-4 items-start'>
-        <button onClick={()=>{
-            setDetailsCaseNumber(row?.id)
-            handleDetailsModel()
-          }} className=' text-blue-600 text-lg transition-all rounded-full' ><BsEye /></button>
-        <Link className=' text-green-600 text-lg transition-all rounded-full' href={`/cases/${row?.id}/edit`}><BiEdit /></Link>
-        <button 
-          onClick={()=>{
-            setDeleteCase({case_number:row?.id})
-            handleDeleteModal()
-          }} 
-          className=' text-lg text-red-500 rounded-full'><FaTrash /></button>
+        <IsAllowedPermissionOrNull
+          permission='permissions.cases.view'
+        >
+          <button onClick={()=>{
+              setDetailsCaseNumber(row?.id)
+              handleDetailsModel()
+            }} className=' text-blue-600 text-lg transition-all rounded-full' ><BsEye /></button>
+        </IsAllowedPermissionOrNull>
+        
+        <IsAllowedPermissionOrNull
+          permission='permissions.cases.edit'
+        >
+          <Link target='_blank' className=' text-green-600 text-lg transition-all rounded-full' href={`/cases/${row?.id}/edit`}><BiEdit /></Link>
+        </IsAllowedPermissionOrNull>
+        <IsAllowedPermissionOrNull
+          permission='permissions.cases.view'
+        >
+          <button 
+            onClick={()=>{
+              setDeleteCase({case_number:row?.id})
+              handleDeleteModal()
+            }} 
+            className=' text-lg text-red-500 rounded-full'
+          >
+            <FaTrash />
+          </button>
+        </IsAllowedPermissionOrNull>
       </div>
     )
     
@@ -83,7 +100,7 @@ const page = () => {
             <DataTable 
               data={data?.cases}
               isLoading={isLoading}        
-              options={options}
+              startOptions={options}
               isOptions={true}
               emptyLinkHref='/cases'
               emptyText='صفحة القضايا الرئيسية'

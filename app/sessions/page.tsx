@@ -15,6 +15,7 @@ import { toast } from 'react-toastify'
 import { exportData, to_int_or_default } from '@/Components/utils/helper'
 import { TbMessageReply } from 'react-icons/tb'
 import AddConsultationModal from '../consultations/_Components/AddConsultationModal'
+import { IsAllowedPermissionOrNull } from '@/Components/Guards/IsAllowedPermission'
 
 
  
@@ -48,30 +49,48 @@ const page = () => {
 
     const options = (row:any)=>(
         <div className='flex gap-4 items-start'>
-          <button 
-            onClick={()=>{
-              setSelectedSessionNumber(row?.id)
-              handleAddConsultation()
-            }} 
-            className=' text-green-600 text-lg transition-all rounded-full' 
+          <IsAllowedPermissionOrNull 
+            permission='permissions.consultations.add'
           >
-            <TbMessageReply />
-          </button>
-          <button onClick={()=>{
-              setSelectedSessionNumber(row?.case_number)
-              handleDetailsModal()
-            }} className=' text-blue-600 text-lg transition-all rounded-full' ><BsEye />
-          </button>
-          <Link className=' text-green-600 text-lg transition-all rounded-full' href={`/cases/${row?.case_number}/sessions/${row?.id}/edit`}><BiEdit /></Link>
-          <button 
-            onClick={()=>{
-              setSelectedSessionNumber(row?.id)
-              handleDeleteModal()
-            }}
-            className=' text-lg text-red-500 rounded-full'
+            <button 
+              onClick={()=>{
+                setSelectedSessionNumber(row?.id)
+                handleAddConsultation()
+              }} 
+              className=' text-green-600 text-lg transition-all rounded-full' 
+            >
+              <TbMessageReply />
+            </button>
+          </IsAllowedPermissionOrNull>
+
+          <IsAllowedPermissionOrNull 
+            permission='permissions.cases.view'
           >
-            <FaTrash />
-          </button>
+            <button onClick={()=>{
+                setSelectedSessionNumber(row?.case_number)
+                handleDetailsModal()
+              }} className=' text-blue-600 text-lg transition-all rounded-full' ><BsEye />
+            </button>
+          </IsAllowedPermissionOrNull>
+          <IsAllowedPermissionOrNull 
+            permission='permissions.sessions.edit'
+          >
+            <Link className=' text-green-600 text-lg transition-all rounded-full' href={`/cases/${row?.case_number}/sessions/${row?.id}/edit`}><BiEdit /></Link>
+          </IsAllowedPermissionOrNull>
+
+          <IsAllowedPermissionOrNull 
+            permission='permissions.sessions.delete'
+          >
+            <button 
+              onClick={()=>{
+                setSelectedSessionNumber(row?.id)
+                handleDeleteModal()
+              }}
+              className=' text-lg text-red-500 rounded-full'
+            >
+              <FaTrash />
+            </button>
+          </IsAllowedPermissionOrNull>
         </div>
     )
     
@@ -125,7 +144,7 @@ const page = () => {
           <DataTable 
             data={data?.sessions}
             isLoading={isLoading}        
-            options={options}
+            startOptions={options}
             isOptions={true}
             emptyLinkHref='/sessions'
             emptyText='صفحة جميع الجلسات'

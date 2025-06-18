@@ -9,20 +9,23 @@ const emptyUser = {
 	username:'',
 	full_name:"",
 	id:'',
-	role:''
+	role:'',
+	permissions:[]
 }
 interface user {
     id:string;
 	full_name: string;
 	username: string;
 	role:string;
+	permissions:string[]
 
 }
 interface AuthState {
 	isAuthenticated: boolean;
 	isLoading: boolean;
     user:user,
-	colormode:string
+	colormode:string,
+
 }
 
 const initialState = {

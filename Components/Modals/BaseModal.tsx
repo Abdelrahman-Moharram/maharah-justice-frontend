@@ -22,7 +22,7 @@ export default function BaseModal({children, open, handleToggler, containerClass
             >
           </div>
           <div className="min-w-[50%] w-[500px] z-20 flex items-center pt-10 justify-center absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-            <div className={"w-fit h-full rounded-md shadow-md p-4 bg-container z-3 min-w-[70%] "+containerClassName}>
+            <div className={"w-max h-full rounded-md shadow-md p-4 bg-container z-3 "+containerClassName}>
                 {children}
             </div>
           </div>

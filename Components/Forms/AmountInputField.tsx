@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { numberToMoney } from '../utils/helper';
 import Input from './Input';
+import { RiyalFont } from '../utils/Icons';
 
 interface props {
 	labelId: string;
@@ -23,7 +24,7 @@ const AmountInputField = ({
 	required = false,
     defaultValue,
     errors,
-    currency=<span className='riyal-font text-lg' > $ </span>,
+    currency,
 }: props) => {
     const [amountValue, setAmountValue] = useState<number|string>('')
     useEffect(()=>{setAmountValue(numberToMoney(value))}, [value])
@@ -48,9 +49,12 @@ const AmountInputField = ({
             
         />
         <span 
-            className='absolute end-2 font-bold text-lg top-[40px]  px-5 transition-all rounded-lg drop-shadow-sm'
+            className='absolute end-2 font-bold text-xl top-[38px]  px-2  transition-all rounded-lg drop-shadow-sm'
         >
-            {currency}
+            {currency?
+                currency:
+                <RiyalFont width='15' height='20' />
+            }
         </span>
     </div>
   )
