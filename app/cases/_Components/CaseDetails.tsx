@@ -6,10 +6,11 @@ import Link from 'next/link'
 import React, { useEffect } from 'react'
 import IncludedSessionsTable from './Tables/IncludedSessionsTable'
 import { exportData, handleCaseBadgeColor } from '@/Components/utils/helper'
-import { FaPlusCircle } from 'react-icons/fa'
+import { FaAccessibleIcon, FaFile, FaPlusCircle } from 'react-icons/fa'
 import IncludedSessiosJudgements from './Tables/IncludedSessiosJudgements'
 import DataTable from '@/Components/Tables/DataTable'
 import { FiPrinter } from 'react-icons/fi'
+import { IsAllowedPermissionOrNull } from '@/Components/Guards/IsAllowedPermission'
 
 const LoadingCaseSkeleton = () =>(
     <div className='p-4'>
@@ -58,6 +59,7 @@ const CaseDetails = ({case_number}:{case_number:string}) => {
           <LoadingCaseSkeleton />
         :
           <>
+            {/* التفاصيل الأساسية */}
             <div className='bg-card rounded-md'>
                 <div className='flex justify-between items-center p-4 rounded-md mb-4'>
                     <div className="font-bold text-2xl">{data?.case?.case_number}</div>
@@ -167,17 +169,22 @@ const CaseDetails = ({case_number}:{case_number:string}) => {
                 </div>
                 <div className="p-4 rounded-md mb-4 block drop-shadow-sm shadow-lg focus:outline-none focus:ring">
                   <p>المرفقات</p>
-                  <div className="flex gap-4 items-center">
+                  <div className="flex gap-4 items-center mt-4">
                     {
                       data?.case?.attachments?.map((attch:string)=>(
                         attch.endsWith('.jpeg')?
                           <img 
-                            className='bg-container rounded-xl h-[200px] overflow-hidden p-4 drop-shadow-md'
+                            className='bg-container rounded-xl overflow-hidden p-4 drop-shadow-md  h-[200px] w-[170px]'
                             src={process.env.NEXT_PUBLIC_HOST+"/media/"+attch}
                           />
                         :
-                          <Link target='_blank' download={attch} className='bg-container rounded-xl h-[100px] overflow-hidden text-center p-4 drop-shadow-md'  href={process.env.NEXT_PUBLIC_HOST+"/media/"+attch} >
-                            {attch}
+                          <Link target='_blank' download={attch} className='bg-container rounded-xl flex items-center justify-center h-[200px] w-[170px] overflow-hidden text-center p-4 drop-shadow-md'  href={process.env.NEXT_PUBLIC_HOST+"/media/"+attch} >
+                            <div>
+                              <FaFile />
+                              <p className="mt-1 font-semibold">
+                                {attch.split('.').slice(-1)}
+                              </p>
+                            </div>
                           </Link>
                       ))
                     }
@@ -186,74 +193,89 @@ const CaseDetails = ({case_number}:{case_number:string}) => {
             </div>
 
             {/* الجلسات */}
-            <div className="mt-8 bg-card p-4 rounded-md">
-              <div className="flex justify-between">
-                <h3 className='font-bold text-lg my-3'>الجلسات</h3>
-                {
-                  data?.case?.is_editable?
-                    <Link className='bg-primary h-fit p-2 rounded-md text-negitaive-color flex items-center gap-3' href={`/cases/${case_number}/sessions/add`}>
-                      إضافة جلسة
-                      <FaPlusCircle />
-                    </Link>
-                  :null
-                }
+            <IsAllowedPermissionOrNull
+              permission='permissions.sessions.view.all'
+            >
+              <div className="mt-8 bg-card p-4 rounded-md">
+                <div className="flex justify-between">
+                  <h3 className='font-bold text-lg my-3'>الجلسات</h3>
+                  {
+                    data?.case?.is_editable?
+                      <Link className='bg-primary h-fit p-2 rounded-md text-negitaive-color flex items-center gap-3' href={`/cases/${case_number}/sessions/add`}>
+                        إضافة جلسة
+                        <FaPlusCircle />
+                      </Link>
+                    :null
+                  }
+                </div>
+                <IncludedSessionsTable 
+                  sessions={data?.case?.sessions}
+                  case_number={case_number}
+                  is_editable={data?.case?.is_editable}
+                />
               </div>
-              <IncludedSessionsTable 
-                sessions={data?.case?.sessions}
-                case_number={case_number}
-                is_editable={data?.case?.is_editable}
-              />
-            </div>
+            </IsAllowedPermissionOrNull>
             {/* ------------------------------ */}
 
             {/* الأحكام */}
-            <div className="mt-8 bg-card p-4 rounded-md">
-              <div className="flex justify-between">
-                <h3 className='font-bold text-lg my-3'>الأحكام</h3>
-                {
-                  data?.case?.is_editable?
-                    <Link className='bg-primary h-fit p-2 rounded-md text-negitaive-color flex items-center gap-3' href={`/cases/${case_number}/judgements/add`}>
-                      إضافة حكم
-                      <FaPlusCircle />
-                    </Link>
-                  :null
-                }
+            <IsAllowedPermissionOrNull
+              permission='permissions.judgements.view'
+            >
+              <div className="mt-8 bg-card p-4 rounded-md">
+                <div className="flex justify-between">
+                  <h3 className='font-bold text-lg my-3'>الأحكام</h3>
+                  {
+                    data?.case?.is_editable?
+                      <Link className='bg-primary h-fit p-2 rounded-md text-negitaive-color flex items-center gap-3' href={`/cases/${case_number}/judgements/add`}>
+                        إضافة حكم
+                        <FaPlusCircle />
+                      </Link>
+                    :null
+                  }
+                </div>
+                <IncludedSessiosJudgements 
+                  data={data?.case?.judgements}
+                  case_number={case_number}
+                  isLoading={isLoading}
+                  is_editable={data?.case?.is_editable}
+                />
               </div>
-              <IncludedSessiosJudgements 
-                data={data?.case?.judgements}
-                case_number={case_number}
-                isLoading={isLoading}
-                is_editable={data?.case?.is_editable}
-              />
-            </div>
+            </IsAllowedPermissionOrNull>
             {/* ------------------------------ */}
 
             {/* الإعتراض */}
-            <div className="mt-8 bg-card p-4 rounded-md">
-              <h3 className='font-bold text-lg my-3'>الإعتراضات</h3>
-              <DataTable
-                data={data?.case?.appeals}
-                emptyLinkHref=''
-                emptyText='لا يوجد إعتراضات'
-                fnKeys={['id', 'judgement_number']}
-                isLoading={isLoading}
-              />
-            </div>
+            <IsAllowedPermissionOrNull
+              permission='permissions.appeals.view'
+            >
+              <div className="mt-8 bg-card p-4 rounded-md">
+                <h3 className='font-bold text-lg my-3'>الإعتراضات</h3>
+                <DataTable
+                  data={data?.case?.appeals}
+                  emptyLinkHref=''
+                  emptyText='لا يوجد إعتراضات'
+                  fnKeys={['id', 'judgement_number']}
+                  isLoading={isLoading}
+                />
+              </div>
+            </IsAllowedPermissionOrNull>
             {/* ------------------------------ */}
             
-            {/* ------------------------------ */}
 
             {/* التنفيذ */}
-            <div className="mt-8 bg-card p-4 rounded-md">
-              <h3 className='font-bold text-lg my-3'>التنفيذ</h3>
-              <DataTable
-                data={data?.case?.executions}
-                emptyLinkHref=''
-                emptyText='لا يوجد تنفيذ'
-                fnKeys={[]}
-                isLoading={isLoading}
-              />
-            </div>
+            <IsAllowedPermissionOrNull
+              permission='permissions.executions.view'
+            >
+              <div className="mt-8 bg-card p-4 rounded-md">
+                <h3 className='font-bold text-lg my-3'>التنفيذ</h3>
+                <DataTable
+                  data={data?.case?.executions}
+                  emptyLinkHref=''
+                  emptyText='لا يوجد تنفيذ'
+                  fnKeys={[]}
+                  isLoading={isLoading}
+                />
+              </div>
+            </IsAllowedPermissionOrNull>
             {/* ------------------------------ */}
           </>
       }

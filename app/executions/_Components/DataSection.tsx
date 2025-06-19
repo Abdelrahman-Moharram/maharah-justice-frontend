@@ -34,8 +34,8 @@ const DataSection = () => {
   return (
     <div>
       <TableSettings 
-        excel={()=>{exportData({ExportFun:exportFunc, fileName:'التنفيذات', params, type:'excel'})}}
-        pdf={()=>{exportData({ExportFun:exportFunc, fileName:'التنفيذات', params, type:'pdf'})}}
+        excel={()=>{exportData({ExportFun:exportFunc, fileName:'التنفيذ', params, type:'excel'})}}
+        pdf={()=>{exportData({ExportFun:exportFunc, fileName:'التنفيذ', params, type:'pdf'})}}
       />
       <div className="py-4 mt-2">
         <DataTable
