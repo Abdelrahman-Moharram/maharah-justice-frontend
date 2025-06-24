@@ -1,8 +1,10 @@
 version: '3.8'
 
 services:
-  app:
+  justice:
+    container_name: 'justice_frontend'
     build: .
+    
     ports:
       - "3088:3000"  
     env_file:
