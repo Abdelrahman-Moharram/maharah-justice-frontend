@@ -22,7 +22,7 @@ const NavBar = () => {
 <>
     {
         Cookies.get('access_token')?
-            <header className="px-4 w-full z-[3]">
+            <header className="px-4 w-full z-3">
                 <div className="mx-auto flex items-center gap-8 py-5">
                     <div className="flex flex-1 items-center justify-end md:justify-between">
                         <NavBarSearch />

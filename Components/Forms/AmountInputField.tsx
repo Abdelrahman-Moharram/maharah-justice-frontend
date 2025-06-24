@@ -49,7 +49,7 @@ const AmountInputField = ({
             
         />
         <span 
-            className='absolute end-2 font-bold text-xl top-[38px]  px-2  transition-all rounded-lg drop-shadow-sm'
+            className='absolute end-2 font-bold text-xl top-[38px]  px-2  transition-all rounded-lg drop-shadow-xs'
         >
             {currency?
                 currency:

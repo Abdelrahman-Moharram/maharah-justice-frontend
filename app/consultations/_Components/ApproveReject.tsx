@@ -76,7 +76,7 @@ const ApproveReject = ({consult_id}:{consult_id:string}) => {
                 
                 <button
                     onClick={()=>{handleModal(); setManagerComment({is_approved:true, message:''})}}
-                    className="inline-block rounded-full border border-green-600 bg-green-600 p-3 text-white hover:bg-transparent hover:text-green-600 focus:outline-none focus:ring active:text-indigo-500"
+                    className="inline-block rounded-full border border-green-600 bg-green-600 p-3 text-white hover:bg-transparent hover:text-green-600 focus:outline-hidden focus:ring-3 active:text-indigo-500"
                 >
                     <span className="sr-only"> Accept </span>
 
@@ -86,7 +86,7 @@ const ApproveReject = ({consult_id}:{consult_id:string}) => {
 
                 <button
                     onClick={()=>{handleModal(); setManagerComment({is_approved:false, message:''})}}
-                    className="inline-block rounded-full border border-red-600 p-3 text-red-600 hover:bg-red-600 hover:text-white focus:outline-none focus:ring active:bg-indigo-500"
+                    className="inline-block rounded-full border border-red-600 p-3 text-red-600 hover:bg-red-600 hover:text-white focus:outline-hidden focus:ring-3 active:bg-indigo-500"
                 >
                     <span className="sr-only"> Reject </span>
                     <IoClose className='text-xl font-extrabold' />

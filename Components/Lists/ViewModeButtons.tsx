@@ -9,7 +9,7 @@ interface props{
 
 const ViewModeButtons = ({viewMode, handleViewMode}:props) => {
   return (
-    <span className="inline-flex overflow-hidden rounded-md border bg-white shadow-sm">
+    <span className="inline-flex overflow-hidden rounded-md border bg-white shadow-xs">
         <button
             onClick={()=>handleViewMode(0)}
             className={"inline-block border-e p-3 focus:relative "

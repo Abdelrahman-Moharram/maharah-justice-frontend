@@ -65,13 +65,13 @@ const UserNavDropDown = ({ user }: Props) => {
 
               <span className="font-semibold">{user?.full_name}</span>
               {
-                <div className="p-[1px] rounded-full bg-white">
+                <div className="p-px rounded-full bg-white">
                   <FaUser />
                 </div>
               }
             </div>
           ) : (
-            <ImageSkeleton width="200px" height="30px" rounded="30px" />
+            <ImageSkeleton width="200px" height="30px" rounded-sm="30px" />
           )}
         </MenuButton>
       </div>
@@ -85,7 +85,7 @@ const UserNavDropDown = ({ user }: Props) => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <MenuItems className="absolute -right-20 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <MenuItems className="absolute -right-20 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-hidden">
           {/* <div className="py-1">
                 <MenuItem>
                   {({ active }) => (

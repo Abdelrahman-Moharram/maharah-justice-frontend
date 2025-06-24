@@ -33,7 +33,7 @@ interface props{
         className={`w-full py-2 rounded-xl border transition-all `+ variantClassNames[variant]}
         disabled={disabled}
     >
-      <div className='flex justify-center items-center content-center gap-1 text-center leading-6 font-[700] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'>
+      <div className='flex justify-center items-center content-center gap-1 text-center leading-6 font-bold focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2'>
         {isLoading? <Spinner sm />: icon } {title}
       </div>
       

@@ -38,7 +38,7 @@ const Paginition = ({totalPages}:props) => {
                     onClick={()=>{
                         router.push(pathname + '?' + createQueryString('page', (page+1).toString()))
                     }}
-                    className="inline-flex size-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900 rtl:rotate-180"
+                    className="inline-flex size-8 items-center justify-center rounded-sm border border-gray-100 bg-white text-gray-900 rtl:rotate-180"
                 >
                     <span className="sr-only">Next Page</span>
                     
@@ -64,7 +64,7 @@ const Paginition = ({totalPages}:props) => {
                     onClick={()=>{
                         router.push(pathname + '?' + createQueryString('page', (page-1).toString()))
                     }}
-                    className="inline-flex size-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900 rtl:rotate-180"
+                    className="inline-flex size-8 items-center justify-center rounded-sm border border-gray-100 bg-white text-gray-900 rtl:rotate-180"
                 >
                     <span className="sr-only">Next Page</span>
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">

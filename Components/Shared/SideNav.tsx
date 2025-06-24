@@ -116,9 +116,7 @@ export default function SideNav() {
                 </svg> ,
             title:"الإعدادات",
             baseKey:'settings',
-            innerLinks:()=>{
-    
-                const settings = [
+            innerLinks:[
                     {title:'المدن', link:'/settings/cities'}, 
                     {title:'المحاكم', link:'/settings/courts'},
                     {title:'حالات القضايا', link:'/settings/states'},
@@ -128,11 +126,7 @@ export default function SideNav() {
                     {title:'الأدوار', link:'/settings/roles'}, 
                     {title:'المحامين', link:'/settings/lawyers'},
                     {title:'العملاء', link:'/settings/customers'},
-                ]
-                
-            
-                return settings
-            },
+                ],
             permissions:''
         },
         {

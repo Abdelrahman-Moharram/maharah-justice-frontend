@@ -20,14 +20,14 @@ const CardsSwiperWithTitle = ({cases, title, handleCaseNumber, handleDetailsModa
   const handleImageSkeleton = ()=>{
     const total = [];
     for(let i=0; i < 2; i ++)
-        total.push(<ImageSkeleton key={i} width='800px' height='300px' rounded='10px' />)
+        total.push(<ImageSkeleton key={i} width='800px' height='300px' rounded-sm='10px' />)
     return total
   }
   return (
     <div className='my-3'>
         <div className='flex justify-between px-12'>
           <p className="font-semibold text-xl">{title}</p>
-          <Link href={link} className="text-primary text-[16px] font-[600]">عرض الجميع ({count})</Link>
+          <Link href={link} className="text-primary text-[16px] font-semibold">عرض الجميع ({count})</Link>
         </div>
         <div className="my-4">
           {

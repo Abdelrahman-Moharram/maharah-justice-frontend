@@ -20,7 +20,7 @@ const EmptyContent = ({icon, title, href}:Props) => {
             {
                 title?
                     <Link
-                        className="mx-auto flex justify-center whitespace-nowrap items-center gap-2 rounded bg-primary py-2 text-lg font-medium text-white transition focus:outline-none focus:ring active:bg-primary"
+                        className="mx-auto flex justify-center whitespace-nowrap items-center gap-2 rounded-sm bg-primary py-2 text-lg font-medium text-white transition focus:outline-hidden focus:ring-3 active:bg-primary"
                         href={href}
                     >
                         {

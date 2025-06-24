@@ -27,7 +27,7 @@ const SelectInput = ({
     <div className='p-0 '>
         <label 
             htmlFor={labelId}
-            className={"block text-md font-medium shadow-none drop-shadow-none outline-none text-gray-700 "+ (errors?.length?"border-red-500":" border-none ")}
+            className={"block text-md font-medium shadow-none drop-shadow-none outline-hidden text-gray-700 "+ (errors?.length?"border-red-500":" border-none ")}
         > 
             {label} 
         </label>
@@ -38,7 +38,7 @@ const SelectInput = ({
                     onChange={onChange}
                     value={value}
                     required={required}
-					className={" w-full select-wrapper py-1.5 px-5 pl-0 blur-none bg-transparent outline-none border-none "+ (errors?.length?"border-red-500":"  ")}
+					className={" w-full select-wrapper py-1.5 px-5 pl-0 blur-none bg-transparent outline-hidden border-none "+ (errors?.length?"border-red-500":"  ")}
                 >
                 {
                     emptyoption?

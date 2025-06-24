@@ -167,7 +167,7 @@ const CaseDetails = ({case_number}:{case_number:string}) => {
                     value={data?.case?.notes || 'لا يوجد'}
                   />
                 </div>
-                <div className="p-4 rounded-md mb-4 block drop-shadow-sm shadow-lg focus:outline-none focus:ring">
+                <div className="p-4 rounded-md mb-4 block drop-shadow-xs shadow-lg focus:outline-hidden focus:ring-3">
                   <p>المرفقات</p>
                   <div className="flex gap-4 items-center mt-4">
                     {

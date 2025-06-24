@@ -34,7 +34,7 @@ const page = () => {
             </svg>
             </div>
             <div className="mx-auto w-[540px]">
-                <h4 className='my-5 text-[36px] font-[600]'>
+                <h4 className='my-5 text-[36px] font-semibold'>
                     نظام العدالة
                 </h4>
                 <LoginForm />

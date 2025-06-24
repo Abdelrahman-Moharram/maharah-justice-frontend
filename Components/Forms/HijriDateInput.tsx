@@ -29,7 +29,7 @@ const HijriDateInput = ({
     <div className='p-0'>
         <label 
             htmlFor={labelId}
-            className={"block text-md font-medium shadow-none mb-1 drop-shadow-none outline-none text-gray-700 "+ (errors?.length?"border-red-500":" border-none ")}
+            className={"block text-md font-medium shadow-none mb-1 drop-shadow-none outline-hidden text-gray-700 "+ (errors?.length?"border-red-500":" border-none ")}
         >
             {label} 
         </label>
@@ -37,11 +37,11 @@ const HijriDateInput = ({
             editable?
                 <DatePicker
                     format="DD-MM-YYYY"
-                    inputClass={"mt-1 w-full py-2 px-4 bg-card border border-[#E3E5E5] rounded-xl outline-none "+ (errors?.length?"border-red-500":"  ")}
+                    inputClass={"mt-1 w-full py-2 px-4 bg-card border border-[#E3E5E5] rounded-xl outline-hidden "+ (errors?.length?"border-red-500":"  ")}
                     placeholder={""}
                     value={value}
                     calendar={arabic}
-                    containerClassName='z-[100] w-full'
+                    containerClassName='z-100 w-full'
                     calendarPosition='bottom-right'
                     required={required}
                     locale={arabic_ar}
@@ -49,7 +49,7 @@ const HijriDateInput = ({
                     editable={editable}
                 />
             :
-                <div className={"mt-2 w-full py-2 px-4 bg-gray-200 border border-[#E3E5E5] rounded-xl outline-none "+ (errors?.length?"border-red-500":"  ")}>
+                <div className={"mt-2 w-full py-2 px-4 bg-gray-200 border border-[#E3E5E5] rounded-xl outline-hidden "+ (errors?.length?"border-red-500":"  ")}>
                     {value?.format('DD-MM-YYYY')||''}
                 </div>
         }

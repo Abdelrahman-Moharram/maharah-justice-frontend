@@ -12,7 +12,7 @@ const AddConsultationModal = ({session_id, open, handleToggler}:Props) => {
     <BaseModal
         handleToggler={handleToggler}
         open={open}
-        containerClassName='min-w-[100%] py-12 px-12'
+        containerClassName='min-w-full py-12 px-12'
     >
       <AddConsultationsForm
         session_id={session_id}

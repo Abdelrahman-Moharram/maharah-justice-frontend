@@ -75,7 +75,7 @@ export default function Form({
 					isLoading={isLoading}
 					title={btnText}
 					submit
-					// className='flex w-full justify-center rounded-xl bg-primary px-3 py-1.5 text-sm  leading-6 font-[700] shadow-sm hover:bg-primary-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
+					// className='flex w-full justify-center rounded-xl bg-primary px-3 py-1.5 text-sm  leading-6 font-bold shadow-xs hover:bg-primary-hover focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
 					disabled={config.find(i=>i.value == '') != null}
 				/>
 			</div>

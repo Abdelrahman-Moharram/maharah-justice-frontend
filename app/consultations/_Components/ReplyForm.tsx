@@ -52,7 +52,7 @@ const ReplyForm = ({consult_id, open, action}:{consult_id:string, action:()=>voi
     <form onSubmit={handleSubmit} className='mx-2 '>
         <div className="flex gap-2 relative">
             <button
-                className="absolute bottom-1 outline-none inline-block rounded-full bg-gray-100 h-fit transition px-3 py-3 text-primary hover:bg-primary hover:text-white focus:outline-none focus:ring active:bg-primary/90"
+                className="absolute bottom-1 outline-hidden inline-block rounded-full bg-gray-100 h-fit transition px-3 py-3 text-primary hover:bg-primary hover:text-white focus:outline-hidden focus:ring-3 active:bg-primary/90"
             >
                 <span className="sr-only"> Add </span>
 

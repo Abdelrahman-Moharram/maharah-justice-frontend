@@ -18,7 +18,7 @@ const CheckBox = ({checked, changeCheckBox, label, labelId, name, errors}:Props)
       > 
         <div className="flex items-center">
           &#8203;
-          <input checked={checked} name={name} onChange={changeCheckBox} type="checkbox" className="size-4 rounded border" id={labelId} />
+          <input checked={checked} name={name} onChange={changeCheckBox} type="checkbox" className="size-4 rounded-sm border" id={labelId} />
         </div>
 
         <div>

@@ -50,7 +50,7 @@ const Input = ({
 					required={required}
 					placeholder={placeholder}
 					readOnly={!editable}
-					className={"mt-1 w-full py-2 px-4 bg-card blur-none border border-[#E3E5E5] rounded-xl outline-none "+ (errors?.length?"border-red-500":"  ")}
+					className={"mt-1 w-full py-2 px-4 bg-card blur-none border border-[#E3E5E5] rounded-xl outline-hidden "+ (errors?.length?"border-red-500":"  ")}
 				/>
 				{
 					type === 'password'?

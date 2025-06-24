@@ -72,7 +72,7 @@ const CardsListWithPagination = ({data, deleteAction, editAction, isLoading, pag
 
                     // Table
 
-                    <div className="w-[100%] mx-auto">
+                    <div className="w-full mx-auto">
                         <DataTable
                             data={data}
                             emptyLinkHref=''

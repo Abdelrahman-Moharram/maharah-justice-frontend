@@ -9,7 +9,7 @@ interface Props{
 }
 export const EditDeleteButtons = ({editAction, deleteAction, item}:Props) => {
   return (
-    <span className="inline-flex overflow-hidden rounded-md border bg-white shadow-sm">
+    <span className="inline-flex overflow-hidden rounded-md border bg-white shadow-xs">
         {
             editAction?
                 <button

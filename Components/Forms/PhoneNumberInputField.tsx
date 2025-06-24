@@ -33,7 +33,7 @@ const PhoneNumberInputField = ({
             placeholder={placeholder}
         />
         <span 
-            className='absolute end-2 font-bold text-sm top-[40px] p-1 transition-all rounded-lg drop-shadow-sm'
+            className='absolute end-2 font-bold text-sm top-[40px] p-1 transition-all rounded-lg drop-shadow-xs'
         >
             966+
         </span>

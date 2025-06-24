@@ -26,7 +26,7 @@ const TableSettings = ({excel, pdf, inputPlaceHolder}:Props) => {
     <div className='grid grid-cols-2 p-3 bg-card text-color rounded-md'>
         <div className="col-span-1">
           <input 
-            className='w-full py-2 px-5 bg-container outline-none border-none shadow-md rounded-lg'
+            className='w-full py-2 px-5 bg-container outline-hidden border-none shadow-md rounded-lg'
             placeholder={inputPlaceHolder || 'ابحث ...'}
             value={filters.search}
             onChange={e=>onChange(e)}

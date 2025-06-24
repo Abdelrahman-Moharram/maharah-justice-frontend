@@ -63,14 +63,14 @@ const DeleteCaseModal = ({handleModal, open, Case, formData, isLoading}:Props) =
                         :
 
                         <li className="flex items-center justify-center gap-2 text-blue-600">
-                            <span className="size-6 rounded bg-blue-50 text-center text-[10px]/6 font-bold"> 1 </span>
+                            <span className="size-6 rounded-sm bg-blue-50 text-center text-[10px]/6 font-bold"> 1 </span>
 
                             <span> رقم القضية </span>
                         </li>
                     }
 
                     <li className="flex items-center justify-center gap-2 text-blue-600">
-                        <span className="size-6 rounded bg-blue-50 text-center text-[10px]/6 font-bold"> 2 </span>
+                        <span className="size-6 rounded-sm bg-blue-50 text-center text-[10px]/6 font-bold"> 2 </span>
 
                         <span> تأكيد كلمة المرور </span>
                     </li>

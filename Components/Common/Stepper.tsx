@@ -25,13 +25,13 @@ const Stepper = () => {
             </li>
 
             <li className="flex items-center justify-center gap-2 text-blue-600">
-                <span className="size-6 rounded bg-blue-50 text-center text-[10px]/6 font-bold"> 2 </span>
+                <span className="size-6 rounded-sm bg-blue-50 text-center text-[10px]/6 font-bold"> 2 </span>
 
                 <span> Address </span>
             </li>
 
             <li className="flex items-center justify-end gap-2">
-                <span className="size-6 rounded bg-gray-50 text-center text-[10px]/6 font-bold text-gray-600">
+                <span className="size-6 rounded-sm bg-gray-50 text-center text-[10px]/6 font-bold text-gray-600">
                 3
                 </span>
 

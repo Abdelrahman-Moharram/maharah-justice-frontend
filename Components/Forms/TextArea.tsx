@@ -22,7 +22,7 @@ const TextArea = ({labelId,
     <div className=' p-0'>
         <label 
             htmlFor={labelId}
-            className={"block text-md font-medium shadow-none drop-shadow-none outline-none text-gray-700 "+ (errors?.length?"border-red-500":" border-none ")}
+            className={"block text-md font-medium shadow-none drop-shadow-none outline-hidden text-gray-700 "+ (errors?.length?"border-red-500":" border-none ")}
         > 
             {label} 
         </label>
@@ -31,7 +31,7 @@ const TextArea = ({labelId,
             rows={rows}
             id={labelId}
             required={required}
-            className={"mt-1 resize-none w-full py-2 px-4 bg-card border border-[#E3E5E5] rounded-xl outline-none "+ (errors?.length?"border-red-500":" ")}
+            className={"mt-1 resize-none w-full py-2 px-4 bg-card border border-[#E3E5E5] rounded-xl outline-hidden "+ (errors?.length?"border-red-500":" ")}
             defaultValue={value}
             onChange={onChange}
         >

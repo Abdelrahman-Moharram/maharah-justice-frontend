@@ -77,7 +77,7 @@ const LawyerSearchInput = ({
       </div>
       {
         data?.lawyers?.length && (nameValue || oldNameValue) && menu  ?
-        <div className='w-full absolute z-[100] max-h-[500px] overflow-y-auto bg-gray-100 p-1 space-y-2 rounded-md'>
+        <div className='w-full absolute z-100 max-h-[500px] overflow-y-auto bg-gray-100 p-1 space-y-2 rounded-md'>
         {
             data?.lawyers.map((lawyer:lawyerType)=>(
                 <div 

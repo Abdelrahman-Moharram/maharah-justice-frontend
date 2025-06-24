@@ -110,7 +110,7 @@ const Notifications = () => {
       </button>
       {
         notificationToggler?
-          <div className='absolute end-10 top-[60px] max-w-[40rem] bg-white rounded-md shadow-lg px-2 py-2 z-10 my-3 max-h-[70%] overflow-y-auto space-y-2'>
+          <div className='absolute end-10 top-[60px] max-w-160 bg-white rounded-md shadow-lg px-2 py-2 z-10 my-3 max-h-[70%] overflow-y-auto space-y-2'>
           {
             isLoading?
                 <RandomSkeleton 

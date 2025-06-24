@@ -42,7 +42,7 @@ const Filter = ({pdf, excel, inputPlaceHolder, handleSearch, isLoading}:Props) =
 
       <div className="w-[50%] pl-2">
         <input 
-          className='w-full py-2 px-5 bg-container outline-none border-none shadow-md rounded-lg'
+          className='w-full py-2 px-5 bg-container outline-hidden border-none shadow-md rounded-lg'
           placeholder={inputPlaceHolder || 'ابحث ...'}
           value={filters.search}
           onChange={e=>onChange(e)}
@@ -90,7 +90,7 @@ const Filter = ({pdf, excel, inputPlaceHolder, handleSearch, isLoading}:Props) =
           pageFilters?.includes('city')?
             <div className="py-3 "> 
               <div className={`bg-container shadow-md shadow-color/20 rounded-md p-4 flex`}>
-                <div className="w-[100%] px-1">
+                <div className="w-full px-1">
                   <SelectInput
                     label='المدينة'
                     labelId='city'
@@ -111,7 +111,7 @@ const Filter = ({pdf, excel, inputPlaceHolder, handleSearch, isLoading}:Props) =
             pageFilters?.includes('customer_type')?
                 <div className="py-3 "> 
                   <div className={`bg-container shadow-md shadow-color/20 rounded-md p-4 flex`}>
-                    <div className="w-[100%] px-1">
+                    <div className="w-full px-1">
                       <SelectInput
                         label='نوع العميل'
                         labelId='customer_type'

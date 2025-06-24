@@ -25,7 +25,7 @@ const FloatingSelectInput = ({
     <>
     <label
         htmlFor={labelId}
-        className="relative block rounded-md border shadow-sm"
+        className="relative block rounded-md border shadow-xs"
     >
         <select
             name={labelId}
@@ -33,7 +33,7 @@ const FloatingSelectInput = ({
             onChange={onChange}
             value={value}
             required={required}
-            className="p-2 peer w-full border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"        
+            className="p-2 peer w-full border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-hidden focus:ring-0"        
         >
             {
                 emptyoption?
