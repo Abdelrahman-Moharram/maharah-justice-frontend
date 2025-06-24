@@ -131,10 +131,14 @@ const CaseDetails = ({case_number}:{case_number:string}) => {
                     keyName={'رقم الإتفاقية'}
                     value={data?.case?.agreement_number}
                     />
-                  <SmallCard 
-                    keyName={'رقم جوال العميل'}
-                    value={data?.case?.cust_phone_number}
-                  />
+                  {
+                    data?.case?.cust_phone_number?
+                      <SmallCard 
+                        keyName={'رقم جوال العميل'}
+                        value={data?.case?.cust_phone_number}
+                      />
+                    :null
+                  }
                   
                   {/* ---------- */}
                   <SmallCard 
