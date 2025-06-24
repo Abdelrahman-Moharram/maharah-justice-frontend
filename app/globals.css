@@ -32,7 +32,9 @@
 
   --background-image-login-image: url('/Login.png');
 }
-
+button{
+  cursor: pointer;
+}
 /*
   The default border color has changed to `currentcolor` in Tailwind CSS v4,
   so we've added these compatibility styles to make sure everything still

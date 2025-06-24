@@ -16,12 +16,7 @@ export default function SideNav() {
     const {data, isLoading} = useGetExecutionsTypesListQuery(undefined)
     
 
-    const casesInnerLinks = [
-        {title:'إضافة قضية', link:'/cases/add'},
-        {title:'جميع القضايا', link:'/cases'}, 
-        {title:'القضايا المنتهية', link:'/cases?filter=finished'},
-        {title:'قضايا اللجنة التمويلية', link:'/cases?filter=financial'},
-    ]
+    
     
     const sessionsInnerLinks =()=>{
     
@@ -39,23 +34,7 @@ export default function SideNav() {
         return sessions
     }
 
-    const settingsInnerLinks =()=>{
     
-        const settings = [
-            {title:'المدن', link:'/settings/cities'}, 
-            {title:'المحاكم', link:'/settings/courts'},
-            {title:'حالات القضايا', link:'/settings/states'},
-            {title:'أنواع القضايا', link:'/settings/litigation-types'},
-            // {title:'الدوائر', link:'/settings/circulars'},
-            {title:'المستخدمين', link:'/settings/users'},
-            {title:'الأدوار', link:'/settings/roles'}, 
-            {title:'المحامين', link:'/settings/lawyers'},
-            {title:'العملاء', link:'/settings/customers'},
-        ]
-        
-    
-        return settings
-    }
 
 
     const sideNavLinks = [
