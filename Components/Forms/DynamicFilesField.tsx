@@ -13,11 +13,13 @@ const DynamicFilesField = ({
         imageChange,
     }:Props) => {
     const [file, setFile] = useState<File|null>(null)
-    const changeCurrentFile = (e:ChangeEvent<HTMLInputElement> ) =>{
+    const changeCurrentFile = (e:ChangeEvent<HTMLInputElement>, idx:number) =>{
+        console.log(idx);
+        
         const files = e.target.files
         
         if (files?.length && imageChange){
-            imageChange(files[0], e.target.id)
+            imageChange(files[0], String(idx))
             setFile(null)
         }
     }
@@ -30,7 +32,7 @@ const DynamicFilesField = ({
                         <ImageInput
                             labelId={`image-${idx}`}
                             type={'file'}
-                            onChange={changeCurrentFile}
+                            onChange={(e)=>changeCurrentFile(e, idx)}
                             file={attch}
                             label={`المرفق رقم(${idx})`}
                             required= {false}
@@ -46,7 +48,7 @@ const DynamicFilesField = ({
             <ImageInput
                 labelId={'image'}
                 type={'file'}
-                onChange={changeCurrentFile}
+                onChange={(e)=>changeCurrentFile(e, attachments?.length||1)}
                 file={file}
                 label={`المرفقات`}
                 required= {false}

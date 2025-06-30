@@ -131,7 +131,8 @@ export default function useCasesForm(){
       changeCheckBox,
       imageChange,
       setFormErrors,
-      getCaseAsFormData
+      getCaseAsFormData,
+      setcaseForm
     }
     
 }

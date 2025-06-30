@@ -21,15 +21,15 @@ export default function SideNav() {
     const sessionsInnerLinks =()=>{
     
         const sessions = [
-            {title:'جلسات اليوم', link:'/sessions?filter=daily'}, 
-            {title:'الجلسات الأسبوعية', link:'/sessions?filter=weekly'},
-            {title:'الجلسات القائمة', link:'/sessions?filter=active'},
-            {title:'الجلسات المنتهية', link:'/sessions?filter=finished'},
-            {title:'الجلسات الخاصة بي', link:'/sessions?filter=mine'},
-            {title:'جميع الجلسات', link:'/sessions'}, 
+            {title:'جلسات اليوم', permission:'permissions.sessions.view.daily', link:'/sessions?filter=daily'}, 
+            {title:'الجلسات الأسبوعية', permission:'permissions.sessions.view.weekly', link:'/sessions?filter=weekly'},
+            {title:'الجلسات القائمة', permission:'permissions.sessions.view.active', link:'/sessions?filter=active'},
+            {title:'الجلسات المنتهية', permission:'permissions.sessions.view.finished', link:'/sessions?filter=finished'},
+            {title:'الجلسات الخاصة بي', permission:'permissions.sessions.view.mine', link:'/sessions?filter=mine'},
+            {title:'جميع الجلسات', permission:'permissions.sessions.view.all', link:'/sessions'}, 
         ]
         if(role && role.toLocaleLowerCase() === 'lawyer')
-            sessions.unshift({title:'جلساتي', link:'/sessions?filter=mine'})
+            sessions.unshift({title:'جلساتي', permission:'', link:'/sessions?filter=mine'})
     
         return sessions
     }
@@ -50,20 +50,14 @@ export default function SideNav() {
             title:"القضايا",
             baseKey:'cases',
             innerLinks:[
-                    {title:'إضافة قضية', link:'/cases/add'},
-                    {title:'جميع القضايا', link:'/cases'}, 
-                    {title:'القضايا المنتهية', link:'/cases?filter=finished'},
-                    {title:'قضايا اللجنة التمويلية', link:'/cases?filter=financial'},
+                    {title:'إضافة قضية', permission:'permissions.cases.add', link:'/cases/add'},
+                    {title:'جميع القضايا', permission:'permissions.cases.view', link:'/cases'}, 
+                    {title:'القضايا المنتهية', permission:'permissions.cases.view.finished', link:'/cases?filter=finished'},
+                    {title:'قضايا اللجنة التمويلية', permission:'permissions.cases.view.financial', link:'/cases?filter=financial'},
                 ],
-            permissions:''
+            permission:''
         },
-        {
-            icon:<CaseIcon />,
-            title:"الجلسات",
-            baseKey:'sessions',
-            innerLinks:sessionsInnerLinks(),
-            permissions:''
-        },
+        
         {
             icon:<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M20.0101 18.5101L15.0601 13.5601" stroke="currentColor" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
@@ -74,7 +68,7 @@ export default function SideNav() {
             title:"الجلسات",
             baseKey:'sessions',
             innerLinks:sessionsInnerLinks(),
-            permissions:''
+            permission:''
         },
         {
             icon:<svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -85,8 +79,8 @@ export default function SideNav() {
             </svg> ,
             title:"التنفيذ",
             baseKey:'executions',
-            innerLinks:data?.execution_types?.map((type:{id:string, name:string, key:string})=>({title:type.name, link:`/executions?exec_type=${type?.key}`})),
-            permissions:'permissions.executions.view'
+            innerLinks:data?.execution_types?.map((type:{id:string, name:string, key:string})=>({title:type.name, permission:'', link:`/executions?exec_type=${type?.key}`})),
+            permission:'permissions.executions.view'
         },
         {
             icon:<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -96,17 +90,17 @@ export default function SideNav() {
             title:"الإعدادات",
             baseKey:'settings',
             innerLinks:[
-                    {title:'المدن', link:'/settings/cities'}, 
-                    {title:'المحاكم', link:'/settings/courts'},
-                    {title:'حالات القضايا', link:'/settings/states'},
-                    {title:'أنواع القضايا', link:'/settings/litigation-types'},
-                    // {title:'الدوائر', link:'/settings/circulars'},
-                    {title:'المستخدمين', link:'/settings/users'},
-                    {title:'الأدوار', link:'/settings/roles'}, 
-                    {title:'المحامين', link:'/settings/lawyers'},
-                    {title:'العملاء', link:'/settings/customers'},
+                    {title:'المدن', permission:'permissions.cities.view', link:'/settings/cities'}, 
+                    {title:'المحاكم', permission:'permissions.courts.view', link:'/settings/courts'},
+                    {title:'حالات القضايا', permission:'permissions.states.view', link:'/settings/states'},
+                    {title:'أنواع القضايا', permission:'permissions.litigation-types.view', link:'/settings/litigation-types'},
+                    // {title:'الدوائر', permission:'permissions.circulars.view', link:'/settings/circulars'},
+                    {title:'المستخدمين', permission:'permissions.users.view', link:'/settings/users'},
+                    {title:'الأدوار', permission:'permissions.roles.view', link:'/settings/roles'}, 
+                    {title:'المحامين', permission:'permissions.lawyers.view', link:'/settings/lawyers'},
+                    {title:'العملاء', permission:'permissions.customers.view', link:'/settings/customers'},
                 ],
-            permissions:''
+            permission:''
         },
         {
             icon:<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -119,7 +113,7 @@ export default function SideNav() {
             title:"الإستشارات القانونية",
             baseKey:'consultations',
             innerLinks:[],
-            permissions:'permissions.consultations.view'
+            permission:'permissions.consultations.view'
 
         },
         {
@@ -134,7 +128,7 @@ export default function SideNav() {
             title:"التقارير",
             baseKey:'reports/cases',
             innerLinks:[],
-            permissions:'permissions.cases.view'
+            permission:'permissions.cases.view'
         },
         
     ]
@@ -157,14 +151,18 @@ export default function SideNav() {
                     </li>
                     {
                         sideNavLinks?.map(item=>(
-                            <li id={item.title}>
-                                <SideNavDropDownItem 
-                                    title={item?.title}
-                                    innerLinks={item?.innerLinks}
-                                    icon={item.icon}
-                                    baseKey={item?.baseKey}
-                                />
-                            </li>
+                            <IsAllowedPermissionOrNull
+                                permission={item?.permission}
+                            >
+                                <li id={item.title}>
+                                    <SideNavDropDownItem 
+                                        title={item?.title}
+                                        innerLinks={item?.innerLinks}
+                                        icon={item.icon}
+                                        baseKey={item?.baseKey}
+                                    />
+                                </li>
+                            </IsAllowedPermissionOrNull>
                         ))
                     }  
                     

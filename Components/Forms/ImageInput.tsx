@@ -14,7 +14,8 @@ interface props {
     
 }
 
-const ImageInput = ({labelId,
+const ImageInput = ({
+    labelId,
 	type,
 	onChange,
 	file,

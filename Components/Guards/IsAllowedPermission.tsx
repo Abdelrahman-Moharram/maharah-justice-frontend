@@ -9,7 +9,7 @@ export const IsAllowedPermissionOrNull = ({permission, children}:{permission:str
     return (
         <>
             {
-                permissions?.includes(permission)?
+                !permission || permissions?.includes(permission)?
                     children
                 :
                     null
