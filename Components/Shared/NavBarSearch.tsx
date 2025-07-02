@@ -35,10 +35,16 @@ const NavBarSearch = () => {
             handleToggler={handleDetailsModal}
             open={modal}
         />
-        <div className="w-[60%] relative">
-            <div className="flex">
+        <div className="w-[50%] relative">
+            <div className="flex bg-card rounded-4xl p-0.5">
+                <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="44" height="44" rx="22" fill="#FBB827"/>
+                    <path d="M21 30C25.9706 30 30 25.9706 30 21C30 16.0294 25.9706 12 21 12C16.0294 12 12 16.0294 12 21C12 25.9706 16.0294 30 21 30Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M28.9299 30.6898C29.4599 32.2898 30.6699 32.4498 31.5999 31.0498C32.4499 29.7698 31.8899 28.7198 30.3499 28.7198C29.2099 28.7098 28.5699 29.5998 28.9299 30.6898Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+
                 <input
-                    className='w-full py-2 px-5 bg-card outline-hidden border-none rounded-lg'
+                    className='w-full p-2 outline-hidden border-none'
                     placeholder='ابحث برقم العميل أو القضية أو رقم الهوية أو رقم الجوال'
                     value={searchValue}
                     onChange={handleSearchValue}

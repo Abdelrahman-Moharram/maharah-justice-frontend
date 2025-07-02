@@ -5,7 +5,8 @@ import SideNavDropDownItem from "./SideNavDropDownItem";
 import { useAppSelector } from "@/redux/hooks";
 import { useGetExecutionsTypesListQuery } from "@/redux/api/JudgementsApi";
 import { IsAllowedPermissionOrNull } from "../Guards/IsAllowedPermission";
-import { CaseIcon, HomeIcon } from "../utils/Icons";
+import { CaseIcon, FullLogo, HomeIcon, Logo } from "../utils/Icons";
+import { useState } from "react";
 
 
 // const 
@@ -15,6 +16,7 @@ export default function SideNav() {
     const {role} = useAppSelector(state => state.auth.user)
     const {data, isLoading} = useGetExecutionsTypesListQuery(undefined)
     
+    const [isHovered, setIsHovered] = useState(false);
 
     
     
@@ -135,18 +137,25 @@ export default function SideNav() {
     
     
     return (
-        <div className={"w-[62px] hover:w-[250px] relative transition-all duration-300"}>
-            <div className={' w-[62px] hover:w-[250px] h-full fixed transition-all delay-50 bg-secondary drop-shadow-2xl text-white'}>
-                <ul className="h-full overflow-y-auto overflow-x-hidden py-5 px-1 space-y-1 side-nav-ul">
-                    <li className='mb-5'>
-                        <Link href={'/'}>
-                            <Image 
-                                className="mx-auto h-auto"
-                                src={'/logo.png'}
-                                width={25}
-                                height={25}
-                                alt="logo"
-                            />
+        <div 
+            className={"w-[62px] hover:w-[280px] relative transition-all duration-300"}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+        >
+            <div className={' w-[62px] hover:w-[240px] h-full fixed transition-all delay-50 drop-shadow-2xl text-white'}>
+                <ul className="h-full overflow-y-auto overflow-x-hidden py-5 px-1 space-y-1 ">
+                    <li className='mb-12 px-2'>
+                        <Link
+                            className="" 
+                            href={'/'}
+                        >
+                            {
+                                isHovered?
+                                    <FullLogo />
+                                :
+                                    <Logo />
+                            }
+                                
                         </Link>
                     </li>
                     {
