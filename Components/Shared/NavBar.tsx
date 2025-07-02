@@ -7,7 +7,7 @@ import Notifications from './Notificaions';
 import Cookies from "js-cookie"
 
 const NavBar = () => {
-    const { isAuthenticated, user, isLoading } = useAppSelector(state => state.auth);
+    const { user } = useAppSelector(state => state.auth);
     
     const authLinks = () => {                
         return (
