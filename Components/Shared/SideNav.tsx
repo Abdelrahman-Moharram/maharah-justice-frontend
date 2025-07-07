@@ -143,7 +143,7 @@ export default function SideNav() {
             onMouseLeave={() => setIsHovered(false)}
         >
             <div className={' w-[62px] hover:w-[240px] h-full fixed transition-all delay-50 drop-shadow-2xl text-white'}>
-                <ul className="h-full overflow-y-auto overflow-x-hidden py-5 px-1 space-y-1 ">
+                <ul className="h-full overflow-y-auto overflow-x-hidden py-5 px-1 space-y-1 side-nav-ul">
                     <li className='mb-12 px-2'>
                         <Link
                             className="" 

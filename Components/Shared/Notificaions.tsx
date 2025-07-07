@@ -82,19 +82,18 @@ const Notifications = () => {
     <>
       <button 
         onClick={handleReadNotification} 
-        className="relative rounded-full p-1.5 border transition-all cursor-pointer hover:bg-color"
+        className="relative rounded-full px-2 border-2 border-negitaive-color/20 transition-all cursor-pointer hover:bg-color"
       >
         {
           notification_count ?
           <>
-            {/* 
             <div className="absolute">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="6" cy="8" r="3.5" fill="#F23D30" stroke="#FBFBFB"/>
-                </svg>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="6" cy="8" r="3.5" fill="#F23D30" />
+              </svg>
             </div> 
-            */}
-            <span className='absolute -mr-2 -mt-1 top-0 right-0 px-[5px] bg-[#F23D30] rounded-full text-white text-sm'>{notification_count>99 ? '99+' : notification_count }</span>
+           
+            {/* <span className='absolute -mr-2 -mt-1 top-0 right-0 px-[5px] bg-[#F23D30] rounded-full text-white text-sm'>{notification_count>99 ? '99+' : notification_count }</span> */}
           </>
           :
           null

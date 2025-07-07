@@ -4,7 +4,7 @@ import type {
 	FetchArgs,
 	FetchBaseQueryError,
 } from '@reduxjs/toolkit/query';
-import { setAuth, setLogout } from '../features/authSlice';
+import { setLogout } from '../features/authSlice';
 import { Mutex } from 'async-mutex';
 import { toast } from 'react-toastify';
 const mutex = new Mutex();

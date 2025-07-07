@@ -94,3 +94,14 @@ export function updateSearchQuery (updatedQuery:any, pathname:string, router:App
 export function capitalizeFirstLetter(val:string) {
     return String(val).charAt(0).toUpperCase() + String(val).slice(1);
 }
+
+
+export const GetNameChars = (val:string) =>{
+    const val_list = val.split(' ')
+
+
+    if (val_list.length == 1)
+        return val_list[0][0]?.toUpperCase()
+    
+    return `${val_list[0][0]?.toUpperCase()} ${val_list[val_list.length-1][0]?.toUpperCase()}`
+}

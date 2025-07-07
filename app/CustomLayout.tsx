@@ -40,9 +40,9 @@ const CustomLayout = ({ children }: Props) => {
             {Cookies.get('access_token') ? (
                 <div className='flex gap-2 bg-secondary'>
                     <SideNav />
-                    <div className="px-0 w-full min-h-[calc(100vh-78px)] mx-auto overflow-hidden">
+                    <div className="px-0 w-full min-h-[calc(100vh)] mx-auto overflow-hidden">
                         <NavBar />
-                        <div className="bg-container p-10 rounded-tr-2xl">
+                        <div className="bg-container h-full p-10 rounded-tr-2xl">
                             <Suspense>
                                 {children}
                             </Suspense>
@@ -50,7 +50,7 @@ const CustomLayout = ({ children }: Props) => {
                     </div>
                 </div>
             ) : (
-                <div className="bg-container p-10 rounded-tr-2xl">
+                <div className="bg-container p-10 h-full rounded-tr-2xl">
                     <Suspense>
                         {children}
                     </Suspense>
