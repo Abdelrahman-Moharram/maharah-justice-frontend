@@ -18,8 +18,8 @@
   --blur-lg: 0px;
 
   --color-foreground: var(--foreground);
-  --color-primary: #fbb827;
-  --color-secondary: #5f605f;
+  --color-primary: #0BA6DF;
+  --color-secondary: #4FB7B3;
   --color-background: var(--background);
   --color-container: rgba(var(--container));
   --color-border: rgba(var(--border));
@@ -160,8 +160,8 @@ animation: fadein 0.35s ease forwards;
 
 
 .swiper-pagination-bullet-active {
-  background: #FBB827 !important; 
-  color: #FBB827 ; 
+  background: #0BA6DF !important; 
+  color: #0BA6DF ; 
 
   width: 20px !important;
   height: 10px;
@@ -203,13 +203,13 @@ body::-webkit-scrollbar-track {
 
 body::-webkit-scrollbar {
   width: 6px;
-  background-color: #fab826;
+  background-color: #0BA6DF;
 }
 
 body::-webkit-scrollbar-thumb {
   border-radius: 4px;
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
-  background-color: #fab826;
+  background-color: #0BA6DF;
 }
 
 
@@ -274,7 +274,7 @@ body::-webkit-scrollbar-thumb {
 }
 .large-table-cell div::-webkit-scrollbar {
   width: 2px;
-  background-color: #FBB827;
+  background-color: #0BA6DF;
 }
 
 

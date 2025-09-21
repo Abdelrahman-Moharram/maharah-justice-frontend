@@ -1,11 +1,10 @@
 'use client'
 import Link from "next/link";
-import Image from "next/image";
 import SideNavDropDownItem from "./SideNavDropDownItem";
 import { useAppSelector } from "@/redux/hooks";
 import { useGetExecutionsTypesListQuery } from "@/redux/api/JudgementsApi";
 import { IsAllowedPermissionOrNull } from "../Guards/IsAllowedPermission";
-import { CaseIcon, FullLogo, HomeIcon, Logo } from "../utils/Icons";
+import { CaseIcon, HomeIcon } from "../utils/Icons";
 import { useState } from "react";
 
 
@@ -14,7 +13,7 @@ import { useState } from "react";
 export default function SideNav() {
     
     const {role} = useAppSelector(state => state.auth.user)
-    const {data, isLoading} = useGetExecutionsTypesListQuery(undefined)
+    const {data} = useGetExecutionsTypesListQuery(undefined)
     
     const [isHovered, setIsHovered] = useState(false);
 
@@ -151,9 +150,12 @@ export default function SideNav() {
                         >
                             {
                                 isHovered?
-                                    <FullLogo />
+                                    <div className="flex items-center">
+                                        <CaseIcon width="40px" />
+                                        <p className="text-xl">مهارة قانونية</p>
+                                    </div>
                                 :
-                                    <Logo />
+                                    <CaseIcon width="40px" />
                             }
                                 
                         </Link>
@@ -162,6 +164,7 @@ export default function SideNav() {
                         sideNavLinks?.map(item=>(
                             <IsAllowedPermissionOrNull
                                 permission={item?.permission}
+                                key={item?.innerLinks}
                             >
                                 <li id={item.title}>
                                     <SideNavDropDownItem 

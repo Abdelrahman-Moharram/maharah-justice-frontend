@@ -10,10 +10,10 @@ const cairo = Cairo({ subsets: ["latin"],display: 'swap', adjustFontFallback: fa
 
 
 export const metadata: Metadata = {
-  title: "Justice",
+  title: "مهارة قانونية",
   description: "",
   icons:{
-    icon:'/logo.png'
+    icon:'/logo.svg'
   }
 };
 
